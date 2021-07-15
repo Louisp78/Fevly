@@ -1,4 +1,4 @@
-# fevly
+# Fevly - a party app
 
 A new Flutter project.
 
@@ -28,6 +28,14 @@ A new Flutter project.
     - main.dart
     - routes.dart               *🚩Definition de toute les navigations entre les pages et des chemins des pages (exemple : “/home”)*
 
+
+## Dev Rules
+1. Toujours utiliser un fichier appelé “components” pour séparer le code en différent fichiers.
+2. Créer une class lorsque deux variables d’un widget sont liée
+3. Utiliser le constructeur avec Action si besoin (voir exemple)
+4. Respecter l’architecture
+5. Toujours utiliser route Named pour la navigation entre les pages
+6. Utiliser les commentaire “///” avant un widget ou une fonction pour pouvoir les voirs dans la doc. (autre commentaire “//”).
 
 ## Documentations & Links
 This project is a starting point for a Flutter application.

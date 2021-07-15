@@ -1,3 +1,4 @@
+import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/styles/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -12,20 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fevly',
       theme: themeData,
-      home: const Home(),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: null,
-      ),
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
     );
   }
 }
