@@ -5,6 +5,7 @@ final ThemeData themeData = ThemeData(
   textTheme: textTheme,
   scaffoldBackgroundColor: Colors.white,
   focusColor: kPrimaryColor,
+  hintColor: kPrimaryColor,
 );
 
 const TextTheme textTheme = TextTheme(

@@ -1,8 +1,8 @@
 import 'package:fevly/components/custom_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
+import 'package:fevly/components/custom_text_button.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'bottom_section.dart';
+
 import 'form_section.dart';
 
 class Body extends StatelessWidget {
@@ -10,8 +10,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: SizedBox(
@@ -20,6 +18,7 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(
+              title: "S'inscrire",
               leading: CustomIconButton(
                 size: const CustomIconButtonSize.small(),
                 press: () => Navigator.pop(context),
@@ -27,11 +26,20 @@ class Body extends StatelessWidget {
                 circle: false,
                 icon: Icons.arrow_back_ios_rounded,
               ),
-              title: "Connexion",
             ),
-            FormSection(textTheme: textTheme, size: size),
+            const FormSection(),
             const Spacer(),
-            BottomSection(size: size),
+            CustomTextButton(
+              press: () => Navigator.pushNamed(context, '/signin_step2'),
+              text: "Suivant",
+              suffixIcon: const Icon(
+                Icons.arrow_forward_rounded,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.03,
+            ),
           ],
         ),
       ),

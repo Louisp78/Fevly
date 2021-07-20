@@ -11,14 +11,16 @@ class CustomTextButton extends StatelessWidget {
     this.secondary = false,
     required this.press,
     required this.text,
+    this.isActive = true,
   }) : super(key: key);
 
-  final IconData? prefixIcon;
-  final IconData? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final bool lightMode;
   final bool secondary;
   final GestureTapCallback press;
   final String text;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +30,27 @@ class CustomTextButton extends StatelessWidget {
       highlightColor: kPrimaryColor,
       onTap: press,
       child: Container(
-        alignment: Alignment.center,
-        height: 44,
-        width: 156,
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        height: 42,
         decoration: BoxDecoration(
-          color: kPrimaryColor,
+          color: isActive
+              ? (lightMode ? kPrimaryColor : kDarkPrimaryColor)
+              : kTextColor,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text(
-          text,
-          style: textTheme.headline4?.copyWith(color: Colors.white),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (prefixIcon != null) prefixIcon!,
+            if (prefixIcon != null) const SizedBox(width: 10),
+            Text(
+              text,
+              style: textTheme.headline4
+                  ?.copyWith(color: lightMode ? Colors.white : Colors.black),
+            ),
+            if (suffixIcon != null) const SizedBox(width: 10),
+            if (suffixIcon != null) suffixIcon!,
+          ],
         ),
       ),
     );
