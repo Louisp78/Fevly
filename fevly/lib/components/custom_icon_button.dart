@@ -6,22 +6,19 @@ class CustomIconButtonSize {
     required this.borderRadius,
     required this.sizeContainer,
     required this.iconSize,
-    required this.padding,
   });
 
-  final double borderRadius, sizeContainer, iconSize, padding;
+  final double borderRadius, sizeContainer, iconSize;
 
   const CustomIconButtonSize.small({
     this.borderRadius = 12.0,
     this.sizeContainer = 29.0,
     this.iconSize = 16.0,
-    this.padding = 7.0,
   });
   const CustomIconButtonSize.normal({
     this.borderRadius = 13.0,
     this.sizeContainer = 37.0,
     this.iconSize = 24.0,
-    this.padding = 10.0,
   });
 }
 
@@ -61,32 +58,24 @@ class CustomIconButton extends StatelessWidget {
       highlightColor: kPrimaryColor,
       onTap: press,
       borderRadius: BorderRadius.circular(size.borderRadius),
-      child: Stack(
+      child: Container(
+        width: size.sizeContainer,
+        height: size.sizeContainer,
         alignment: Alignment.center,
-        children: [
-          Container(
-            width: size.sizeContainer,
-            height: size.sizeContainer,
-            alignment: Alignment.center,
-            decoration: circle
-                ? boxDecoration.copyWith(
-                    shape: BoxShape.circle,
-                  )
-                : boxDecoration.copyWith(
-                    borderRadius: BorderRadius.circular(size.borderRadius),
-                  ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: size.padding),
-            child: Icon(
-              icon,
-              size: size.iconSize,
-              color: outline
-                  ? (lightMode ? Colors.black : Colors.white)
-                  : (lightMode ? Colors.white : Colors.black),
-            ),
-          ),
-        ],
+        decoration: circle
+            ? boxDecoration.copyWith(
+                shape: BoxShape.circle,
+              )
+            : boxDecoration.copyWith(
+                borderRadius: BorderRadius.circular(size.borderRadius),
+              ),
+        child: Icon(
+          icon,
+          size: size.iconSize,
+          color: outline
+              ? (lightMode ? Colors.black : Colors.white)
+              : (lightMode ? Colors.white : Colors.black),
+        ),
       ),
     );
   }
