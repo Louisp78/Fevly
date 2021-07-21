@@ -26,23 +26,24 @@ class FormSection extends StatelessWidget {
             SizedBox(
               height: size.height * 0.05,
             ),
-            const CustomTextField(
+            CustomTextField(
               hintText: "Nom d'utilisateur ou adresse mail",
               isSelected: true,
+              onChanged: (value) {},
+              onSaved: (value) {},
+              validator: (value) {},
             ),
           ],
-        ),
-        SizedBox(
-          height: size.height * 0.03,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const CustomTextField(
+            CustomTextField(
               hintText: "Mot de passe",
-            ),
-            SizedBox(
-              height: size.height * 0.02,
+              obscureText: true,
+              onChanged: (value) {},
+              onSaved: (value) {},
+              validator: (value) {},
             ),
             Text(
               "Mot de passe oublié ?",

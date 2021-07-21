@@ -28,6 +28,7 @@ class CustomTextButton extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return InkWell(
       highlightColor: kPrimaryColor,
+      borderRadius: BorderRadius.circular(20),
       onTap: press,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),

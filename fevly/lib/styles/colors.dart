@@ -39,6 +39,9 @@ const Color kDarkerTextColor = Color(0xff767676);
 /// Error
 const Color kErrorColor = Color(0xffFF0000);
 
+/// Done
+const Color kDoneColor = Color(0xff0ADA05);
+
 /// Surface Light
 const Color kSurfaceLightColor = Color(0xffFBFBFB);
 
