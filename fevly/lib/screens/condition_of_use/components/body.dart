@@ -1,9 +1,9 @@
 import 'package:fevly/components/custom_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/models/fom_validate.dart';
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'form_section.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../../constant.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -11,13 +11,16 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: ChangeNotifierProvider(
-        create: (context) => FormValidate(),
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    return RawScrollbar(
+      thumbColor: kPrimaryVariantColor,
+      radius: const Radius.circular(20),
+      child: SingleChildScrollView(
         child: Column(
           children: [
             CustomAppBar(
-              title: "S'inscrire",
+              title: "Conditions d’utilisations",
               leading: CustomIconButton(
                 size: const CustomIconButtonSize.small(),
                 press: () => Navigator.pop(context),
@@ -26,8 +29,16 @@ class Body extends StatelessWidget {
                 icon: Icons.arrow_back_ios_rounded,
               ),
             ),
-            const FormSection(),
-            SizedBox(height: size.height * 0.03),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: size.width * 0.05,
+                  right: size.width * 0.05,
+                  bottom: size.height * 0.05),
+              child: Text(
+                termOfUse,
+                style: textTheme.bodyText2,
+              ),
+            ),
           ],
         ),
       ),

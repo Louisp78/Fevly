@@ -18,15 +18,13 @@ class CustomAppBar extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding:
-          EdgeInsets.only(top: size.height * 0.07, bottom: size.height * 0.07),
+    return SizedBox(
+      height: size.height * 0.17,
       child: Stack(
         alignment: Alignment.centerLeft,
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            top: 0,
             left: size.width * 0.1,
             child: leading,
           ),

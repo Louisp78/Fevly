@@ -2,12 +2,27 @@ import 'package:flutter/cupertino.dart';
 
 class FormValidate extends ChangeNotifier {
   bool isFormValid = false;
+  bool isTermOfUseAccepted = false;
 
-  /// The current total price of all items (assuming all items cost $42).
-  bool get validationState => isFormValid;
+  bool get formValid {
+    return isFormValid;
+  }
 
-  set validationState(bool newBool) {
+  set formValid(bool newBool) {
     isFormValid = newBool;
     notifyListeners();
+  }
+
+  bool get termOfUse {
+    return isTermOfUseAccepted;
+  }
+
+  set termOfUse(bool newBool) {
+    isTermOfUseAccepted = newBool;
+    notifyListeners();
+  }
+
+  bool get validation {
+    return isFormValid && isTermOfUseAccepted;
   }
 }
