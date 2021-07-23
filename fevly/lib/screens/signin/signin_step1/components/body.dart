@@ -1,6 +1,5 @@
 import 'package:fevly/components/custom_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/models/fom_validate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,16 +31,6 @@ class Body extends StatelessWidget {
                 ),
               ),
               const FormSection(),
-              const Spacer(),
-              CustomTextButton(
-                press: () => Navigator.pushNamed(context, '/signin_step2'),
-                text: "Suivant",
-                isActive: false,
-                suffixIcon: const Icon(
-                  Icons.arrow_forward_rounded,
-                  color: Colors.white,
-                ),
-              ),
               SizedBox(
                 height: size.height * 0.03,
               ),

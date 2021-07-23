@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'models/user_relation_state.dart';
+
 const String specialChar = "!\"#\$%&'()*+=`./\\:;<>@[]^_|~";
 
 const String termOfUse = '''
@@ -13,5 +18,39 @@ Viverra quisque id pulvinar tempus eu pulvinar integer porta amet. Consequat gra
 Volutpat ornare volutpat eu ut. Dignissim sit diam donec bibendum fringilla tristique in amet. At pharetra et adipiscing magna elit ac faucibus porta egestas. Tellus eget amet imperdiet ornare magnis. Mi pretium quis bibendum lacus, sed sociis in. Erat nisi, lectus cursus non tristique. In arcu est, vulputate elit. Sem ullamcorper eget cras dictum purus a, eu et cursus. Leo tellus fermentum auctor molestie. At urna, tortor, amet sed nibh neque vulputate iaculis. Enim eget ultrices lorem convallis id amet amet. Ac leo lectus pretium pretium aliquam nibh et. Sed senectus mauris condimentum platea viverra eget gravida. At etiam turpis ridiculus ac enim facilisis.
 ''';
 
-String validatorMissed(String source) =>
+String validatorMissed({required String source}) =>
     "Oops vous avez oublier votre $source.";
+
+const String snackBarMissingField =
+    "Il semble que vous ayez oublié 2 ou 3 trucs...";
+
+String needToBeFriendMessage({required String username}) =>
+    "Devenez ami avec $username pour voir ses badges.";
+
+const double kSmallIconSize = 14;
+
+String getTextFromRelationState(UserRelationState relationState) {
+  switch (relationState) {
+    case UserRelationState.friend:
+      return "Ami";
+    case UserRelationState.me:
+      return "Mes listes";
+    case UserRelationState.requestSent:
+      return "En attente";
+    case UserRelationState.unFriend:
+      return "Devenir ami";
+  }
+}
+
+IconData getIconDataFromRelationState(UserRelationState relationState) {
+  switch (relationState) {
+    case UserRelationState.friend:
+      return Icons.done_rounded;
+    case UserRelationState.me:
+      return Icons.format_list_bulleted_rounded;
+    case UserRelationState.requestSent:
+      return Icons.email_rounded;
+    case UserRelationState.unFriend:
+      return Icons.person_add_rounded;
+  }
+}

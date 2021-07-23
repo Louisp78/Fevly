@@ -11,7 +11,7 @@ final ThemeData themeData = ThemeData(
 const TextTheme textTheme = TextTheme(
   // QS 9 Bold
   headline6: TextStyle(
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     color: Colors.black,
     fontSize: 9.0,
   ),
