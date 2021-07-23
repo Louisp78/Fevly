@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 /// Inner shadow
 final BoxShadow kInnerShadow = BoxShadow(
   blurRadius: 10,
@@ -27,4 +29,11 @@ final BoxShadow kShadowPopup = BoxShadow(
   blurRadius: 40,
   offset: const Offset(0, 4),
   color: Colors.black.withOpacity(0.17),
+);
+
+/// Shadow for profile card
+final BoxShadow kShadowProfileCard = BoxShadow(
+  blurRadius: 15,
+  offset: const Offset(0, 7),
+  color: kPrimaryColor.withOpacity(0.5),
 );

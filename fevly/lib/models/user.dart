@@ -1,5 +1,6 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
+import 'package:fevly/models/user_relation_state.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
@@ -8,9 +9,11 @@ class User {
   final String pseudo;
   final String password;
   final String email;
+  final UserRelationState relationState;
 
   User(
-      {required this.name,
+      {this.relationState = UserRelationState.me,
+      required this.name,
       required this.pseudo,
       required this.password,
       required this.email})
@@ -27,6 +30,7 @@ class User {
     pseudo: $pseudo,
     password: $password
     email: $email
+    UserRelationState : ${relationState.toString()}
     ''';
   }
 }

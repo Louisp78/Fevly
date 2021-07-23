@@ -1,20 +1,46 @@
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
+import 'package:fevly/screens/profile/profile_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
 import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
+import 'package:fevly/styles/transition.dart';
 import 'package:flutter/material.dart';
 
 class RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/login':
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const LoginScreen(),
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
       case '/signin_step1':
-        return MaterialPageRoute(builder: (_) => const SignInStep1Screen());
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const SignInStep1Screen(),
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
+
       case '/signin_step2':
-        return MaterialPageRoute(builder: (_) => const SignInStep2Screen());
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const SignInStep2Screen(),
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
       case '/signin_step2/term_of_use':
         return MaterialPageRoute(builder: (_) => const TermOfUseScreen());
+
+      case '/profile':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const ProfileScreen(),
+          transitionsBuilder: slideUpTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
 
       default:
         return MaterialPageRoute(

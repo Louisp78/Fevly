@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
-
 bool containsInString(String source, String comparator) {
   final List<String> sourceList = source.split('');
   for (final String element in sourceList) {
