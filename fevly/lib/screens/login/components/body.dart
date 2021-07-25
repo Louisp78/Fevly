@@ -10,7 +10,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: ChangeNotifierProvider(
         create: (context) => FormValidate(),
@@ -26,7 +25,7 @@ class Body extends StatelessWidget {
               ),
               title: "Connexion",
             ),
-            FormSection(),
+            const FormSection(),
           ],
         ),
       ),

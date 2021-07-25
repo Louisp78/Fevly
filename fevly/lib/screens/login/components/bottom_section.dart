@@ -63,10 +63,10 @@ class BottomSection extends StatelessWidget {
         SizedBox(
           width: size.width * 0.8,
           child: Row(
-            children: [
+            children: const [
               Expanded(child: Divider()),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Text("ou"),
               ),
               Expanded(child: Divider()),

@@ -149,6 +149,7 @@ class FormSection extends StatelessWidget {
                             !formValidate.isTermOfUseAccepted;
 
                     if (validation) {
+                      // ignore: unused_local_variable
                       final User currentUser = User(
                           name: name, pseudo: pseudo, password: "", email: "@");
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -161,7 +162,6 @@ class FormSection extends StatelessWidget {
                           ),
                         ),
                       );
-                      print(currentUser.name);
                     } else if (onlyTermOfUseLeft) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
