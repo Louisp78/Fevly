@@ -1,9 +1,11 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
+import 'package:fevly/components/custom_dialog_list.dart';
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/user_relation_state.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'counter_item.dart';
@@ -78,10 +80,40 @@ class ProfileCard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              const Icon(
-                Icons.more_vert_rounded,
-                size: 24,
-                color: Colors.white,
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      builder: (context) => CustomDialogList(
+                            title: "Options",
+                            listOptions: [
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "Inviter à Soirée Exemple",
+                                  style: textTheme.headline5,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "Bloquer",
+                                  style: textTheme.headline5
+                                      ?.copyWith(color: kErrorColor),
+                                ),
+                              ),
+                            ],
+                          ));
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Icon(
+                    Icons.more_vert_rounded,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
@@ -104,16 +136,16 @@ class ProfileCard extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const CounterItem(
+            children: const [
+              CounterItem(
                 title: "Soirées",
                 count: 31,
               ),
-              const CounterItem(
+              CounterItem(
                 title: "Amis",
                 count: 86,
               ),
-              const CounterItem(
+              CounterItem(
                 title: "Badges",
                 count: 15,
               ),
@@ -124,3 +156,29 @@ class ProfileCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+// InkWell(
+//   onTap: () {},
+//   child: Container(
+//     padding: EdgeInsets.symmetric(
+//         horizontal: size.width * 0.05),
+//     child: RichText(
+//       text: TextSpan(
+//         children: [
+//           TextSpan(
+//             text: "Inviter à ",
+//             style: textTheme.headline4,
+//           ),
+//           TextSpan(
+//             text: "Soirée exemple",
+//             style: textTheme.headline4
+//                 ?.copyWith(color: kPrimaryColor),
+//           ),
+//         ],
+//       ),
+//     ),
+//   ),
+// ),

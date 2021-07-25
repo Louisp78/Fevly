@@ -17,6 +17,13 @@ final BoxShadow kShadowBase = BoxShadow(
   color: Colors.black.withOpacity(0.1),
 );
 
+/// Shadow for bottom bar
+final BoxShadow kShadowBottomBar = BoxShadow(
+  blurRadius: 40,
+  offset: const Offset(0, -4),
+  color: Colors.black.withOpacity(0.1),
+);
+
 /// [only for dark theme] Basic Shadow
 final BoxShadow kDarkShadowBase = BoxShadow(
   blurRadius: 40,
