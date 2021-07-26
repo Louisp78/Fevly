@@ -24,6 +24,7 @@ class Body extends StatelessWidget {
         name: "Jean Eude",
         pseudo: "jeaneude",
         password: "heheheheheh",
+        // ignore: avoid_redundant_argument_values
         relationState: UserRelationState.me);
 
     final Size size = MediaQuery.of(context).size;
