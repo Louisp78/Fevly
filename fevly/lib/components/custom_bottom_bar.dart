@@ -14,7 +14,7 @@ class CustomBottomBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           color: Colors.white,
           boxShadow: [kShadowBottomBar]),
