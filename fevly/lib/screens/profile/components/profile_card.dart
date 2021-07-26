@@ -5,6 +5,7 @@ import 'package:fevly/constant.dart';
 import 'package:fevly/models/user_relation_state.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
+import 'package:fevly/test/data_example.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -85,16 +86,35 @@ class ProfileCard extends StatelessWidget {
                   showDialog(
                       barrierDismissible: true,
                       context: context,
-                      builder: (context) => CustomDialogList(
-                            title: "Options",
-                            listOptions: [
-                              TextButton(
+                      builder: (context) =>
+                          CustomDialogList(title: "Options", listOptions: [
+                            ...List.generate(
+                              listParties1.length,
+                              (index) => TextButton(
                                 onPressed: () {},
-                                child: Text(
-                                  "Inviter à Soirée Exemple",
-                                  style: textTheme.headline5,
-                                ),
+                                child: RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                    text: "Inviter à ",
+                                    style: textTheme.headline5,
+                                  ),
+                                  TextSpan(
+                                    text: "${listParties1[index].name}.",
+                                    style: textTheme.headline5
+                                        ?.copyWith(color: kPrimaryColor),
+                                  ),
+                                ])),
                               ),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Bloquer",
+                                style: textTheme.headline5
+                                    ?.copyWith(color: kErrorColor),
+                              ),
+                            ),
+                          ] /*.addAll([
                               TextButton(
                                 onPressed: () {},
                                 child: Text(
@@ -103,8 +123,8 @@ class ProfileCard extends StatelessWidget {
                                       ?.copyWith(color: kErrorColor),
                                 ),
                               ),
-                            ],
-                          ));
+                            ]),*/
+                              ));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8),

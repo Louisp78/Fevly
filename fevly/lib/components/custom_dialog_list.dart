@@ -10,7 +10,7 @@ class CustomDialogList extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final List<TextButton> listOptions;
+  final List<Widget> listOptions;
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +52,13 @@ class CustomDialogList extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: size.height * 0.05,
+              height: size.height * 0.015,
             ),
             Padding(
-              padding: EdgeInsets.only(left: size.width * 0.02),
+              padding: EdgeInsets.only(left: size.width * 0.03),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  listOptions.length,
-                  (index) => listOptions[index],
-                ),
+                children: listOptions,
               ),
             ),
           ],
