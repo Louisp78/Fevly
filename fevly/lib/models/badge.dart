@@ -31,4 +31,16 @@ class Badge {
     required this.badgeCategory,
     required this.badgeType,
   }) : assert(name.length < 25, "name is too long");
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return """
+    name: $name,
+    image: $image,
+    badgeCategory: $badgeCategory,
+    badgeType: $badgeType,
+    quantity: $quantity,
+    """;
+  }
 }

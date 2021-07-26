@@ -2,7 +2,7 @@ import 'package:fevly/models/badge.dart';
 import 'package:fevly/models/party.dart';
 import 'package:fevly/models/user.dart';
 
-final List<Badge> badgeList1 = [
+List<Badge> badgeList1 = [
   Badge(
     name: "Sandale",
     badgeCategory: BadgeCategory.danse,
@@ -103,6 +103,18 @@ final listOfUsers1 = [
 final listParties1 = [
   Party(
       name: "Soirée exemple",
+      description: "Une incroyable soirée.",
+      organizer: [
+        User(
+          name: "Louis Place",
+          email: "placelouis@gmail.com",
+          pseudo: "louisp78",
+          password: "loulou78",
+        ),
+      ],
+      guest: listOfUsers1),
+  Party(
+      name: "Soirée exemple 2",
       description: "Une incroyable soirée.",
       organizer: [
         User(

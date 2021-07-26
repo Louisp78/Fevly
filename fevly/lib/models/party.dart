@@ -10,8 +10,8 @@ class Party {
       required this.description,
       required this.organizer,
       required this.guest})
-      : assert(description.length > 1000, "Description too long."),
-        assert(name.length > 21, "Name too long.");
+      : assert(description.length < 1000, "Description too long."),
+        assert(name.length < 21, "Name too long.");
 
   int get numberGuest {
     return guest.length;
