@@ -1,5 +1,7 @@
+import 'package:fevly/components/custom_text_field.dart';
+import 'package:fevly/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
-import 'package:fevly/models/text_field_select.dart';
+import 'package:fevly/models/text_field_provider.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:fevly/test/data_example.dart';
@@ -12,7 +14,7 @@ class HeaderListBadge extends StatelessWidget {
     required this.searchField,
   }) : super(key: key);
 
-  final SearchField searchField;
+  final TextFieldProvider searchField;
 
   @override
   Widget build(BuildContext context) {
@@ -32,28 +34,26 @@ class HeaderListBadge extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            width:
-                searchField.selection ? size.width * 0.75 : size.width * 0.45,
-            height: 37,
-            child: Focus(
-              onFocusChange: (focus) => searchField.selection = focus,
-              child: TextField(
-                onChanged: (value) {
-                  searchField.searchText = value;
-                  searchField.listOfObjects = sortListBadgeBySearch(
-                      sourceList: badgeList1, search: searchField.searchText);
-                },
-                decoration: badgeSearchInputDecoration(
-                  textTheme: textTheme,
-                  hintText: "Rechercher un badges",
-                  size: size,
-                ),
+          Focus(
+            onFocusChange: (focus) => searchField.selection = focus,
+            child: CustomTextField(
+              width:
+                  searchField.selection ? size.width * 0.75 : size.width * 0.45,
+              height: 37,
+              onChanged: (value) {
+                searchField.textValueOverride = value;
+                searchField.listOfObjects = sortListBadgeBySearch(
+                    sourceList: badgeList1,
+                    search: searchField.textValueOverride);
+              },
+              decoration: badgeSearchInputDecoration(
+                hintStyle: kSearchHintStyle(textTheme: textTheme),
+                hintText: "Rechercher un badges",
+                size: size,
               ),
-            ) /*BadgeSearchTextField(
-              searchField: searchField,
-            ),*/
-            ,
+              onSaved: (value) {},
+              validator: (value) {},
+            ),
           ),
           Text(
             "${badgeList1.length}/100",

@@ -1,5 +1,8 @@
 import 'package:fevly/models/badge.dart';
+import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/party.dart';
+import 'package:fevly/models/product.dart';
+import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
 List<Badge> badgeList1 = [
@@ -125,4 +128,34 @@ final listParties1 = [
         ),
       ],
       guest: listOfUsers1),
+];
+
+List<GuestList> guestListList = [
+  GuestList(name: "Liste d'invité 1", guests: listOfUsers1),
+  GuestList(name: "Liste d'invité 2", guests: listOfUsers1),
+];
+
+List<GuestList> guestListListForDropdown = [
+  GuestList(name: "Liste d'invité 1", guests: listOfUsers1),
+  GuestList(name: "Liste d'invité 2", guests: listOfUsers1),
+  GuestList(name: "Aucune", guests: [])
+];
+
+List<ProductList> productListListForDropdown = [
+  ProductList(listOfProduct: productList1, name: "Liste de courses 1"),
+  ProductList(listOfProduct: productList1, name: "Liste de courses 2"),
+  ProductList(listOfProduct: [], name: "Aucune"),
+];
+
+List<Product> productList1 = [
+  Product(name: "Pack de Kro", price: 12, quantity: 1),
+  Product(name: "Pizza", price: 14, quantity: 4),
+  Product(name: "Paquet de Chips", price: 4.99, quantity: 2),
+  Product(name: "Paquet de PopCorn", price: 2.50, quantity: 1),
+  Product(name: "Vodka", price: 17, quantity: 1),
+];
+
+List<ProductList> productListList = [
+  ProductList(listOfProduct: productList1, name: "Liste de courses 1"),
+  ProductList(listOfProduct: productList1, name: "Liste de courses 2")
 ];

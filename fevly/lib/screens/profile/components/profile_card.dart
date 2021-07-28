@@ -114,17 +114,7 @@ class ProfileCard extends StatelessWidget {
                                     ?.copyWith(color: kErrorColor),
                               ),
                             ),
-                          ] /*.addAll([
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "Bloquer",
-                                  style: textTheme.headline5
-                                      ?.copyWith(color: kErrorColor),
-                                ),
-                              ),
-                            ]),*/
-                              ));
+                          ]));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8),
@@ -144,7 +134,7 @@ class ProfileCard extends StatelessWidget {
             size: CustomSmallButtonSize.small,
             text: getTextFromRelationState(relationState),
             lightMode: false,
-            press: () {},
+            press: () => Navigator.pushNamed(context, "/profile/my_lists"),
             prefixIcon: Icon(
               getIconDataFromRelationState(relationState),
               color: Colors.white,
@@ -176,29 +166,3 @@ class ProfileCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-// InkWell(
-//   onTap: () {},
-//   child: Container(
-//     padding: EdgeInsets.symmetric(
-//         horizontal: size.width * 0.05),
-//     child: RichText(
-//       text: TextSpan(
-//         children: [
-//           TextSpan(
-//             text: "Inviter à ",
-//             style: textTheme.headline4,
-//           ),
-//           TextSpan(
-//             text: "Soirée exemple",
-//             style: textTheme.headline4
-//                 ?.copyWith(color: kPrimaryColor),
-//           ),
-//         ],
-//       ),
-//     ),
-//   ),
-// ),

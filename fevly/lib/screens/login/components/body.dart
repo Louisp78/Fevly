@@ -1,4 +1,4 @@
-import 'package:fevly/components/custom_app_bar.dart';
+import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/models/fom_validate.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class Body extends StatelessWidget {
         create: (context) => FormValidate(),
         child: Column(
           children: [
-            CustomAppBar(
+            CustomAuthAppBar(
               leading: CustomIconButton(
                 size: const CustomIconButtonSize.small(),
                 press: () => Navigator.pop(context),

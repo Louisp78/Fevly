@@ -6,6 +6,7 @@ final ThemeData themeData = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   focusColor: kPrimaryColor,
   hintColor: kPrimaryColor,
+  floatingActionButtonTheme: fltActionBtnThemeData,
 );
 
 const TextTheme textTheme = TextTheme(
@@ -79,3 +80,6 @@ const TextTheme textTheme = TextTheme(
     fontSize: 16.0,
   ),
 );
+
+const FloatingActionButtonThemeData fltActionBtnThemeData =
+    FloatingActionButtonThemeData(backgroundColor: kPrimaryColor);

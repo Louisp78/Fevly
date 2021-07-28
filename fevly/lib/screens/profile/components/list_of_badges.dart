@@ -1,5 +1,5 @@
 import 'package:fevly/models/badge.dart';
-import 'package:fevly/models/text_field_select.dart';
+import 'package:fevly/models/text_field_provider.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/scroll_behavior.dart';
@@ -15,14 +15,14 @@ class ListOfBadges extends StatelessWidget {
     required this.searchField,
   }) : super(key: key);
 
-  final SearchField searchField;
+  final TextFieldProvider searchField;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final List<Badge> listOfBadge = searchField.listOfObjects as List<Badge>;
+    final List<Badge> listOfBadge = searchField.listOfObjects! as List<Badge>;
     return SizedBox(
       height: searchField.selection ? size.height * 0.86 : size.height * 0.57,
       width: size.width,
