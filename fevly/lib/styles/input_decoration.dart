@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-InputDecoration basicInputDecoration(TextTheme textTheme, String hintText) =>
+InputDecoration basicInputDecoration(
+        {required TextStyle hintStyle, required String hintText}) =>
     InputDecoration(
       filled: true,
       hintText: hintText,
       fillColor: kSurfaceLightColor,
-      hintStyle: textTheme.headline4?.copyWith(color: kTextColor),
+      hintStyle: hintStyle,
       contentPadding: const EdgeInsets.only(
         bottom: 5.0,
         left: 20.0,
@@ -49,7 +50,7 @@ InputDecoration basicInputDecoration(TextTheme textTheme, String hintText) =>
     );
 
 InputDecoration badgeSearchInputDecoration(
-        {required TextTheme textTheme,
+        {required TextStyle hintStyle,
         required Size size,
         required String hintText}) =>
     InputDecoration(
@@ -61,7 +62,7 @@ InputDecoration badgeSearchInputDecoration(
       ),
       hintText: hintText,
       fillColor: kSurfaceColor,
-      hintStyle: textTheme.headline6?.copyWith(color: kTextColor),
+      hintStyle: hintStyle,
       contentPadding: EdgeInsets.only(
         left: size.width * 0.045,
       ),

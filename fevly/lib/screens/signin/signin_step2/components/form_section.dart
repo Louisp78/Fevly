@@ -7,6 +7,7 @@ import 'package:fevly/functions/contains_in_string.dart';
 import 'package:fevly/models/fom_validate.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +61,9 @@ class FormSection extends StatelessWidget {
                 height: size.height * 0.05,
               ),
               CustomTextField(
-                hintText: "Prénom",
+                decoration: basicInputDecoration(
+                    hintStyle: kBasicHintStyle(textTheme: textTheme),
+                    hintText: "Prénom"),
                 isSelected: true,
                 onChanged: (value) {
                   name = value;
@@ -81,7 +84,9 @@ class FormSection extends StatelessWidget {
                 },
               ),
               CustomTextField(
-                hintText: "Nom d'utilisateur",
+                decoration: basicInputDecoration(
+                    hintStyle: kBasicHintStyle(textTheme: textTheme),
+                    hintText: "Nom d'utilisateur"),
                 isSelected: true,
                 onChanged: (value) {
                   pseudo = value;

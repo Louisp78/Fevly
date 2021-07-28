@@ -1,3 +1,4 @@
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,3 +55,12 @@ IconData getIconDataFromRelationState(UserRelationState relationState) {
       return Icons.person_add_rounded;
   }
 }
+
+TextStyle kBasicHintStyle({required TextTheme textTheme}) =>
+    textTheme.headline4!.copyWith(color: kTextColor);
+
+TextStyle kSearchHintStyle({required TextTheme textTheme}) =>
+    textTheme.headline6!.copyWith(color: kTextColor);
+
+TextStyle kBottomSheetHintStyle({required TextTheme textTheme}) =>
+    textTheme.headline5!.copyWith(color: kTextColor);

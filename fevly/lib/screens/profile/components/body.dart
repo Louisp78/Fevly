@@ -1,5 +1,5 @@
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/text_field_select.dart';
+import 'package:fevly/models/text_field_provider.dart';
 
 import 'package:fevly/models/user.dart';
 import 'package:fevly/models/user_relation_state.dart';
@@ -33,8 +33,8 @@ class Body extends StatelessWidget {
     return SizedBox(
       width: size.width,
       child: ChangeNotifierProvider(
-        create: (context) => SearchField(listOfObjects: badgeList1),
-        child: Consumer<SearchField>(
+        create: (context) => TextFieldProvider(listOfObjects: badgeList1),
+        child: Consumer<TextFieldProvider>(
           builder: (context, searchField, child) => Stack(
             alignment: Alignment.center,
             children: [
@@ -76,7 +76,7 @@ class Body extends StatelessWidget {
       {required User profileOwner,
       required TextTheme textTheme,
       required Size size,
-      required SearchField searchField}) {
+      required TextFieldProvider searchField}) {
     switch (profileOwner.relationState) {
       case UserRelationState.unFriend:
       case UserRelationState.requestSent:

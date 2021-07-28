@@ -2,6 +2,7 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/fom_validate.dart';
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,9 @@ class FormSection extends StatelessWidget {
                     height: size.height * 0.05,
                   ),
                   CustomTextField(
-                    hintText: "Nom d'utilisateur ou adresse mail",
+                    decoration: basicInputDecoration(
+                        hintStyle: kBasicHintStyle(textTheme: textTheme),
+                        hintText: "Nom d'utilisateur ou adresse mail"),
                     isSelected: true,
                     onChanged: (value) {
                       username = value;
@@ -63,7 +66,9 @@ class FormSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   CustomTextField(
-                    hintText: "Mot de passe",
+                    decoration: basicInputDecoration(
+                        hintStyle: kBasicHintStyle(textTheme: textTheme),
+                        hintText: "Mot de passe"),
                     obscureText: true,
                     onChanged: (value) {
                       password = value;
