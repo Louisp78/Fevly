@@ -64,3 +64,8 @@ TextStyle kSearchHintStyle({required TextTheme textTheme}) =>
 
 TextStyle kBottomSheetHintStyle({required TextTheme textTheme}) =>
     textTheme.headline5!.copyWith(color: kTextColor);
+
+double kGridCrossSpacing({required Size size}) => size.width * 0.05;
+double kGridMainSpacing({required Size size}) => size.height * 0.02;
+double kBasicVerticalPadding({required Size size}) => size.height * 0.03;
+double kBasicHorizontalPadding({required Size size}) => size.width * 0.05;

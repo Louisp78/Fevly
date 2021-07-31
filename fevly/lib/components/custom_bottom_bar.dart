@@ -12,6 +12,7 @@ class CustomBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
+      width: size.width,
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(

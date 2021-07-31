@@ -105,40 +105,44 @@ final listOfUsers1 = [
 
 final listParties1 = [
   Party(
-      name: "Soirée exemple",
-      description: "Une incroyable soirée.",
-      organizer: [
-        User(
-          name: "Louis Place",
-          email: "placelouis@gmail.com",
-          pseudo: "louisp78",
-          password: "loulou78",
-        ),
-      ],
-      guest: listOfUsers1),
+    name: "Soirée exemple",
+    description: "Une incroyable soirée.",
+    organizer: [
+      User(
+        name: "Louis Place",
+        email: "placelouis@gmail.com",
+        pseudo: "louisp78",
+        password: "loulou78",
+      ),
+    ],
+    guests: GuestList(name: "none", listOfUser: listOfUsers1),
+    products: ProductList(listOfProduct: productList1, name: "none"),
+  ),
   Party(
-      name: "Soirée exemple 2",
-      description: "Une incroyable soirée.",
-      organizer: [
-        User(
-          name: "Louis Place",
-          email: "placelouis@gmail.com",
-          pseudo: "louisp78",
-          password: "loulou78",
-        ),
-      ],
-      guest: listOfUsers1),
+    name: "Soirée exemple 2",
+    description: "Une incroyable soirée.",
+    organizer: [
+      User(
+        name: "Louis Place",
+        email: "placelouis@gmail.com",
+        pseudo: "louisp78",
+        password: "loulou78",
+      ),
+    ],
+    guests: GuestList(name: "none", listOfUser: listOfUsers1),
+    products: ProductList(listOfProduct: productList1, name: "none"),
+  ),
 ];
 
 List<GuestList> guestListList = [
-  GuestList(name: "Liste d'invité 1", guests: listOfUsers1),
-  GuestList(name: "Liste d'invité 2", guests: listOfUsers1),
+  GuestList(name: "Liste d'invité 1", listOfUser: listOfUsers1),
+  GuestList(name: "Liste d'invité 2", listOfUser: listOfUsers1),
 ];
 
 List<GuestList> guestListListForDropdown = [
-  GuestList(name: "Liste d'invité 1", guests: listOfUsers1),
-  GuestList(name: "Liste d'invité 2", guests: listOfUsers1),
-  GuestList(name: "Aucune", guests: [])
+  GuestList(name: "Liste d'invité 1", listOfUser: listOfUsers1),
+  GuestList(name: "Liste d'invité 2", listOfUser: listOfUsers1),
+  GuestList(name: "Aucune", listOfUser: [])
 ];
 
 List<ProductList> productListListForDropdown = [
@@ -148,11 +152,37 @@ List<ProductList> productListListForDropdown = [
 ];
 
 List<Product> productList1 = [
-  Product(name: "Pack de Kro", price: 12, quantity: 1),
-  Product(name: "Pizza", price: 14, quantity: 4),
-  Product(name: "Paquet de Chips", price: 4.99, quantity: 2),
-  Product(name: "Paquet de PopCorn", price: 2.50, quantity: 1),
-  Product(name: "Vodka", price: 17, quantity: 1),
+  Product(
+      name: "Kronenbourg",
+      price: 12,
+      quantity: 1,
+      image: "assets/products/pint_of_beer.svg",
+      unit: QuantityUnit.pack),
+  Product(
+      name: "Pizza",
+      price: 14,
+      quantity: 4,
+      image: "assets/products/pint_of_beer.svg",
+      unit: QuantityUnit.part),
+  Product(
+      name: "Chips",
+      price: 4.99,
+      quantity: 2,
+      image: "assets/products/pint_of_beer.svg",
+      unit: QuantityUnit.paquet),
+  Product(
+    name: "PopCorn",
+    price: 2.50,
+    quantity: 1,
+    image: "assets/products/pint_of_beer.svg",
+    unit: QuantityUnit.paquet,
+  ),
+  Product(
+      name: "Vodka",
+      price: 17,
+      quantity: 1,
+      image: "assets/products/pint_of_beer.svg",
+      unit: QuantityUnit.L),
 ];
 
 List<ProductList> productListList = [

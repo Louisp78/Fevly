@@ -1,6 +1,8 @@
+import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/screens/my_lists/my_lists_screen.dart';
+import 'package:fevly/screens/product_list/product_list_screen.dart';
 import 'package:fevly/screens/profile/profile_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
 import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
@@ -47,6 +49,22 @@ class RouterNav {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const MyListsScreen(),
+        );
+
+      case '/profile/my_lists/product_list':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ProductListScreen(
+            productList: settings.arguments! as ProductList,
+          ),
+        );
+
+      case '/profile/my_lists/guest_list':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ProductListScreen(
+            productList: settings.arguments! as ProductList,
+          ),
         );
 
       default:

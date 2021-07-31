@@ -2,11 +2,11 @@ import 'package:fevly/models/user.dart';
 
 class GuestList {
   final String name;
-  List<User> guests;
+  List<User> listOfUser;
 
-  GuestList({required this.name, required this.guests});
+  GuestList({required this.name, required this.listOfUser});
 
   int get numberOfGuests {
-    return guests.length;
+    return listOfUser.length;
   }
 }

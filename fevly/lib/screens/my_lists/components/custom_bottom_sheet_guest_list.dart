@@ -4,8 +4,6 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/guest_list.dart';
-import 'package:fevly/models/product.dart';
-import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/text_field_provider.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
