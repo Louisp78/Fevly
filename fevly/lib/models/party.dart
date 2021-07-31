@@ -1,20 +1,24 @@
+import 'package:fevly/models/guest_list.dart';
+import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
 class Party {
   final String name, description;
   final List<User> organizer;
-  final List<User> guest;
+  final GuestList guests;
+  final ProductList products;
 
   Party(
       {required this.name,
       required this.description,
       required this.organizer,
-      required this.guest})
+      required this.guests,
+      required this.products})
       : assert(description.length < 1000, "Description too long."),
         assert(name.length < 21, "Name too long.");
 
   int get numberGuest {
-    return guest.length;
+    return guests.listOfUser.length;
   }
 
   int get numberOrganizer {

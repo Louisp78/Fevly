@@ -10,11 +10,13 @@ class ListTileItem extends StatelessWidget {
     required this.subtitle,
     this.leading,
     this.margin,
+    required this.press,
   }) : super(key: key);
 
   final String title, subtitle;
   final EdgeInsets? margin;
   final Widget? leading;
+  final GestureTapCallback press;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class ListTileItem extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return InkWell(
+      onTap: press,
       child: Container(
         padding: EdgeInsets.all(size.width * 0.03),
         margin: margin != null ? margin! : null,

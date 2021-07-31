@@ -10,11 +10,13 @@ class CustomBasicAppBar extends StatelessWidget {
     required this.title,
     required this.iconData,
     required this.press,
+    this.subtitle,
   }) : super(key: key);
 
   final String title;
   final IconData iconData;
   final GestureTapCallback press;
+  final String? subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,9 @@ class CustomBasicAppBar extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       width: size.width,
+      height: size.height * 0.15,
       padding:
-          EdgeInsets.only(top: size.height * 0.07, bottom: size.height * 0.04),
+          EdgeInsets.only(top: size.height * 0.07, bottom: size.height * 0.03),
       alignment: Alignment.center,
       decoration:
           BoxDecoration(color: kSurfaceLightColor, boxShadow: [kShadowBase]),
@@ -37,11 +40,23 @@ class CustomBasicAppBar extends StatelessWidget {
             children: [
               SizedBox(
                 width: size.width * 0.40,
-                child: AutoSizeText(
-                  title,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  style: textTheme.headline3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AutoSizeText(
+                      title,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: textTheme.headline3,
+                    ),
+                    if (subtitle != null)
+                      AutoSizeText(
+                        subtitle!,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: textTheme.headline5?.copyWith(color: kTextColor),
+                      ),
+                  ],
                 ),
               ),
             ],
