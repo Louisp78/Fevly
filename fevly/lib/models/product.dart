@@ -28,7 +28,7 @@ extension QuantityUnitExtension on QuantityUnit {
 //$ ============================================================
 
 class Product {
-  String name;
+  final String name;
   double price;
   double quantity;
   QuantityUnit unit;
