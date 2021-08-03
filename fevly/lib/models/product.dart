@@ -1,23 +1,31 @@
+//$ ENUMERATION
+//$ ============================================================
+
 enum QuantityUnit { none, L, m, cm, pack, paquet, part }
 
-String getQuantityUnitNameFromSource({required QuantityUnit unitSource}) {
-  switch (unitSource) {
-    case QuantityUnit.paquet:
-      return "paquet";
-    case QuantityUnit.L:
-      return "L";
-    case QuantityUnit.cm:
-      return "cm";
-    case QuantityUnit.m:
-      return "m";
-    case QuantityUnit.pack:
-      return "pack";
-    case QuantityUnit.part:
-      return "part";
-    default:
-      return "";
+extension QuantityUnitExtension on QuantityUnit {
+  String get name {
+    switch (this) {
+      case QuantityUnit.paquet:
+        return "paquet";
+      case QuantityUnit.L:
+        return "L";
+      case QuantityUnit.cm:
+        return "cm";
+      case QuantityUnit.m:
+        return "m";
+      case QuantityUnit.pack:
+        return "pack";
+      case QuantityUnit.part:
+        return "part";
+      default:
+        return "";
+    }
   }
 }
+
+//$ CLASS
+//$ ============================================================
 
 class Product {
   String name;
@@ -36,7 +44,6 @@ class Product {
         assert(quantity >= 0, "quanty of Product must be no-negative");
   @override
   String toString() {
-    // TODO: implement toString
     return """
     name: $name,
     price: $price,

@@ -107,7 +107,7 @@ final listParties1 = [
   Party(
     name: "Soirée exemple",
     description: "Une incroyable soirée.",
-    organizer: [
+    listOfOrganizer: [
       User(
         name: "Louis Place",
         email: "placelouis@gmail.com",
@@ -121,7 +121,7 @@ final listParties1 = [
   Party(
     name: "Soirée exemple 2",
     description: "Une incroyable soirée.",
-    organizer: [
+    listOfOrganizer: [
       User(
         name: "Louis Place",
         email: "placelouis@gmail.com",

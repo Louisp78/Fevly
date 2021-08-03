@@ -1,11 +1,8 @@
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/models/dropdown.dart';
-
+import 'package:fevly/screens/my_lists/view_models/my_lists_model_view.dart';
 import 'package:fevly/styles/colors.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'custom_header_drop_list.dart';
 
 class DropList extends StatelessWidget {
@@ -26,14 +23,15 @@ class DropList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
-      create: (context) => Dropdown(isExpanded: false),
-      child: Consumer<Dropdown>(
-        builder: (context, dropdown, child) => Column(
+      create: (context) => MyListsModelView(),
+      child: Consumer<MyListsModelView>(
+        builder: (context, myListsModelView, child) => Column(
           children: [
             CustomHeaderDropList(
-              dropdown: dropdown,
+              myListsModelView: myListsModelView,
               title: title,
-              press: () => dropdown.expandState = !dropdown.expandState,
+              press: () =>
+                  myListsModelView.isExpanded = !myListsModelView.isExpanded,
               listLen: listWidget.length,
               button: CustomTextButton(
                 press: addItemPress,
@@ -51,7 +49,7 @@ class DropList extends StatelessWidget {
             SizedBox(
               height: size.height * 0.03,
             ),
-            if (dropdown.expandState)
+            if (myListsModelView.isExpanded)
               SingleChildScrollView(
                 child: Column(
                   children: listWidget,

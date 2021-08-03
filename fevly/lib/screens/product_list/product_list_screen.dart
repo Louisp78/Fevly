@@ -206,8 +206,7 @@ class ProductListScreen extends StatelessWidget {
                                   return DropdownMenuItem<QuantityUnit>(
                                     value: unit,
                                     child: Text(unit != QuantityUnit.none
-                                        ? getQuantityUnitNameFromSource(
-                                            unitSource: unit)
+                                        ? unit.name
                                         : "Aucune"),
                                   );
                                 }).toList(),

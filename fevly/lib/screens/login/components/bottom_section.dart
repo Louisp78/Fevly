@@ -1,7 +1,7 @@
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/fom_validate.dart';
+import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,11 +11,11 @@ class BottomSection extends StatelessWidget {
   const BottomSection({
     Key? key,
     required this.keyForm,
-    required this.formValidate,
+    required this.formViewModel,
   }) : super(key: key);
 
   final GlobalKey<FormState> keyForm;
-  final FormValidate formValidate;
+  final FormViewModel formViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class BottomSection extends StatelessWidget {
         CustomSmallButton(
           press: () {
             final bool validate =
-                keyForm.currentState!.validate() && formValidate.formValid;
+                keyForm.currentState!.validate() && formViewModel.isFormValid;
 
             if (validate) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -54,7 +54,7 @@ class BottomSection extends StatelessWidget {
             }
           },
           text: "Connexion",
-          borderColor: formValidate.formValid ? kPrimaryColor : kTextColor,
+          borderColor: formViewModel.isFormValid ? kPrimaryColor : kTextColor,
           size: CustomSmallButtonSize.normal,
         ),
         SizedBox(
