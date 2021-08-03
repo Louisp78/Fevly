@@ -15,5 +15,5 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-    - name: Flutter action
-      uses: subosito/flutter-action@v1.5.3
+      - name: Flutter action
+        uses: subosito/flutter-action@v1.5.3
