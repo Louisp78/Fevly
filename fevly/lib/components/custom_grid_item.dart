@@ -43,7 +43,7 @@ class CustomGridItem extends StatelessWidget {
             ),
             Text(
               badge != null
-                  ? "${badge!.name} ${getBadgeTypeName(badge!.badgeType)}"
+                  ? "${badge!.name} ${badge!.badgeType.name}"
                   : product!.name,
               style: textTheme.headline6,
               maxLines: 1,
