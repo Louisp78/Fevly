@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-on: [workflow_dispatch]  
+on:
   push:
     branches:
       - 'release/**'
@@ -21,3 +21,10 @@ jobs:
       - name: Flutter action
         uses: subosito/flutter-action@v1.5.3
       - run: echo "🍏 This job's status is ${{ job.status }}."
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Super-Linter
+        uses: github/super-linter@v4.5.1
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
