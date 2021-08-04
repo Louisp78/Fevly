@@ -14,6 +14,8 @@ class CustomTextButtonSize {
       {this.padding = 24, this.borderRadius = 20, this.height = 42});
   const CustomTextButtonSize.small(
       {this.padding = 10, this.borderRadius = 13, this.height = 27});
+  const CustomTextButtonSize.verySmall(
+      {this.padding = 8, this.borderRadius = 11, this.height = 25});
 }
 
 class CustomTextButton extends StatelessWidget {
