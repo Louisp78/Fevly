@@ -2,7 +2,7 @@ import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum CustomSmallButtonSize { small, normal }
+enum CustomSmallButtonSize { small, normal, verySmall}
 
 class CustomSmallButton extends StatelessWidget {
   const CustomSmallButton({
@@ -58,13 +58,13 @@ class CustomSmallButton extends StatelessWidget {
             if (prefixIcon != null) const SizedBox(width: 5),
             Text(
               text,
-              style: isSmall
+              style: size == CustomSmallButtonSize.verySmall ? textTheme.headline6 :(isSmall
                   ? textTheme.headline5?.copyWith(
                       color: lightMode ? Colors.black : Colors.white,
                     )
                   : textTheme.headline3?.copyWith(
                       color: lightMode ? Colors.black : Colors.white,
-                    ),
+                    )),
             ),
             if (suffixIcon != null) const SizedBox(width: 5),
             if (suffixIcon != null) suffixIcon!,
