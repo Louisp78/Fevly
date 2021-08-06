@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/models/dropdown.dart';
+import 'package:fevly/screens/my_lists/view_models/my_lists_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,14 +12,14 @@ class CustomHeaderDropList extends StatelessWidget {
     required this.press,
     required this.button,
     required this.listLen,
-    required this.dropdown,
+    required this.myListsModelView,
   }) : super(key: key);
 
   final String title;
   final GestureTapCallback press;
   final CustomTextButton? button;
   final int listLen;
-  final Dropdown dropdown;
+  final MyListsModelView myListsModelView;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class CustomHeaderDropList extends StatelessWidget {
               IconButton(
                 onPressed: press,
                 icon: Icon(
-                  dropdown.expandState
+                  myListsModelView.isExpanded
                       ? Icons.expand_less_rounded
                       : Icons.expand_more_rounded,
                   size: 36,

@@ -111,7 +111,7 @@ final listParties1 = [
     address: "2 rue du Poteau, 75018, Paris",
     name: "Soirée exemple",
     description: "Une incroyable soirée.",
-    organizer: [
+    listOfOrganizer: [
       User(
         name: "Louis Place",
         email: "placelouis@gmail.com",
@@ -126,7 +126,7 @@ final listParties1 = [
     address: "1 rue du Poteau, 75018, Paris",
     name: "Soirée exemple 2",
     description: "Une incroyable soirée.",
-    organizer: [
+    listOfOrganizer: [
       User(
         name: "Louis Place",
         email: "placelouis@gmail.com",

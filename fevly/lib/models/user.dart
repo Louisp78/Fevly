@@ -1,15 +1,50 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
-import 'package:fevly/models/user_relation_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-@immutable
+//$ ENUMERATION
+//$ ============================================================
+
+enum UserRelationState { friend, requestSent, unFriend, me }
+
+extension UserRelationStateExtension on UserRelationState {
+  String get name {
+    switch (this) {
+      case UserRelationState.friend:
+        return "Ami";
+      case UserRelationState.me:
+        return "Mes listes";
+      case UserRelationState.requestSent:
+        return "En attente";
+      case UserRelationState.unFriend:
+        return "Devenir ami";
+    }
+  }
+
+  IconData get iconData {
+    switch (this) {
+      case UserRelationState.friend:
+        return Icons.done_rounded;
+      case UserRelationState.me:
+        return Icons.format_list_bulleted_rounded;
+      case UserRelationState.requestSent:
+        return Icons.email_rounded;
+      case UserRelationState.unFriend:
+        return Icons.person_add_rounded;
+    }
+  }
+}
+
+//$ CLASS
+//$ ============================================================
+
 class User {
-  final String name;
-  final String pseudo;
-  final String password;
-  final String email;
-  final UserRelationState relationState;
+  String name;
+  String pseudo;
+  String password;
+  String email;
+  UserRelationState relationState;
 
   User(
       {this.relationState = UserRelationState.me,
@@ -24,7 +59,6 @@ class User {
 
   @override
   String toString() {
-    // TODO: implement toString
     return '''
     name: $name,
     pseudo: $pseudo,
