@@ -3,7 +3,6 @@ import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
-
 //$ CLASS
 //$ ==================================
 
@@ -12,9 +11,11 @@ class Party extends ChangeNotifier {
   final List<User> _listOfOrganizer;
   GuestList _guests;
   ProductList _products;
+  String _address;
 
   Party({
     required String name,
+    required String address,
     required String description,
     required List<User> listOfOrganizer,
     required GuestList guests,
@@ -24,6 +25,7 @@ class Party extends ChangeNotifier {
         _name = name,
         _description = description,
         _products = products,
+        _address = address,
         assert(description.length < 1000, "Description too long."),
         assert(name.length < 21, "Name too long."),
         assert(listOfOrganizer.isNotEmpty,
@@ -36,6 +38,7 @@ class Party extends ChangeNotifier {
   int get listOfOrganizerLength => _listOfOrganizer.length;
   String get name => _name;
   String get description => _description;
+  String get address => _address;
   ProductList get products => _products;
   GuestList get guests => _guests;
 
@@ -61,10 +64,14 @@ class Party extends ChangeNotifier {
     notifyListeners();
   }
 
+  set address(String pAddress) {
+    _address = pAddress;
+    notifyListeners();
+  }
+
   set products(ProductList list) {
     _products = list;
     notifyListeners();
-
   }
 
   set guests(GuestList list) {
