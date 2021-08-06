@@ -37,7 +37,7 @@ class AddressInformation extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    party.adress,
+                    party.address,
                     maxLines: 4,
                     style: textTheme.headline4,
                   ),
