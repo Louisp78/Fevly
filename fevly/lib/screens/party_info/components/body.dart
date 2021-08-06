@@ -46,7 +46,7 @@ class Body extends StatelessWidget {
                     children: [
                       Text("Organisateurs", style: textTheme.headline5),
                       Text(
-                          "${listParties1[0].listOfOrganizer.length} organisateurs",
+                          "${listParties1[0].listOfOrganizerLength} organisateurs",
                           style: textTheme.headline5),
                     ],
                   ),
@@ -57,7 +57,7 @@ class Body extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ...List.generate(
-                          listParties1[0].listOfOrganizer.length,
+                          listParties1[0].listOfOrganizerLength,
                           (index) => AvatarInfo(
                                 text:
                                     listParties1[0].listOfOrganizer[index].name,
