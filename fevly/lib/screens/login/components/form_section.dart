@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/fom_validate.dart';
+import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,8 @@ class FormSection extends StatelessWidget {
     const String examplePassword = "loulou78";
     return Form(
       key: _keyForm,
-      child: Consumer<FormValidate>(
-        builder: (context, formValidate, child) => SizedBox(
+      child: Consumer<FormViewModel>(
+        builder: (context, formViewModel, child) => SizedBox(
           height: size.height * 0.83,
           width: size.width,
           child: Column(
@@ -48,7 +48,7 @@ class FormSection extends StatelessWidget {
                     isSelected: true,
                     onChanged: (value) {
                       username = value;
-                      formValidate.formValid =
+                      formViewModel.isFormValid =
                           password.isNotEmpty && username.isNotEmpty;
                     },
                     onSaved: (value) {},
@@ -72,7 +72,7 @@ class FormSection extends StatelessWidget {
                     obscureText: true,
                     onChanged: (value) {
                       password = value;
-                      formValidate.formValid =
+                      formViewModel.isFormValid =
                           password.isNotEmpty && username.isNotEmpty;
                     },
                     onSaved: (value) {},
@@ -93,7 +93,7 @@ class FormSection extends StatelessWidget {
               ),
               const Spacer(),
               BottomSection(
-                formValidate: formValidate,
+                formViewModel: formViewModel,
                 keyForm: _keyForm,
               ),
               const Spacer(),

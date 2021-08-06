@@ -11,9 +11,8 @@ List<Badge> sortListBadgeBySearch(
       .toList();
   resList1.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
   final resList2 = sourceList
-      .where((element) => getBadgeTypeName(element.badgeType)
-          .toLowerCase()
-          .contains(search.toLowerCase()))
+      .where((element) =>
+          element.badgeType.name.toLowerCase().contains(search.toLowerCase()))
       .toList();
   return resList1 + resList2;
 }

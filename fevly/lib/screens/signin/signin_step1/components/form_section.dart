@@ -1,7 +1,7 @@
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/fom_validate.dart';
+import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +30,8 @@ class FormSection extends StatelessWidget {
       child: SizedBox(
         height: size.height * 0.8,
         width: size.width * 0.8,
-        child: Consumer<FormValidate>(
-          builder: (context, formValidate, child) => Column(
+        child: Consumer<FormViewModel>(
+          builder: (context, formViewModel, child) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -48,7 +48,7 @@ class FormSection extends StatelessWidget {
                 isSelected: true,
                 onChanged: (value) {
                   email = value;
-                  formValidate.formValid = email.isNotEmpty &&
+                  formViewModel.isFormValid = email.isNotEmpty &&
                       password.isNotEmpty &&
                       isConfirmPassNotEmpty;
                 },
@@ -70,7 +70,7 @@ class FormSection extends StatelessWidget {
                 obscureText: true,
                 onChanged: (value) {
                   password = value;
-                  formValidate.formValid = password.isNotEmpty &&
+                  formViewModel.isFormValid = password.isNotEmpty &&
                       email.isNotEmpty &&
                       isConfirmPassNotEmpty;
                 },
@@ -92,7 +92,7 @@ class FormSection extends StatelessWidget {
                 obscureText: true,
                 onChanged: (value) {
                   isConfirmPassNotEmpty = value.isNotEmpty;
-                  formValidate.formValid = password.isNotEmpty &&
+                  formViewModel.isFormValid = password.isNotEmpty &&
                       email.isNotEmpty &&
                       isConfirmPassNotEmpty;
                 },
@@ -110,7 +110,7 @@ class FormSection extends StatelessWidget {
               Align(
                 child: CustomTextButton(
                   press: () {
-                    final bool validation = formValidate.formValid &&
+                    final bool validation = formViewModel.isFormValid &&
                         _keyForm.currentState!.validate();
 
                     if (validation) {
@@ -129,7 +129,7 @@ class FormSection extends StatelessWidget {
                     }
                   },
                   text: "Suivant",
-                  isActive: formValidate.formValid,
+                  isActive: formViewModel.isFormValid,
                   suffixIcon: const Icon(
                     Icons.arrow_forward_rounded,
                     color: Colors.white,
