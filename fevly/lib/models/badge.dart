@@ -51,7 +51,7 @@ extension BadgeTypeExtension on BadgeType {
 class Badge extends ChangeNotifier {
   final String _name, _image;
   final BadgeCategory _badgeCategory;
-  final BadgeType _badgeType;
+  BadgeType _badgeType;
   int _quantity;
 
   Badge({
