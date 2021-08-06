@@ -4,21 +4,18 @@ import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constant.dart';
 
 class DateInformations extends StatelessWidget {
-  const DateInformations({
-    Key? key,
-    required this.size,
-    required this.textTheme,
-  }) : super(key: key);
-
-  final Size size;
-  final TextTheme textTheme;
+  const DateInformations({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       height: 150,
       width: size.width * 0.9,
@@ -50,7 +47,7 @@ class DateInformations extends StatelessWidget {
                       "Début",
                       style: textTheme.headline6,
                       ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
                       size: CustomSmallButtonSize.verySmall,
                       text: "26/08/2021 à 18h00",
@@ -71,7 +68,7 @@ class DateInformations extends StatelessWidget {
                       "Fin",
                       style: textTheme.headline6,
                       ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
                       size: CustomSmallButtonSize.verySmall,
                       text: "26/08/2021 à 18h00",
@@ -101,7 +98,7 @@ class DateInformations extends StatelessWidget {
                     "Dans 60 jours",
                     style: textTheme.headline6,
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: size.height * 0.008),
                   CustomTextButton(
                     buttonSize: const CustomTextButtonSize.verySmall(),
                     text: "Programmer",

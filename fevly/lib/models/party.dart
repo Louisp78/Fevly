@@ -3,7 +3,7 @@ import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
 class Party {
-  final String name, description;
+  final String name, description, address;
   final List<User> organizer;
   final GuestList guests;
   final ProductList products;
@@ -11,6 +11,7 @@ class Party {
   Party(
       {required this.name,
       required this.description,
+      required this.address, 
       required this.organizer,
       required this.guests,
       required this.products})
