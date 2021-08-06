@@ -5,6 +5,9 @@ import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
+final List<String> avatarsList = [
+      "louis", "vincent", "louis", "vincent", "louis", "vincent", "louis", "vincent"];
+
 List<Badge> badgeList1 = [
   Badge(
     name: "Sandale",
@@ -105,6 +108,7 @@ final listOfUsers1 = [
 
 final listParties1 = [
   Party(
+    address: "2 rue du Poteau, 75018, Paris",
     name: "Soirée exemple",
     description: "Une incroyable soirée.",
     organizer: [
@@ -119,6 +123,7 @@ final listParties1 = [
     products: ProductList(listOfProduct: productList1, name: "none"),
   ),
   Party(
+    address: "1 rue du Poteau, 75018, Paris",
     name: "Soirée exemple 2",
     description: "Une incroyable soirée.",
     organizer: [
