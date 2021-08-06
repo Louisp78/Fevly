@@ -8,7 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AddressInformation extends StatelessWidget {
   const AddressInformation({
-    Key? key, required this.party,
+    Key? key,
+    required this.party,
   }) : super(key: key);
   final Party party;
 
@@ -19,25 +20,27 @@ class AddressInformation extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       height: 150,
-      width: (size.width * 0.9 / 2) - (size.width * 0.05/2),
+      width: (size.width * 0.9 / 2) - (size.width * 0.05 / 2),
       decoration: BoxDecoration(
-        color: kSurfaceLightColor, boxShadow: [kShadowBase],
+        color: kSurfaceLightColor,
+        boxShadow: [kShadowBase],
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical: size.width * 0.03),
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.03, vertical: size.width * 0.03),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   child: Text(
-                    party.address,
+                    party.adress,
                     maxLines: 4,
                     style: textTheme.headline4,
-                    ),
+                  ),
                 ),
                 SizedBox(width: size.width * 0.02),
                 const FittedBox(
@@ -57,7 +60,8 @@ class AddressInformation extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical: size.width * 0.03),
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.03, vertical: size.width * 0.03),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
