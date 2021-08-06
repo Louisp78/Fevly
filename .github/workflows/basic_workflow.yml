@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Build & Linter Test
 on:
   push:
     branches:
@@ -21,14 +21,12 @@ jobs:
       - name: Flutter action
         uses: subosito/flutter-action@v1.5.3
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  linter:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Super-Linter
-        uses: github/super-linter@v4.5.1
+      ################################
+      # Run Linter against code base #
+      ################################
+      - name: Lint Code Base
+        uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-
