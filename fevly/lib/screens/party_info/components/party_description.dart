@@ -1,19 +1,18 @@
+import 'package:fevly/models/party.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PartyDescription extends StatelessWidget {
-  const PartyDescription({
-    Key? key,
-    required this.size,
-    required this.textTheme,
-  }) : super(key: key);
-
-  final Size size;
-  final TextTheme textTheme;
+  const PartyDescription({Key? key, required this.party,}) : super(key: key);
+  final Party party;
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       height: 150,
       width: size.width * 0.9,
@@ -28,7 +27,7 @@ class PartyDescription extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
             child: Text(
-              "Nom et Description",
+              party.name,
               style: textTheme.headline4,
             ),
           ),
@@ -36,7 +35,7 @@ class PartyDescription extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
             child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus non nisi felis viverra. Hac commodo diam magna accumsan elementum convallis turpis magna ligula.",
+              party.description,
               style: textTheme.headline5,
             ),
           ),
