@@ -1,21 +1,22 @@
 import 'package:fevly/components/custom_text_button.dart';
+import 'package:fevly/models/party.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddressInformation extends StatelessWidget {
   const AddressInformation({
-    Key? key,
-    required this.size,
-    required this.textTheme,
+    Key? key, required this.party,
   }) : super(key: key);
-
-  final Size size;
-  final TextTheme textTheme;
+  final Party party;
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       height: 150,
       width: (size.width * 0.9 / 2) - (size.width * 0.05/2),
@@ -33,7 +34,7 @@ class AddressInformation extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    "1 rue du Poteau, 75018, Paris",
+                    party.address,
                     maxLines: 4,
                     style: textTheme.headline4,
                     ),

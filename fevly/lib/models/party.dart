@@ -3,6 +3,7 @@ import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
+
 //$ CLASS
 //$ ==================================
 
@@ -63,6 +64,7 @@ class Party extends ChangeNotifier {
   set products(ProductList list) {
     _products = list;
     notifyListeners();
+
   }
 
   set guests(GuestList list) {
