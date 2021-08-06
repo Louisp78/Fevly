@@ -4,7 +4,7 @@ import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
-import 'package:fevly/models/fom_validate.dart';
+import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -32,8 +32,8 @@ class FormSection extends StatelessWidget {
       child: SizedBox(
         height: size.height * 0.8,
         width: size.width * 0.8,
-        child: Consumer<FormValidate>(
-          builder: (context, formValidate, child) => Column(
+        child: Consumer<FormViewModel>(
+          builder: (context, formViewModell, child) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
@@ -67,7 +67,8 @@ class FormSection extends StatelessWidget {
                 isSelected: true,
                 onChanged: (value) {
                   name = value;
-                  formValidate.formValid = pseudo.isNotEmpty && name.isNotEmpty;
+                  formViewModell.isFormValid =
+                      pseudo.isNotEmpty && name.isNotEmpty;
                 },
                 onSaved: (value) {
                   if (value != null) {
@@ -90,7 +91,8 @@ class FormSection extends StatelessWidget {
                 isSelected: true,
                 onChanged: (value) {
                   pseudo = value;
-                  formValidate.formValid = pseudo.isNotEmpty && name.isNotEmpty;
+                  formViewModell.isFormValid =
+                      pseudo.isNotEmpty && name.isNotEmpty;
                 },
                 onSaved: (value) {
                   if (value != null) {
@@ -114,9 +116,9 @@ class FormSection extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomCheckBox(
-                      press: () =>
-                          formValidate.termOfUse = !formValidate.termOfUse,
-                      isCheck: formValidate.termOfUse,
+                      press: () => formViewModell.isTermOfUseAccepted =
+                          !formViewModell.isTermOfUseAccepted,
+                      isCheck: formViewModell.isTermOfUseAccepted,
                     ),
                     const SizedBox(
                       width: 20,
@@ -145,13 +147,13 @@ class FormSection extends StatelessWidget {
                 child: CustomTextButton(
                   press: () {
                     final bool validation = _keyForm.currentState!.validate() &&
-                        formValidate.formValid &&
-                        formValidate.isTermOfUseAccepted;
+                        formViewModell.isFormValid &&
+                        formViewModell.isTermOfUseAccepted;
 
                     final bool onlyTermOfUseLeft =
                         _keyForm.currentState!.validate() &&
-                            formValidate.formValid &&
-                            !formValidate.isTermOfUseAccepted;
+                            formViewModell.isFormValid &&
+                            !formViewModell.isTermOfUseAccepted;
 
                     if (validation) {
                       // ignore: unused_local_variable
@@ -192,7 +194,7 @@ class FormSection extends StatelessWidget {
                     }
                   },
                   text: "S'inscrire",
-                  isActive: formValidate.validation,
+                  isActive: formViewModell.validation,
                 ),
               ),
             ],
