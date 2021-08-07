@@ -2,7 +2,7 @@ import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_dialog_list.dart';
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/user_relation_state.dart';
+import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test/data_example.dart';
@@ -84,37 +84,10 @@ class ProfileCard extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   showDialog(
-                      barrierDismissible: true,
-                      context: context,
-                      builder: (context) =>
-                          CustomDialogList(title: "Options", listOptions: [
-                            ...List.generate(
-                              listParties1.length,
-                              (index) => TextButton(
-                                onPressed: () {},
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                    text: "Inviter à ",
-                                    style: textTheme.headline5,
-                                  ),
-                                  TextSpan(
-                                    text: "${listParties1[index].name}.",
-                                    style: textTheme.headline5
-                                        ?.copyWith(color: kPrimaryColor),
-                                  ),
-                                ])),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Bloquer",
-                                style: textTheme.headline5
-                                    ?.copyWith(color: kErrorColor),
-                              ),
-                            ),
-                          ]));
+                    barrierDismissible: true,
+                    context: context,
+                    builder: (context) => buildDialog(textTheme),
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8),
@@ -132,11 +105,11 @@ class ProfileCard extends StatelessWidget {
           ),
           CustomSmallButton(
             size: CustomSmallButtonSize.small,
-            text: getTextFromRelationState(relationState),
+            text: relationState.name,
             lightMode: false,
             press: () => Navigator.pushNamed(context, "/profile/my_lists"),
             prefixIcon: Icon(
-              getIconDataFromRelationState(relationState),
+              relationState.iconData,
               color: Colors.white,
               size: kSmallIconSize,
             ),
@@ -164,5 +137,34 @@ class ProfileCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  CustomDialogList buildDialog(TextTheme textTheme) {
+    return CustomDialogList(title: "Options", listOptions: [
+      ...List.generate(
+        listParties1.length,
+        (index) => TextButton(
+          onPressed: () {},
+          child: RichText(
+              text: TextSpan(children: [
+            TextSpan(
+              text: "Inviter à ",
+              style: textTheme.headline5,
+            ),
+            TextSpan(
+              text: "${listParties1[index].name}.",
+              style: textTheme.headline5?.copyWith(color: kPrimaryColor),
+            ),
+          ])),
+        ),
+      ),
+      TextButton(
+        onPressed: () {},
+        child: Text(
+          "Bloquer",
+          style: textTheme.headline5?.copyWith(color: kErrorColor),
+        ),
+      ),
+    ]);
   }
 }

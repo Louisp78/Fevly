@@ -2,8 +2,6 @@ import 'package:fevly/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'models/user_relation_state.dart';
-
 const String specialChar = "!\"#\$%&'()*+=`./\\:;<>@[]^_|~";
 
 const String termOfUse = '''
@@ -29,32 +27,6 @@ String needToBeFriendMessage({required String username}) =>
     "Devenez ami avec $username pour voir ses badges.";
 
 const double kSmallIconSize = 14;
-
-String getTextFromRelationState(UserRelationState relationState) {
-  switch (relationState) {
-    case UserRelationState.friend:
-      return "Ami";
-    case UserRelationState.me:
-      return "Mes listes";
-    case UserRelationState.requestSent:
-      return "En attente";
-    case UserRelationState.unFriend:
-      return "Devenir ami";
-  }
-}
-
-IconData getIconDataFromRelationState(UserRelationState relationState) {
-  switch (relationState) {
-    case UserRelationState.friend:
-      return Icons.done_rounded;
-    case UserRelationState.me:
-      return Icons.format_list_bulleted_rounded;
-    case UserRelationState.requestSent:
-      return Icons.email_rounded;
-    case UserRelationState.unFriend:
-      return Icons.person_add_rounded;
-  }
-}
 
 TextStyle kBasicHintStyle({required TextTheme textTheme}) =>
     textTheme.headline4!.copyWith(color: kTextColor);
