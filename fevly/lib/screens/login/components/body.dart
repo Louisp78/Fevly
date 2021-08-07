@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/models/fom_validate.dart';
+import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'form_section.dart';
@@ -12,7 +12,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: ChangeNotifierProvider(
-        create: (context) => FormValidate(),
+        create: (context) => FormViewModel(),
         child: Column(
           children: [
             CustomAuthAppBar(
