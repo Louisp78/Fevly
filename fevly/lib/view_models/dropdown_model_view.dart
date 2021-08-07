@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 //$ CLASS
 //$ =========================================
 
-class MyListsModelView extends ChangeNotifier {
+class DropDownModelView extends ChangeNotifier {
   bool _isExpanded;
 
-  MyListsModelView({bool isExpanded = false}) : _isExpanded = isExpanded;
+  DropDownModelView({bool isExpanded = false}) : _isExpanded = isExpanded;
 
   //* GETTER
   bool get isExpanded => _isExpanded;

@@ -1,5 +1,5 @@
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/screens/my_lists/view_models/my_lists_model_view.dart';
+import 'package:fevly/view_models/dropdown_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +23,8 @@ class DropList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
-      create: (context) => MyListsModelView(),
-      child: Consumer<MyListsModelView>(
+      create: (context) => DropDownModelView(),
+      child: Consumer<DropDownModelView>(
         builder: (context, myListsModelView, child) => Column(
           children: [
             CustomHeaderDropList(
