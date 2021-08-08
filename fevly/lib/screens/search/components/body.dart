@@ -54,6 +54,7 @@ class Body extends StatelessWidget {
                       children: [
                         CustomDropList(
                           title: "Récent",
+                          displayButton: false,
                           listWidget: List.generate(
                             listOfUsers1.length,
                             (index) {
@@ -100,6 +101,7 @@ class Body extends StatelessWidget {
                         ),
                         CustomDropList(
                           title: "Amis",
+                          displayButton: false,
                           listWidget: List.generate(
                             listOfUsers1.length,
                             (index) {
