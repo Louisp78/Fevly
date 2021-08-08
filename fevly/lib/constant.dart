@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,3 +52,21 @@ double kGridCrossSpacing({required Size size}) => size.width * 0.05;
 double kGridMainSpacing({required Size size}) => size.height * 0.02;
 double kBasicVerticalPadding({required Size size}) => size.height * 0.03;
 double kBasicHorizontalPadding({required Size size}) => size.width * 0.05;
+
+AutoSizeText kBasicTitleForAppBar(
+        {required String title, required TextTheme textTheme}) =>
+    AutoSizeText(
+      title,
+      maxLines: 1,
+      textAlign: TextAlign.center,
+      style: textTheme.headline3,
+    );
+
+AutoSizeText kBasicSubtitleForAppBar(
+        {required String subtitle, required TextTheme textTheme}) =>
+    AutoSizeText(
+      subtitle,
+      maxLines: 1,
+      textAlign: TextAlign.center,
+      style: textTheme.headline5?.copyWith(color: kTextColor),
+    );
