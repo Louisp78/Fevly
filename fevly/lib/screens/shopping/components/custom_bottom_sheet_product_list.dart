@@ -118,15 +118,15 @@ class CustomBottomSheetProductList extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: size.width * 0.31,
+                      width: size.width * 0.25,
                     ),
                     Text(
-                      "0",
+                      modelViewShopping.count.toString(),
                       style: textTheme.headline2,
                     ),
                     SizedBox(width: size.width * 0.02),
                     CustomIconButton(
-                      press: () {},
+                      press: () => modelViewShopping.count += 1,
                       icon: Icons.add_rounded,
                       size: const CustomIconButtonSize.small(),
                       circle: false,
@@ -134,7 +134,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                     ),
                     SizedBox(width: size.width * 0.02),
                     CustomIconButton( 
-                      press: () {},
+                      press: () => modelViewShopping.count == 0 ? {} : modelViewShopping.count -= 1,
                       icon: Icons.remove_rounded,
                       size: const CustomIconButtonSize.small(),
                       circle: false,
