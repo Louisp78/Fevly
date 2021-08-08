@@ -11,7 +11,7 @@ class CustomDropList extends StatelessWidget {
     this.iconData,
     required this.listWidget,
     required this.addItemPress,
-    this.displayButton = false,
+    this.displayButton = true,
   }) : assert(
             displayButton && iconData != null ||
                 !displayButton && iconData == null,
