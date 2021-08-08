@@ -1,7 +1,7 @@
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:fevly/test/data_example.dart';
@@ -14,7 +14,7 @@ class HeaderListBadge extends StatelessWidget {
     required this.searchField,
   }) : super(key: key);
 
-  final TextFieldProvider searchField;
+  final TextFieldModelView searchField;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +41,9 @@ class HeaderListBadge extends StatelessWidget {
                   searchField.selection ? size.width * 0.75 : size.width * 0.45,
               height: 37,
               onChanged: (value) {
-                searchField.textValueOverride = value;
+                searchField.textValue = value;
                 searchField.listOfObjects = sortListBadgeBySearch(
-                    sourceList: badgeList1,
-                    search: searchField.textValueOverride);
+                    sourceList: badgeList1, search: searchField.textValue);
               },
               decoration: badgeSearchInputDecoration(
                 hintStyle: kSearchHintStyle(textTheme: textTheme),

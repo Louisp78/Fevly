@@ -6,7 +6,15 @@ import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
 final List<String> avatarsList = [
-      "louis", "vincent", "louis", "vincent", "louis", "vincent", "louis", "vincent"];
+  "louis",
+  "vincent",
+  "louis",
+  "vincent",
+  "louis",
+  "vincent",
+  "louis",
+  "vincent"
+];
 
 List<Badge> badgeList1 = [
   Badge(
@@ -147,13 +155,11 @@ List<GuestList> guestListList = [
 List<GuestList> guestListListForDropdown = [
   GuestList(name: "Liste d'invité 1", listOfUser: listOfUsers1),
   GuestList(name: "Liste d'invité 2", listOfUser: listOfUsers1),
-  GuestList(name: "Aucune", listOfUser: [])
 ];
 
 List<ProductList> productListListForDropdown = [
   ProductList(listOfProduct: productList1, name: "Liste de courses 1"),
   ProductList(listOfProduct: productList1, name: "Liste de courses 2"),
-  ProductList(listOfProduct: [], name: "Aucune"),
 ];
 
 List<Product> productList1 = [
@@ -176,11 +182,11 @@ List<Product> productList1 = [
       image: "assets/products/pint_of_beer.svg",
       unit: QuantityUnit.paquet),
   Product(
-      name: "PopCorn",
-      price: 2.50,
-      quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
-      unit: QuantityUnit.paquet,
+    name: "PopCorn",
+    price: 2.50,
+    quantity: 1,
+    image: "assets/products/pint_of_beer.svg",
+    unit: QuantityUnit.paquet,
   ),
   Product(
       name: "Vodka",
