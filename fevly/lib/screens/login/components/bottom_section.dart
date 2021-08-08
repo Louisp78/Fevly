@@ -80,7 +80,7 @@ class BottomSection extends StatelessWidget {
           press: () {},
           text: "Connexion avec Google",
           prefixIcon: SvgPicture.asset(
-            "assets/icons/google.svg",
+            "assets/base/google.svg",
             color: Colors.white,
           ),
         ),
