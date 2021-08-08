@@ -176,11 +176,11 @@ List<Product> productList1 = [
       image: "assets/products/pint_of_beer.svg",
       unit: QuantityUnit.paquet),
   Product(
-    name: "PopCorn",
-    price: 2.50,
-    quantity: 1,
-    image: "assets/products/pint_of_beer.svg",
-    unit: QuantityUnit.paquet,
+      name: "PopCorn",
+      price: 2.50,
+      quantity: 1,
+      image: "assets/products/pint_of_beer.svg",
+      unit: QuantityUnit.paquet,
   ),
   Product(
       name: "Vodka",

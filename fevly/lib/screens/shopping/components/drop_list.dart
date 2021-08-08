@@ -1,6 +1,4 @@
-import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/view_models/dropdown_model_view.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'custom_header_drop_list.dart';
@@ -25,36 +23,23 @@ class DropList extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => DropDownModelView(),
       child: Consumer<DropDownModelView>(
-        builder: (context, myListsModelView, child) => Column(
+        builder: (context, dropdown, child) => Column(
           children: [
             CustomHeaderDropList(
-              myListsModelView: myListsModelView,
+              dropdown: dropdown,
               title: title,
-              press: () =>
-                  myListsModelView.isExpanded = !myListsModelView.isExpanded,
+              press: () => dropdown.isExpanded = !dropdown.isExpanded,
               listLen: listWidget.length,
-              button: CustomTextButton(
-                press: addItemPress,
-                text: "Ajouter",
-                buttonSize: const CustomTextButtonSize.small(),
-                suffixIcon: Icon(
-                  iconData,
-                  color: kDarkerTextColor,
-                  size: 14,
-                ),
-                backgroundColor: kSurfaceColor,
-                textColor: kDarkerTextColor,
-              ),
             ),
             SizedBox(
               height: size.height * 0.03,
             ),
-            if (myListsModelView.isExpanded)
+            if (dropdown.isExpanded)
               SingleChildScrollView(
                 child: Column(
-                  children: listWidget,
+                    children: listWidget,
                 ),
-              ),
+            ),
           ],
         ),
       ),
