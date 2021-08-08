@@ -32,7 +32,7 @@ class Body extends StatelessWidget {
             Column(
               children: [
                 SizedBox(
-                  height: kBasicVerticalPadding(size: size * 6),
+                  height: kBasicVerticalPadding(size: size) * 6,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -63,8 +63,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.7,
+                Expanded(
                   child: GridView.count(
                     crossAxisCount: 3,
                     padding: EdgeInsets.symmetric(

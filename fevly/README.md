@@ -37,6 +37,9 @@ A new Flutter project.
 5. Toujours utiliser route Named pour la navigation entre les pages
 6. Utiliser les commentaire “///” avant un widget ou une fonction pour pouvoir les voirs dans la doc. (autre commentaire “//”).
 
+## Push Rules
+1. Toujours push les modifications générales sur le main puis merge depuis les branches annexes.
+
 ## Documentations & Links
 This project is a starting point for a Flutter application.
 
