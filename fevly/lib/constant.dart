@@ -1,3 +1,4 @@
+import 'package:fevly/models/badge.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,15 @@ const String snackBarMissingField =
 
 String needToBeFriendMessage({required String username}) =>
     "Devenez ami avec $username pour voir ses badges.";
+
+String kBadgeSpecialName({required BadgeCategory category}) {
+  switch (category) {
+    case BadgeCategory.drink:
+      return "d'ambroisie";
+    default:
+      throw Exception("SpecialName not define for ${category.name}");
+  }
+}
 
 const double kSmallIconSize = 14;
 

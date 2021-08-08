@@ -1,3 +1,4 @@
+import 'package:fevly/constant.dart';
 import 'package:flutter/cupertino.dart';
 
 //$ ENUMERATION
@@ -79,6 +80,23 @@ class Badge extends ChangeNotifier {
   set quantity(int newValue) {
     _quantity = newValue;
     notifyListeners();
+  }
+
+  String get nameType {
+    switch (_badgeType) {
+      case BadgeType.wood:
+        return "bois";
+      case BadgeType.metal:
+        return "métal";
+      case BadgeType.gold:
+        return "or";
+      case BadgeType.ruby:
+        return "rubis";
+      case BadgeType.diamond:
+        return "diamant";
+      default:
+        return kBadgeSpecialName(category: _badgeCategory);
+    }
   }
 
   @override
