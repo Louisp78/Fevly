@@ -3,8 +3,10 @@ import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/functions/general.dart';
+import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/view_models/text_field_model_view.dart';
+import 'package:fevly/screens/shopping/model_views/model_view_shopping.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -27,14 +29,14 @@ class CustomBottomSheetProductList extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return ChangeNotifierProvider(
-      create: (context) => TextFieldModelView<ProductList>(),
-      child: Consumer<TextFieldModelView<ProductList>>(
-        builder: (context, textFieldProvider, child) =>
+      create: (context) => ModelViewShopping(),
+      child: Consumer<ModelViewShopping>(
+        builder: (context, modelViewShopping, child) =>
             Stack(clipBehavior: Clip.none, children: [
           Container(
             alignment: Alignment.center,
             height:
-                textFieldProvider.selection ? size.height : size.height * 0.4,
+                modelViewShopping.selection ? size.height : size.height * 0.4,
             padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.05, vertical: size.height * 0.03),
             decoration: const BoxDecoration(
@@ -55,13 +57,13 @@ class CustomBottomSheetProductList extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                if (textFieldProvider.selection)
+                if (modelViewShopping.selection)
                   SizedBox(
                     height: size.height * 0.05,
                   ),
-                if (!textFieldProvider.selection) const Spacer(),
+                if (!modelViewShopping.selection) const Spacer(),
                 Focus(
-                  onFocusChange: (focus) => textFieldProvider.selection = focus,
+                  onFocusChange: (focus) => modelViewShopping.selection = focus,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +99,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                       ),
                       CustomTextField(
                         onChanged: (value) {
-                          textFieldProvider.textValue = value;
+                          modelViewShopping.textField = value;
                         },
                         onSaved: (value) {},
                         validator: (value) {},
@@ -139,39 +141,62 @@ class CustomBottomSheetProductList extends StatelessWidget {
                       outline: true,
                     ),
                     SizedBox(width: size.width * 0.02),
-                    CustomTextField(
-                        onChanged: (value) {
-                          textFieldProvider.textValue = value;
+                    Container(
+                      width: size.width * 0.35,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: kSurfaceLightColor,
+                          boxShadow: [kShadowBase]),
+                      child: DropdownButton<QuantityUnit>(
+                        value: QuantityUnit.paquet,
+                        hint: SizedBox(
+                          width: size.width * 0.3 - 24,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AutoSizeText(
+                                cast<QuantityUnit>(modelViewShopping.isCategorySelected)
+                                    .toString(),
+                                maxLines: 1,
+                                style: textTheme.headline5,
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                        icon: const Icon(Icons.expand_more_rounded),
+                        elevation: 16,
+                        style: textTheme.headline5,
+                        underline: Container(
+                          height: 0,
+                        ),
+                        onChanged: (QuantityUnit? newValue) {
+                          modelViewShopping.isCategorySelected = newValue.toString();
                         },
-                        onSaved: (value) {},
-                        validator: (value) {},
-                        width: size.width * 0.35,
-                        height: 35,
-                        decoration: basicInputDecoration(
-                            hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                            hintText: "Nom"),
+                        items: [
+                          ...QuantityUnit.values,
+                          null
+                        ].map<DropdownMenuItem<QuantityUnit>>((QuantityUnit? list) {
+                          return DropdownMenuItem<QuantityUnit>(
+                            value: list,
+                            child: Text(
+                                list != null ? list.name : "Dupliquer",
+                                style: list == null
+                                    ? textTheme.headline5
+                                        ?.copyWith(color: kPrimaryColor)
+                                    : null),
+                          );
+                        }).toList(),
                       ),
+                    ),
                   ]
                 ),
                 const Spacer(),
                 CustomTextButton(
-                  press: () {
-                    if (textFieldProvider.textValue.isNotEmpty) {
-                      if (textFieldProvider.value!.name != "Aucune") {
-                        productListListForDropdown.add(ProductList(
-                            listOfProduct:
-                                textFieldProvider.value!.listOfProduct,
-                            name: textFieldProvider.textValue));
-                      } else {
-                        productListListForDropdown.add(ProductList(
-                            listOfProduct: [],
-                            name: textFieldProvider.textValue));
-                      }
-                      Navigator.pop(context);
-                    }
-                  },
+                  press: () {},
                   text: "Ajouter",
-                  isActive: textFieldProvider.textValue.isNotEmpty,
+                  isActive: modelViewShopping.count != 0 && modelViewShopping.textField != "" && modelViewShopping.isCategorySelected != "",
                 ),
               ],
             ),
