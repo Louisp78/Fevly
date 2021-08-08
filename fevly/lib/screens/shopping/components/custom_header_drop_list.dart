@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/view_models/dropdown_model_view.dart';
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/view_models/dropdown_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,16 +10,14 @@ class CustomHeaderDropList extends StatelessWidget {
     Key? key,
     required this.title,
     required this.press,
-    required this.button,
     required this.listLen,
-    required this.myListsModelView,
+    required this.dropdown,
   }) : super(key: key);
 
   final String title;
   final GestureTapCallback press;
-  final CustomTextButton? button;
   final int listLen;
-  final DropDownModelView myListsModelView;
+  final DropDownModelView dropdown;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class CustomHeaderDropList extends StatelessWidget {
         children: [
           Expanded(
             child: AutoSizeText(
-              "$title ($listLen)",
+              "$title",
               style: textTheme.headline3?.copyWith(color: kTextColor),
               maxLines: 1,
             ),
@@ -45,11 +43,10 @@ class CustomHeaderDropList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (button != null) button!,
               IconButton(
                 onPressed: press,
                 icon: Icon(
-                  myListsModelView.isExpanded
+                  dropdown.isExpanded
                       ? Icons.expand_less_rounded
                       : Icons.expand_more_rounded,
                   size: 36,
