@@ -6,7 +6,7 @@ import 'package:fevly/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -31,13 +31,13 @@ class ProductListScreen extends StatelessWidget {
         productList: productList,
       ),
       floatingActionButton: ChangeNotifierProvider(
-        create: (context) => TextFieldProvider<Product>(
+        create: (context) => TextFieldModelView<Product>(
             value: Product(name: "", image: "", price: 0, quantity: 0)),
         child: Padding(
           padding: EdgeInsets.only(
             bottom: size.height * 0.08,
           ),
-          child: Consumer<TextFieldProvider<Product>>(
+          child: Consumer<TextFieldModelView<Product>>(
             builder: (context, textFieldProvider, child) =>
                 FloatingActionButton(
               onPressed: () => showModalBottomSheet(
@@ -116,7 +116,7 @@ class ProductListScreen extends StatelessWidget {
                                   textFieldProvider.selection = focus,
                               child: CustomTextField(
                                 onChanged: (value) {
-                                  textFieldProvider.textValueOverride = value;
+                                  textFieldProvider.textValue = value;
                                 },
                                 onSaved: (value) {},
                                 validator: (value) {},
@@ -135,7 +135,7 @@ class ProductListScreen extends StatelessWidget {
                               textFieldProvider.selection = focus,
                           child: CustomTextField(
                             onChanged: (value) {
-                              textFieldProvider.textValueOverride = value;
+                              textFieldProvider.textValue = value;
                             },
                             onSaved: (value) {},
                             validator: (value) {},
@@ -197,8 +197,7 @@ class ProductListScreen extends StatelessWidget {
                                   height: 0,
                                 ),
                                 onChanged: (QuantityUnit? newValue) {
-                                  textFieldProvider.singleValue?.unit =
-                                      newValue!;
+                                  textFieldProvider.value?.unit = newValue!;
                                 },
                                 items: QuantityUnit.values
                                     .map<DropdownMenuItem<QuantityUnit>>(
@@ -236,8 +235,7 @@ class ProductListScreen extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           text: "Ajouter",
-                          isActive:
-                              textFieldProvider.textValueOverride.isNotEmpty,
+                          isActive: textFieldProvider.textValue.isNotEmpty,
                         ),
                       ],
                     ),

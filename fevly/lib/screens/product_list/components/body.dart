@@ -5,7 +5,7 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:fevly/models/product.dart';
@@ -24,8 +24,8 @@ class Body extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (context) =>
-          TextFieldProvider(listOfObjects: productList.listOfProduct),
-      child: Consumer<TextFieldProvider>(
+          TextFieldModelView(listOfObjects: productList.listOfProduct),
+      child: Consumer<TextFieldModelView>(
         builder: (context, searchField, child) => Stack(
           alignment: Alignment.center,
           children: [
@@ -47,10 +47,10 @@ class Body extends StatelessWidget {
                             : size.width * 0.45,
                         height: 37,
                         onChanged: (value) {
-                          searchField.textValueOverride = value;
+                          searchField.textValue = value;
                           searchField.listOfObjects = sortListProductBySearch(
                               sourceList: productList.listOfProduct,
-                              search: searchField.textValueOverride);
+                              search: searchField.textValue);
                         },
                         decoration: badgeSearchInputDecoration(
                           hintStyle: kSearchHintStyle(textTheme: textTheme),

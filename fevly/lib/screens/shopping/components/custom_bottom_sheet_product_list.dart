@@ -1,12 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -29,8 +27,8 @@ class CustomBottomSheetProductList extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return ChangeNotifierProvider(
-      create: (context) => TextFieldProvider<ProductList>(),
-      child: Consumer<TextFieldProvider<ProductList>>(
+      create: (context) => TextFieldModelView<ProductList>(),
+      child: Consumer<TextFieldModelView<ProductList>>(
         builder: (context, textFieldProvider, child) =>
             Stack(clipBehavior: Clip.none, children: [
           Container(
@@ -99,7 +97,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                       ),
                       CustomTextField(
                         onChanged: (value) {
-                          textFieldProvider.textValueOverride = value;
+                          textFieldProvider.textValue = value;
                         },
                         onSaved: (value) {},
                         validator: (value) {},
@@ -143,7 +141,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                     SizedBox(width: size.width * 0.02),
                     CustomTextField(
                         onChanged: (value) {
-                          textFieldProvider.textValueOverride = value;
+                          textFieldProvider.textValue = value;
                         },
                         onSaved: (value) {},
                         validator: (value) {},
@@ -158,11 +156,11 @@ class CustomBottomSheetProductList extends StatelessWidget {
                 const Spacer(),
                 CustomTextButton(
                   press: () {
-                    if (textFieldProvider.textValueOverride.isNotEmpty) {
-                      if (textFieldProvider.singleValue!.name != "Aucune") {
+                    if (textFieldProvider.textValue.isNotEmpty) {
+                      if (textFieldProvider.value!.name != "Aucune") {
                         productListListForDropdown.add(ProductList(
                             listOfProduct:
-                                textFieldProvider.singleValue!.listOfProduct,
+                                textFieldProvider.value!.listOfProduct,
                             name: textFieldProvider.textValue));
                       } else {
                         productListListForDropdown.add(ProductList(
@@ -173,7 +171,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                     }
                   },
                   text: "Ajouter",
-                  isActive: textFieldProvider.textValueOverride.isNotEmpty,
+                  isActive: textFieldProvider.textValue.isNotEmpty,
                 ),
               ],
             ),

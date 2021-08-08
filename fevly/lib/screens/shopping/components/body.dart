@@ -18,7 +18,7 @@ import 'drop_list.dart';
 import 'list_tile_item.dart';
 
 class Body extends StatelessWidget {
-  const Body({ Key? key }) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,122 +27,122 @@ class Body extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return SizedBox(
       height: size.height,
-      child: Stack(
-        children: [ 
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.15, bottom: 60),
-            child: SingleChildScrollView(
+      child: Stack(children: [
+        Padding(
+          padding: EdgeInsets.only(top: size.height * 0.15, bottom: 60),
+          child: SingleChildScrollView(
             child: Column(
-                children: [
-                  SizedBox(height: size.height * 0.03),
-                  ChangeNotifierProvider(
+              children: [
+                SizedBox(height: size.height * 0.03),
+                ChangeNotifierProvider(
                   create: (context) => IsShopping(isClick: true),
                   // ignore: sort_child_properties_last
                   child: Consumer<IsShopping>(
-                  builder: (context, isShopping, child) => 
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.35),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // ignore: prefer_const_literals_to_create_immutables
-                          children: [
-                            Column(
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.message_rounded,
-                                    size: 24,
-                                    color: !isShopping.expandState ? kPrimaryColor : Colors.black,
-                                    ),
-                                  onPressed: () => isShopping.expandState = !isShopping.expandState,
+                    builder: (context, isShopping, child) => Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.35),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.message_rounded,
+                                  size: 24,
+                                  color: !isShopping.expandState
+                                      ? kPrimaryColor
+                                      : Colors.black,
                                 ),
-                              ],
-                            ),
-                            IconButton(
-                              icon : Icon(
-                                Icons.shopping_bag_rounded,
-                                size: 30,
-                                color: isShopping.expandState ? kPrimaryColor : Colors.black,
-                                ),
-                              onPressed: () => isShopping.expandState = !isShopping.expandState,
+                                onPressed: () => isShopping.expandState =
+                                    !isShopping.expandState,
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.03),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),  
-                      child: Row(
-                        children: [
-                          Text(
-                            "Courses",
-                            style: textTheme.headline2?.copyWith(color: kDarkerTextColor),
-                          )
+                          IconButton(
+                            icon: Icon(
+                              Icons.shopping_bag_rounded,
+                              size: 30,
+                              color: isShopping.expandState
+                                  ? kPrimaryColor
+                                  : Colors.black,
+                            ),
+                            onPressed: () => isShopping.expandState =
+                                !isShopping.expandState,
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(height: size.height * 0.02),
-                    DropList(
-                      title: "A apporter",
-                      iconData: Icons.group_add_rounded,
-                      listWidget:
-                          List.generate(productList1.length, (index) {
-                        final Product productList = productList1[index];
-                        return ListTileItem(
-                          title: productList.name,
-                          margin: index != productList1.length - 1
-                              ? EdgeInsets.only(bottom: size.height * 0.035)
-                              : null,
-                          leading: const CustomCircleAvatar(
-                            radius: 20,
-                          ),
-                          press: () {}
-                        );
-                      }),
-                      addItemPress: () => showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (BuildContext context) {
-                                return const CustomBottomSheetProductList(
-                                  title: "Ajouter une liste de courses",
-                            );
-                          }
-                        ),
-                    ),
-                    SizedBox(height: size.height * 0.001),
-                    const AddAndLoadShopping(),
-                    SizedBox(height: size.height * 0.001),
-                    DropList(
-                      title: "Apporté",
-                      iconData: Icons.group_add_rounded,
-                      listWidget:
-                          List.generate(productList1.length, (index) {
-                        final Product productList = productList1[index];
-                        return ListTileItem(
-                          title: productList.name,
-                          margin: index != productList1.length - 1
-                              ? EdgeInsets.only(bottom: size.height * 0.035)
-                              : null,
-                          leading: const CustomCircleAvatar(
-                            radius: 20,
-                          ),
-                          press: () {}
-                        );
-                      }),
-                      addItemPress: () => showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (BuildContext context) {
-                                return const CustomBottomSheetProductAdd(
-                                  title: "Ajouter une liste de courses",
-                      );
-                    }
                   ),
                 ),
-                 CustomTextButton(
+                SizedBox(height: size.height * 0.03),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Courses",
+                        style: textTheme.headline2
+                            ?.copyWith(color: kDarkerTextColor),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: size.height * 0.02),
+                DropList(
+                  title: "A apporter",
+                  iconData: Icons.group_add_rounded,
+                  listWidget: List.generate(productList1.length, (index) {
+                    final Product productList = productList1[index];
+                    return ListTileItem(
+                        title: productList.name,
+                        margin: index != productList1.length - 1
+                            ? EdgeInsets.only(bottom: size.height * 0.035)
+                            : null,
+                        leading: const CustomCircleAvatar(
+                          radius: 20,
+                        ),
+                        press: () {});
+                  }),
+                  addItemPress: () => showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (BuildContext context) {
+                        return const CustomBottomSheetProductList(
+                          title: "Ajouter une liste de courses",
+                        );
+                      }),
+                ),
+                SizedBox(height: size.height * 0.001),
+                const AddAndLoadShopping(),
+                SizedBox(height: size.height * 0.001),
+                DropList(
+                  title: "Apporté",
+                  iconData: Icons.group_add_rounded,
+                  listWidget: List.generate(productList1.length, (index) {
+                    final Product productList = productList1[index];
+                    return ListTileItem(
+                        title: productList.name,
+                        margin: index != productList1.length - 1
+                            ? EdgeInsets.only(bottom: size.height * 0.035)
+                            : null,
+                        leading: const CustomCircleAvatar(
+                          radius: 20,
+                        ),
+                        press: () {});
+                  }),
+                  addItemPress: () => showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (BuildContext context) {
+                        return const CustomBottomSheetProductList(
+                          title: "Ajouter une liste de courses",
+                        );
+                      }),
+                ),
+                CustomTextButton(
                   press: () => showModalBottomSheet(
                         context: context,
                         backgroundColor: Colors.transparent,
@@ -157,8 +157,8 @@ class Body extends StatelessWidget {
                 SizedBox(height: size.height * 0.05),
               ],
             ),
-        ),
           ),
+        ),
         const Positioned(bottom: 0, child: CustomBottomBar()),
         CustomBasicAppBar(
           iconData: Icons.arrow_back_ios_rounded,
@@ -166,9 +166,7 @@ class Body extends StatelessWidget {
           title: "Soirée exemple",
           subtitle: "10 participants",
         ),
-        ]
-      ),
+      ]),
     );
   }
 }
-

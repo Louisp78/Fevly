@@ -1,7 +1,7 @@
 import 'package:fevly/components/custom_grid_item.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/badge.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'header_list_badge.dart';
@@ -12,7 +12,7 @@ class ListOfBadges extends StatelessWidget {
     required this.searchField,
   }) : super(key: key);
 
-  final TextFieldProvider searchField;
+  final TextFieldModelView searchField;
 
   @override
   Widget build(BuildContext context) {
