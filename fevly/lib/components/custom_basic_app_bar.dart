@@ -10,13 +10,16 @@ class CustomBasicAppBar extends StatelessWidget {
     required this.title,
     required this.iconData,
     required this.press,
-    this.subtitle,
+    this.subtitle, this.prefixIcon, this.firstSuffixIcon, this.secondSuffixIcon,
   }) : super(key: key);
 
   final String title;
   final IconData iconData;
   final GestureTapCallback press;
   final String? subtitle;
+  final Widget? prefixIcon;
+  final Widget? firstSuffixIcon;
+  final Widget? secondSuffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +71,21 @@ class CustomBasicAppBar extends StatelessWidget {
               icon: Icon(iconData),
             ),
           ),
+          if(prefixIcon != null)
+            Positioned(
+              left: size.width * 0.1,
+              child: prefixIcon!,
+            ),
+          if(firstSuffixIcon != null)
+            Positioned(
+              right: size.width * 0.1,
+              child: firstSuffixIcon!,
+            ),
+          if(secondSuffixIcon != null)
+            Positioned(
+              right: 0,
+              child: secondSuffixIcon!,
+            ),
         ],
       ),
     );

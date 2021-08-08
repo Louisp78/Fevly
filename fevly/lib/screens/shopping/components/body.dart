@@ -9,12 +9,15 @@ import 'package:fevly/test/data_example.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'add_and_load_shopping.dart';
 import 'custom_bottom_sheet_product_list.dart';
+import 'custom_button_sheet_product_add.dart';
 import 'drop_list.dart';
 import 'list_tile_item.dart';
+import 'list_tile_item_2.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -97,11 +100,16 @@ class Body extends StatelessWidget {
                     final Product productList = productList1[index];
                     return ListTileItem(
                         title: productList.name,
-                        margin: index != productList1.length - 1
+                        margin: index != productList1.length
                             ? EdgeInsets.only(bottom: size.height * 0.035)
                             : null,
-                        leading: const CustomCircleAvatar(
+                        leading: CustomCircleAvatar(
                           radius: 20,
+                          icon: SizedBox(
+                            height: 20 *  (32 / 25),
+                            width: 20 *  (32 / 25),
+                            child: SvgPicture.asset("assets/drink/mojito.svg")
+                            )
                         ),
                         press: () {});
                   }),
@@ -114,7 +122,6 @@ class Body extends StatelessWidget {
                         );
                       }),
                 ),
-                SizedBox(height: size.height * 0.001),
                 const AddAndLoadShopping(),
                 SizedBox(height: size.height * 0.001),
                 DropList(
@@ -122,12 +129,20 @@ class Body extends StatelessWidget {
                   iconData: Icons.group_add_rounded,
                   listWidget: List.generate(productList1.length, (index) {
                     final Product productList = productList1[index];
-                    return ListTileItem(
+                    return ListTileItem2(
                         title: productList.name,
-                        margin: index != productList1.length - 1
+                        margin: index != productList1.length
                             ? EdgeInsets.only(bottom: size.height * 0.035)
                             : null,
-                        leading: const CustomCircleAvatar(
+                        leading: CustomCircleAvatar(
+                          radius: 20,
+                          icon: SizedBox(
+                            height: 20 *  (32 / 25),
+                            width: 20 *  (32 / 25),
+                            child: SvgPicture.asset("assets/drink/mojito.svg")
+                            )
+                        ),
+                        suffix: const CustomCircleAvatar(
                           radius: 20,
                         ),
                         press: () {});
@@ -143,13 +158,13 @@ class Body extends StatelessWidget {
                 ),
                 CustomTextButton(
                   press: () => showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (BuildContext context) {
-                        return const CustomBottomSheetProductList(
-                          title: "Ajouter un produit",
-                        );
-                      }),
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          return const CustomBottomSheetProductAdd(
+                            title: "Ajouter un produit",
+                          );
+                        }),
                   text: "Ajouter une course",
                   backgroundColor: kPrimaryColor,
                 ),
@@ -164,6 +179,21 @@ class Body extends StatelessWidget {
           press: () {},
           title: "Soirée exemple",
           subtitle: "10 participants",
+          prefixIcon: IconButton(
+            icon: const Icon(Icons.info_rounded),
+            color: Colors.black,
+            onPressed: () {},
+          ),
+          firstSuffixIcon: IconButton(
+            icon: const Icon(Icons.alarm),
+            color: kSecondaryColor,
+            onPressed: () {},
+          ),
+          secondSuffixIcon: IconButton(
+            icon: const Icon(Icons.group_rounded),
+            color: Colors.black,
+            onPressed: () {},
+          ),
         ),
       ]),
     );
