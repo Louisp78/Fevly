@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 class CustomCircleAvatar extends StatelessWidget {
   const CustomCircleAvatar({
     Key? key,
-    this.radius = 25,
+    this.radius = 25, this.icon,
   }) : super(key: key);
 
   final double radius;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +18,11 @@ class CustomCircleAvatar extends StatelessWidget {
       child: CircleAvatar(
         radius: radius,
         backgroundColor: kSurfaceColor,
-        child: Icon(
-          Icons.person_rounded,
+        child: icon ?? Icon(
+          Icons.person,
           size: radius * (32 / 25),
           color: kPrimaryColor,
-        ),
+        )
       ),
     );
   }

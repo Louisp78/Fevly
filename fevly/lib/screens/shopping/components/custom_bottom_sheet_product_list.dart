@@ -1,10 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/general.dart';
+import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/view_models/text_field_model_view.dart';
+import 'package:fevly/screens/shopping/model_views/model_view_shopping.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -27,14 +29,14 @@ class CustomBottomSheetProductList extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return ChangeNotifierProvider(
-      create: (context) => TextFieldModelView<ProductList>(),
-      child: Consumer<TextFieldModelView<ProductList>>(
-        builder: (context, textFieldProvider, child) =>
+      create: (context) => ModelViewShopping(),
+      child: Consumer<ModelViewShopping>(
+        builder: (context, modelViewShopping, child) =>
             Stack(clipBehavior: Clip.none, children: [
           Container(
             alignment: Alignment.center,
             height:
-                textFieldProvider.selection ? size.height : size.height * 0.4,
+                modelViewShopping.selection ? size.height : size.height * 0.4,
             padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.05, vertical: size.height * 0.03),
             decoration: const BoxDecoration(
@@ -55,89 +57,146 @@ class CustomBottomSheetProductList extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                if (textFieldProvider.selection)
+                if (modelViewShopping.selection)
                   SizedBox(
                     height: size.height * 0.05,
                   ),
-                if (!textFieldProvider.selection) const Spacer(),
+                if (!modelViewShopping.selection) const Spacer(),
                 Focus(
-                  onFocusChange: (focus) => textFieldProvider.selection = focus,
-                  child: CustomTextField(
-                    onChanged: (value) {
-                      textFieldProvider.textValue = value;
-                    },
-                    onSaved: (value) {},
-                    validator: (value) {},
-                    width: size.width * 0.6,
-                    height: 35,
-                    decoration: basicInputDecoration(
-                        hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                        hintText: "Nom de la liste"),
+                  onFocusChange: (focus) => modelViewShopping.selection = focus,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: size.width * 0.20,
+                          width: size.width * 0.20,
+                          decoration: BoxDecoration(
+                            color: kSurfaceLightColor,
+                            boxShadow: [kShadowBase],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: size.width * 0.02),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(height: size.height * 0.001),
+                                Icon(
+                                  Icons.category,
+                                  size: size.width * 0.08,
+                                ),
+                                Text(
+                                  "Catégorie",
+                                  style: textTheme.headline5?.copyWith(color: kDarkerTextColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      CustomTextField(
+                        onChanged: (value) {
+                          modelViewShopping.textField = value;
+                        },
+                        onSaved: (value) {},
+                        validator: (value) {},
+                        width: size.width * 0.6,
+                        height: 35,
+                        decoration: basicInputDecoration(
+                            hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
+                            hintText: "Nom du produit"),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.03,
+                  height: size.height * 0.01,
                 ),
-                Container(
-                  width: size.width * 0.6,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: kSurfaceLightColor,
-                      boxShadow: [kShadowBase]),
-                  child: DropdownButton<ProductList>(
-                    value: textFieldProvider.value,
-                    hint: textFieldProvider.value != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text((cast<ProductList>(textFieldProvider.value)!)
-                                  .name),
-                              SizedBox(
-                                width: size.width * 0.2,
-                              ),
-                            ],
-                          )
-                        : const Text("Dupliquer une liste"),
-                    icon: const Icon(Icons.expand_more_rounded),
-                    elevation: 16,
-                    style: textTheme.headline5,
-                    underline: Container(
-                      height: 0,
+                Row(
+                  children: [
+                    SizedBox(
+                      width: size.width * 0.31,
                     ),
-                    onChanged: (ProductList? newValue) {
-                      textFieldProvider.value = newValue;
-                    },
-                    items: productListListForDropdown
-                        .map<DropdownMenuItem<ProductList>>(
-                            (ProductList? list) {
-                      return DropdownMenuItem<ProductList>(
-                        value: list,
-                        child: Text(list != null ? list.name : "Aucune"),
-                      );
-                    }).toList(),
-                  ),
+                    Text(
+                      "0",
+                      style: textTheme.headline2,
+                    ),
+                    SizedBox(width: size.width * 0.02),
+                    CustomIconButton(
+                      press: () {},
+                      icon: Icons.add_rounded,
+                      size: const CustomIconButtonSize.small(),
+                      circle: false,
+                      outline: true,
+                    ),
+                    SizedBox(width: size.width * 0.02),
+                    CustomIconButton( 
+                      press: () {},
+                      icon: Icons.remove_rounded,
+                      size: const CustomIconButtonSize.small(),
+                      circle: false,
+                      outline: true,
+                    ),
+                    SizedBox(width: size.width * 0.02),
+                    Container(
+                      width: size.width * 0.35,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: kSurfaceLightColor,
+                          boxShadow: [kShadowBase]),
+                      child: DropdownButton<QuantityUnit>(
+                        value: QuantityUnit.paquet,
+                        hint: SizedBox(
+                          width: size.width * 0.3 - 24,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AutoSizeText(
+                                cast<QuantityUnit>(modelViewShopping.isCategorySelected)
+                                    .toString(),
+                                maxLines: 1,
+                                style: textTheme.headline5,
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                        icon: const Icon(Icons.expand_more_rounded),
+                        elevation: 16,
+                        style: textTheme.headline5,
+                        underline: Container(
+                          height: 0,
+                        ),
+                        onChanged: (QuantityUnit? newValue) {
+                          modelViewShopping.isCategorySelected = newValue.toString();
+                        },
+                        items: [
+                          ...QuantityUnit.values,
+                          null
+                        ].map<DropdownMenuItem<QuantityUnit>>((QuantityUnit? list) {
+                          return DropdownMenuItem<QuantityUnit>(
+                            value: list,
+                            child: Text(
+                                list != null ? list.name : "Dupliquer",
+                                style: list == null
+                                    ? textTheme.headline5
+                                        ?.copyWith(color: kPrimaryColor)
+                                    : null),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ]
                 ),
                 const Spacer(),
                 CustomTextButton(
-                  press: () {
-                    if (textFieldProvider.textValue.isNotEmpty) {
-                      if (textFieldProvider.value!.name != "Aucune") {
-                        productListListForDropdown.add(ProductList(
-                            listOfProduct:
-                                textFieldProvider.value!.listOfProduct,
-                            name: textFieldProvider.textValue));
-                      } else {
-                        productListListForDropdown.add(ProductList(
-                            listOfProduct: [],
-                            name: textFieldProvider.textValue));
-                      }
-                      Navigator.pop(context);
-                    }
-                  },
+                  press: () {},
                   text: "Ajouter",
-                  isActive: textFieldProvider.textValue.isNotEmpty,
+                  isActive: modelViewShopping.count != 0 && modelViewShopping.textField != "" && modelViewShopping.isCategorySelected != "",
                 ),
               ],
             ),
