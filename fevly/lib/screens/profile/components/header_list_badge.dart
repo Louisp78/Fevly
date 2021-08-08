@@ -45,7 +45,7 @@ class HeaderListBadge extends StatelessWidget {
                 searchField.listOfObjects = sortListBadgeBySearch(
                     sourceList: badgeList1, search: searchField.textValue);
               },
-              decoration: badgeSearchInputDecoration(
+              decoration: smallSearchInputDecoration(
                 hintStyle: kSearchHintStyle(textTheme: textTheme),
                 hintText: "Rechercher un badges",
                 size: size,

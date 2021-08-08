@@ -55,7 +55,7 @@ class BottomSection extends StatelessWidget {
           },
           text: "Connexion",
           borderColor: formViewModel.isFormValid ? kPrimaryColor : kTextColor,
-          size: CustomSmallButtonSize.normal,
+          buttonSize: CustomSmallButtonSize.normal,
         ),
         SizedBox(
           height: size.height * 0.02,
