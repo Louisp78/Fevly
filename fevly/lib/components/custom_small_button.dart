@@ -2,25 +2,27 @@ import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum CustomSmallButtonSize { small, normal, verySmall}
+enum CustomSmallButtonSize { small, normal, verySmall }
 
 class CustomSmallButton extends StatelessWidget {
   const CustomSmallButton({
     Key? key,
     this.prefixIcon,
     this.suffixIcon,
-    required this.size,
+    this.buttonSize = CustomSmallButtonSize.normal,
     this.lightMode = true,
     this.withBorder = true,
     required this.text,
     required this.press,
     this.borderColor,
+    this.textColor,
   }) : super(key: key);
 
   final String text;
+  final Color? textColor;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final CustomSmallButtonSize size;
+  final CustomSmallButtonSize buttonSize;
   final bool lightMode;
   final bool withBorder;
   final GestureTapCallback press;
@@ -30,7 +32,9 @@ class CustomSmallButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final bool isSmall = size == CustomSmallButtonSize.small;
+    final bool isSmall = buttonSize == CustomSmallButtonSize.small;
+    final Color chooseTextColor =
+        textColor ?? (lightMode ? Colors.black : Colors.white);
     return InkWell(
       onTap: press,
       child: Container(
@@ -49,7 +53,7 @@ class CustomSmallButton extends StatelessWidget {
               : null,
           color: withBorder
               ? null
-              : (lightMode ? kSurfaceLightColor : kDarkSurfaceLightColor),
+              : (lightMode ? kSurfaceColor : kDarkSurfaceLightColor),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -58,13 +62,15 @@ class CustomSmallButton extends StatelessWidget {
             if (prefixIcon != null) const SizedBox(width: 5),
             Text(
               text,
-              style: size == CustomSmallButtonSize.verySmall ? textTheme.headline6 :(isSmall
-                  ? textTheme.headline5?.copyWith(
-                      color: lightMode ? Colors.black : Colors.white,
-                    )
-                  : textTheme.headline3?.copyWith(
-                      color: lightMode ? Colors.black : Colors.white,
-                    )),
+              style: buttonSize == CustomSmallButtonSize.verySmall
+                  ? textTheme.headline6
+                  : (isSmall
+                      ? textTheme.headline5?.copyWith(
+                          color: chooseTextColor,
+                        )
+                      : textTheme.headline3?.copyWith(
+                          color: chooseTextColor,
+                        )),
             ),
             if (suffixIcon != null) const SizedBox(width: 5),
             if (suffixIcon != null) suffixIcon!,
