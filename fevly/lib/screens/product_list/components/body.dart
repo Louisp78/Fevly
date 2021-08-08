@@ -52,7 +52,7 @@ class Body extends StatelessWidget {
                               sourceList: productList.listOfProduct,
                               search: searchField.textValue);
                         },
-                        decoration: badgeSearchInputDecoration(
+                        decoration: smallSearchInputDecoration(
                           hintStyle: kSearchHintStyle(textTheme: textTheme),
                           hintText: "Rechercher un produit",
                           size: size,

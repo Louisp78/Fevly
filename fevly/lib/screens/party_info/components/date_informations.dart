@@ -9,7 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../constant.dart';
 
 class DateInformations extends StatelessWidget {
-  const DateInformations({Key? key,}) : super(key: key);
+  const DateInformations({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class DateInformations extends StatelessWidget {
       height: 150,
       width: size.width * 0.9,
       decoration: BoxDecoration(
-        color: kSurfaceLightColor, boxShadow: [kShadowBase],
+        color: kSurfaceLightColor,
+        boxShadow: [kShadowBase],
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -32,7 +35,7 @@ class DateInformations extends StatelessWidget {
             child: Text(
               "Dates",
               style: textTheme.headline4,
-              ),
+            ),
           ),
           SizedBox(height: size.height * 0.01),
           Padding(
@@ -46,10 +49,10 @@ class DateInformations extends StatelessWidget {
                     Text(
                       "Début",
                       style: textTheme.headline6,
-                      ),
+                    ),
                     SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
-                      size: CustomSmallButtonSize.verySmall,
+                      buttonSize: CustomSmallButtonSize.verySmall,
                       text: "26/08/2021 à 18h00",
                       press: () {},
                       prefixIcon: const Icon(
@@ -67,10 +70,10 @@ class DateInformations extends StatelessWidget {
                     Text(
                       "Fin",
                       style: textTheme.headline6,
-                      ),
+                    ),
                     SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
-                      size: CustomSmallButtonSize.verySmall,
+                      buttonSize: CustomSmallButtonSize.verySmall,
                       text: "26/08/2021 à 18h00",
                       press: () {},
                       prefixIcon: const Icon(
@@ -91,22 +94,22 @@ class DateInformations extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Dans 60 jours",
-                    style: textTheme.headline6,
-                  ),
-                  SizedBox(height: size.height * 0.008),
-                  CustomTextButton(
-                    buttonSize: const CustomTextButtonSize.verySmall(),
-                    text: "Programmer",
-                    press: () {},
-                    prefixIcon: const Icon(
-                      Icons.calendar_today_rounded,
-                      color: Colors.white,
-                      size: 13,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Dans 60 jours",
+                      style: textTheme.headline6,
+                    ),
+                    SizedBox(height: size.height * 0.008),
+                    CustomTextButton(
+                      buttonSize: const CustomTextButtonSize.verySmall(),
+                      text: "Programmer",
+                      press: () {},
+                      prefixIcon: const Icon(
+                        Icons.calendar_today_rounded,
+                        color: Colors.white,
+                        size: 13,
                       ),
                     ),
                   ],

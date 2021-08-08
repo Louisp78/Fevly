@@ -8,7 +8,7 @@ import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_product_list.dart';
-import 'drop_list.dart';
+import '../../../components/custom_drop_list.dart';
 import 'list_tile_item.dart';
 
 class Body extends StatelessWidget {
@@ -25,9 +25,9 @@ class Body extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: kBasicVerticalPadding(size: size * 5),
+                  height: 110,
                 ),
-                DropList(
+                CustomDropList(
                   title: "Listes d'invités",
                   iconData: Icons.group_add_rounded,
                   listWidget:
@@ -58,7 +58,7 @@ class Body extends StatelessWidget {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                DropList(
+                CustomDropList(
                   title: "Listes de courses",
                   iconData: Icons.playlist_add_rounded,
                   listWidget:

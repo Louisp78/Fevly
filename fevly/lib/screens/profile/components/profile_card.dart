@@ -104,7 +104,7 @@ class ProfileCard extends StatelessWidget {
             flex: 3,
           ),
           CustomSmallButton(
-            size: CustomSmallButtonSize.small,
+            buttonSize: CustomSmallButtonSize.small,
             text: relationState.name,
             lightMode: false,
             press: () => Navigator.pushNamed(context, "/profile/my_lists"),
