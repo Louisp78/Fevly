@@ -2,23 +2,18 @@ import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/is_shopping.dart';
 import 'package:fevly/models/product.dart';
-import 'package:fevly/models/product_list.dart';
-import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_guest_list.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test/data_example.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constant.dart';
 import 'add_and_load_shopping.dart';
 import 'custom_bottom_sheet_product_list.dart';
+import 'custom_button_sheet_product_add.dart';
 import 'drop_list.dart';
 import 'list_tile_item.dart';
 
@@ -141,7 +136,7 @@ class Body extends StatelessWidget {
                               context: context,
                               backgroundColor: Colors.transparent,
                               builder: (BuildContext context) {
-                                return const CustomBottomSheetProductList(
+                                return const CustomBottomSheetProductAdd(
                                   title: "Ajouter une liste de courses",
                       );
                     }
@@ -152,7 +147,7 @@ class Body extends StatelessWidget {
                         context: context,
                         backgroundColor: Colors.transparent,
                         builder: (BuildContext context) {
-                          return const CustomBottomSheetProductList(
+                          return const CustomBottomSheetProductAdd(
                             title: "Ajouter un produit",
                           );
                         }),
