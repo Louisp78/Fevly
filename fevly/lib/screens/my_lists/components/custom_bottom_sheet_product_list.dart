@@ -4,7 +4,7 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -27,8 +27,8 @@ class CustomBottomSheetProductList extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return ChangeNotifierProvider(
-      create: (context) => TextFieldProvider<ProductList>(),
-      child: Consumer<TextFieldProvider<ProductList>>(
+      create: (context) => TextFieldModelView<ProductList>(),
+      child: Consumer<TextFieldModelView<ProductList>>(
         builder: (context, textFieldProvider, child) =>
             Stack(clipBehavior: Clip.none, children: [
           Container(
@@ -64,7 +64,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                   onFocusChange: (focus) => textFieldProvider.selection = focus,
                   child: CustomTextField(
                     onChanged: (value) {
-                      textFieldProvider.textValueOverride = value;
+                      textFieldProvider.textValue = value;
                     },
                     onSaved: (value) {},
                     validator: (value) {},
@@ -81,25 +81,29 @@ class CustomBottomSheetProductList extends StatelessWidget {
                 Container(
                   width: size.width * 0.6,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: kSurfaceLightColor,
                       boxShadow: [kShadowBase]),
                   child: DropdownButton<ProductList>(
                     value: textFieldProvider.value,
-                    hint: textFieldProvider.value != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text((cast<ProductList>(textFieldProvider.value)!)
-                                  .name),
-                              SizedBox(
-                                width: size.width * 0.2,
-                              ),
-                            ],
-                          )
-                        : const Text("Dupliquer une liste"),
+                    hint: SizedBox(
+                      width: size.width * 0.5 - 24,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AutoSizeText(
+                            textFieldProvider.value != null
+                                ? cast<ProductList>(textFieldProvider.value)!
+                                    .name
+                                : "Dupliquer une liste",
+                            maxLines: 1,
+                            style: textTheme.headline5,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
                     icon: const Icon(Icons.expand_more_rounded),
                     elevation: 16,
                     style: textTheme.headline5,
@@ -107,14 +111,20 @@ class CustomBottomSheetProductList extends StatelessWidget {
                       height: 0,
                     ),
                     onChanged: (ProductList? newValue) {
-                      textFieldProvider.singleValue = newValue;
+                      textFieldProvider.value = newValue;
                     },
-                    items: productListListForDropdown
-                        .map<DropdownMenuItem<ProductList>>(
-                            (ProductList? list) {
+                    items: [
+                      ...productListListForDropdown,
+                      null
+                    ].map<DropdownMenuItem<ProductList>>((ProductList? list) {
                       return DropdownMenuItem<ProductList>(
                         value: list,
-                        child: Text(list != null ? list.name : "Aucune"),
+                        child: Text(
+                            list != null ? list.name : "Dupliquer une liste",
+                            style: list == null
+                                ? textTheme.headline5
+                                    ?.copyWith(color: kPrimaryColor)
+                                : null),
                       );
                     }).toList(),
                   ),
@@ -122,11 +132,11 @@ class CustomBottomSheetProductList extends StatelessWidget {
                 const Spacer(),
                 CustomTextButton(
                   press: () {
-                    if (textFieldProvider.textValueOverride.isNotEmpty) {
-                      if (textFieldProvider.singleValue!.name != "Aucune") {
+                    if (textFieldProvider.textValue.isNotEmpty) {
+                      if (textFieldProvider.value!.name != "Aucune") {
                         productListListForDropdown.add(ProductList(
                             listOfProduct:
-                                textFieldProvider.singleValue!.listOfProduct,
+                                textFieldProvider.value!.listOfProduct,
                             name: textFieldProvider.textValue));
                       } else {
                         productListListForDropdown.add(ProductList(
@@ -137,7 +147,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                     }
                   },
                   text: "Ajouter",
-                  isActive: textFieldProvider.textValueOverride.isNotEmpty,
+                  isActive: textFieldProvider.textValue.isNotEmpty,
                 ),
               ],
             ),

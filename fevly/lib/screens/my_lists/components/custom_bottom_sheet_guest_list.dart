@@ -4,7 +4,7 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/guest_list.dart';
-import 'package:fevly/models/text_field_provider.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -27,8 +27,8 @@ class CustomBottomSheetGuestList extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return ChangeNotifierProvider(
-      create: (context) => TextFieldProvider<GuestList>(),
-      child: Consumer<TextFieldProvider<GuestList>>(
+      create: (context) => TextFieldModelView<GuestList>(),
+      child: Consumer<TextFieldModelView<GuestList>>(
         builder: (context, textFieldProvider, child) =>
             Stack(clipBehavior: Clip.none, children: [
           Container(
@@ -64,7 +64,7 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                   onFocusChange: (focus) => textFieldProvider.selection = focus,
                   child: CustomTextField(
                     onChanged: (value) {
-                      textFieldProvider.textValueOverride = value;
+                      textFieldProvider.textValue = value;
                     },
                     onSaved: (value) {},
                     validator: (value) {},
@@ -81,25 +81,28 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                 Container(
                   width: size.width * 0.6,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: kSurfaceLightColor,
                       boxShadow: [kShadowBase]),
                   child: DropdownButton<GuestList>(
                     value: textFieldProvider.value,
-                    hint: textFieldProvider.value != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(cast<GuestList>(textFieldProvider.value)!
-                                  .name),
-                              SizedBox(
-                                width: size.width * 0.2,
-                              ),
-                            ],
-                          )
-                        : const Text("Dupliquer une liste"),
+                    hint: SizedBox(
+                      width: size.width * 0.5 - 24,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AutoSizeText(
+                            textFieldProvider.value != null
+                                ? cast<GuestList>(textFieldProvider.value)!.name
+                                : "Dupliquer une liste",
+                            maxLines: 1,
+                            style: textTheme.headline5,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
                     icon: const Icon(Icons.expand_more_rounded),
                     elevation: 16,
                     style: textTheme.headline5,
@@ -107,13 +110,18 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                       height: 0,
                     ),
                     onChanged: (GuestList? newValue) {
-                      textFieldProvider.singleValue = newValue;
+                      textFieldProvider.value = newValue;
                     },
-                    items: guestListListForDropdown
+                    items: [...guestListListForDropdown, null]
                         .map<DropdownMenuItem<GuestList>>((GuestList? list) {
                       return DropdownMenuItem<GuestList>(
                         value: list,
-                        child: Text(list != null ? list.name : "Aucune"),
+                        child: Text(
+                            list != null ? list.name : "Dupliquer une liste",
+                            style: list == null
+                                ? textTheme.headline5
+                                    ?.copyWith(color: kPrimaryColor)
+                                : null),
                       );
                     }).toList(),
                   ),
@@ -122,7 +130,7 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                 CustomTextButton(
                   press: () {},
                   text: "Ajouter",
-                  isActive: textFieldProvider.textValueOverride.isNotEmpty,
+                  isActive: textFieldProvider.textValue.isNotEmpty,
                 ),
               ],
             ),
