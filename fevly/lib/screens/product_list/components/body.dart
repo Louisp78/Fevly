@@ -88,11 +88,8 @@ class Body extends StatelessWidget {
             Positioned(
               top: 0,
               child: CustomBasicAppBar(
-                title: kBasicTitleForAppBar(
-                    title: productList.name, textTheme: textTheme),
-                subtitle: kBasicSubtitleForAppBar(
-                    subtitle: "${productList.numberOfProducts} produits",
-                    textTheme: textTheme),
+                title: productList.name,
+                subtitleText: "${productList.numberOfProducts} produits",
                 iconData: Icons.arrow_back_ios_rounded,
                 press: () => Navigator.pop(context),
               ),

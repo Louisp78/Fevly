@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_guest_list.dart';
@@ -9,7 +8,6 @@ import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_product_list.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'drop_list.dart';
 import 'list_tile_item.dart';
 
@@ -19,8 +17,6 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return SizedBox(
       height: size.height,
       child: Stack(
@@ -100,10 +96,11 @@ class Body extends StatelessWidget {
           ),
           const Positioned(bottom: 0, child: CustomBottomBar()),
           CustomBasicAppBar(
-              iconData: Icons.arrow_back_ios_rounded,
-              press: () => Navigator.pop(context),
-              title: kBasicTitleForAppBar(
-                  title: "Mes Listes", textTheme: textTheme)),
+            iconData: Icons.arrow_back_ios_rounded,
+            press: () => Navigator.pop(context),
+            title: "Mes Listes",
+            subtitleText: "4 listes",
+          ),
         ],
       ),
     );
