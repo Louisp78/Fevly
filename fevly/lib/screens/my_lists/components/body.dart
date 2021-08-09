@@ -24,7 +24,7 @@ class Body extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 110,
                 ),
                 CustomDropList(

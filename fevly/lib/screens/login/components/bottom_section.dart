@@ -46,7 +46,7 @@ class BottomSection extends StatelessWidget {
                 SnackBar(
                   backgroundColor: kSurfaceColor,
                   content: Text(
-                    snackBarMissingField,
+                    kSnackBarMissingField,
                     style: textTheme.headline4?.copyWith(color: kPrimaryColor),
                   ),
                 ),
@@ -55,7 +55,6 @@ class BottomSection extends StatelessWidget {
           },
           text: "Connexion",
           borderColor: formViewModel.isFormValid ? kPrimaryColor : kTextColor,
-          buttonSize: CustomSmallButtonSize.normal,
         ),
         SizedBox(
           height: size.height * 0.02,
