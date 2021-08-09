@@ -93,25 +93,64 @@ List<Badge> badgeList1 = [
 
 final listOfUsers1 = [
   User(
-      name: "Vincent Libeskind",
-      pseudo: "vinvin",
-      password: "ehehehe",
-      email: "vincent.libeskind@gmail.com"),
+    name: "Vincent Libeskind",
+    pseudo: "vinvin",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.unFriend,
+  ),
   User(
-      name: "Mathilde Fontaine",
-      pseudo: "mathouFtn",
-      password: "ehehehe",
-      email: "vincent.libeskind@gmail.com"),
+    name: "Mathilde Fontaine",
+    pseudo: "mathouFtn",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.unFriend,
+  ),
   User(
-      name: "Marie Fontaine",
-      pseudo: "marieFtn",
-      password: "ehehehe",
-      email: "vincent.libeskind@gmail.com"),
+    name: "Marie Fontaine",
+    pseudo: "marieFtn",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.unFriend,
+  ),
   User(
-      name: "Elise Place",
-      pseudo: "elisePl",
-      password: "ehehehe",
-      email: "vincent.libeskind@gmail.com"),
+    name: "Elise Place",
+    pseudo: "elisePl",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.unFriend,
+  ),
+];
+
+final listOfFriends1 = [
+  User(
+    name: "Vincent Libeskind",
+    pseudo: "vinvin",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.friend,
+  ),
+  User(
+    name: "Mathilde Fontaine",
+    pseudo: "mathouFtn",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.friend,
+  ),
+  User(
+    name: "Marie Fontaine",
+    pseudo: "marieFtn",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.friend,
+  ),
+  User(
+    name: "Elise Place",
+    pseudo: "elisePl",
+    password: "ehehehe",
+    email: "vincent.libeskind@gmail.com",
+    relationState: UserRelationState.friend,
+  ),
 ];
 
 final listParties1 = [

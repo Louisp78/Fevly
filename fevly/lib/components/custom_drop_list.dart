@@ -10,18 +10,22 @@ class CustomDropList extends StatelessWidget {
     required this.title,
     this.iconData,
     required this.listWidget,
-    required this.addItemPress,
+    this.addItemPress,
     this.displayButton = true,
-  }) : assert(
+  })  : assert(
             displayButton && iconData != null ||
                 !displayButton && iconData == null,
-            "Couldn't display the icon inside the textButton");
+            "Couldn't display the icon inside the textButton"),
+        assert(
+            displayButton && addItemPress != null ||
+                !displayButton && addItemPress == null,
+            "You need addItemPress when button is show!");
 
   final String title;
   final IconData? iconData;
   final bool displayButton;
   final List<Widget> listWidget;
-  final GestureTapCallback addItemPress;
+  final GestureTapCallback? addItemPress;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,7 @@ class CustomDropList extends StatelessWidget {
               listLen: listWidget.length,
               button: displayButton
                   ? CustomTextButton(
-                      press: addItemPress,
+                      press: addItemPress!,
                       text: "Ajouter",
                       buttonSize: const CustomTextButtonSize.small(),
                       suffixIcon: Icon(

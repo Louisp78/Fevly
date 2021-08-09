@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
     required this.decoration,
     this.width,
     this.height,
+    this.padding,
   }) : super(key: key);
   final bool isSelected;
   final bool obscureText;
@@ -20,6 +21,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?) validator;
   final InputDecoration decoration;
   final double? width, height;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class CustomTextField extends StatelessWidget {
     return Container(
       width: width ?? size.width * 0.8,
       height: height,
+      padding: padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),

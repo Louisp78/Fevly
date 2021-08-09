@@ -22,8 +22,11 @@ Volutpat ornare volutpat eu ut. Dignissim sit diam donec bibendum fringilla tris
 String validatorMissed({required String source}) =>
     "Oops vous avez oublier votre $source.";
 
-const String snackBarMissingField =
+const String kSnackBarMissingField =
     "Il semble que vous ayez oublié 2 ou 3 trucs...";
+
+String kSnackBarSendFrienRequest({required String userPseudo}) =>
+    "Demande d'ami envoyé à $userPseudo !";
 
 String needToBeFriendMessage({required String username}) =>
     "Devenez ami avec $username pour voir ses badges.";
