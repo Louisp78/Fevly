@@ -185,7 +185,7 @@ class FormSection extends StatelessWidget {
                         SnackBar(
                           backgroundColor: kSurfaceColor,
                           content: Text(
-                            snackBarMissingField,
+                            kSnackBarMissingField,
                             style: textTheme.headline4
                                 ?.copyWith(color: kPrimaryColor),
                           ),
