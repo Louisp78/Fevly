@@ -18,7 +18,7 @@ extension UserRelationStateExtension on UserRelationState {
       case UserRelationState.requestSent:
         return "En attente";
       case UserRelationState.unFriend:
-        return "Devenir ami";
+        return "Ajouter";
     }
   }
 
