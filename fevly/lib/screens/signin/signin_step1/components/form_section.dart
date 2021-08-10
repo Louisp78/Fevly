@@ -42,6 +42,9 @@ class FormSection extends StatelessWidget {
                 height: size.height * 0.05,
               ),
               CustomTextField(
+                padding: EdgeInsets.only(
+                  bottom: kBasicVerticalPadding(size: size),
+                ),
                 decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: "Adresse mail"),
@@ -63,6 +66,9 @@ class FormSection extends StatelessWidget {
                 },
               ),
               CustomTextField(
+                padding: EdgeInsets.only(
+                  bottom: kBasicVerticalPadding(size: size),
+                ),
                 decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: "Créer un mot de passe"),
@@ -114,7 +120,8 @@ class FormSection extends StatelessWidget {
                         _keyForm.currentState!.validate();
 
                     if (validation) {
-                      Navigator.pushNamed(context, '/signin_step2');
+                      Navigator.pushNamed(
+                          context, '/signin_step1/signin_step2');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

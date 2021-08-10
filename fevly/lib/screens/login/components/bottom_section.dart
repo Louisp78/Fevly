@@ -1,6 +1,7 @@
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/test/data_example.dart';
 import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,11 @@ class BottomSection extends StatelessWidget {
                   ),
                 ),
               );
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(
+                context,
+                '/profile',
+                arguments: kCurrentUser,
+              );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

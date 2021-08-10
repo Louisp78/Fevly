@@ -35,7 +35,11 @@ class Body extends StatelessWidget {
                   UserSearchBar(
                     textFieldModelView: textFieldModelView,
                   ),
-                  buildListOfUser(size, textFieldModelView, listOfUser),
+                  buildListOfUser(
+                      size: size,
+                      context: context,
+                      textFieldModelView: textFieldModelView,
+                      listOfUser: listOfUser),
                 ],
               ),
             ),
@@ -53,8 +57,11 @@ class Body extends StatelessWidget {
 
   //$ METHOD
   //$ ================================================================
-  Expanded buildListOfUser(Size size,
-      TextFieldModelView<dynamic> textFieldModelView, List<User> listOfUser) {
+  Expanded buildListOfUser(
+      {required Size size,
+      required BuildContext context,
+      required TextFieldModelView<dynamic> textFieldModelView,
+      required List<User> listOfUser}) {
     return Expanded(
       child: SingleChildScrollView(
         child: Padding(
@@ -67,6 +74,8 @@ class Body extends StatelessWidget {
                   child: Column(
                     children: List.generate(listOfUser.length, (index) {
                       return CustomUserListItem(
+                        press: () => Navigator.pushNamed(context, '/profile',
+                            arguments: listOfUser[index]),
                         currentList: listOfUser,
                         index: index,
                       );

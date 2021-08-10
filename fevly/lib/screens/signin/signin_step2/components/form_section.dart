@@ -61,6 +61,9 @@ class FormSection extends StatelessWidget {
                 height: size.height * 0.05,
               ),
               CustomTextField(
+                padding: EdgeInsets.only(
+                  bottom: kBasicVerticalPadding(size: size),
+                ),
                 decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: "Prénom"),
@@ -129,7 +132,7 @@ class FormSection extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () => Navigator.pushNamed(
-                          context, '/signin_step2/term_of_use'),
+                          context, '/signin_step1/signin_step2/term_of_use'),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
                         child: AutoSizeText(

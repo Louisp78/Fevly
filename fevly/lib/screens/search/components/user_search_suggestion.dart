@@ -21,6 +21,8 @@ class UserSearchSuggestion extends StatelessWidget {
               return CustomUserListItem(
                 currentList: listOfUsers1,
                 index: index,
+                press: () => Navigator.pushNamed(context, '/profile',
+                    arguments: listOfUsers1[index]),
               );
             },
           ),
@@ -34,6 +36,8 @@ class UserSearchSuggestion extends StatelessWidget {
               return CustomUserListItem(
                 currentList: listOfFriends1,
                 index: index,
+                press: () => Navigator.pushNamed(context, '/profile',
+                    arguments: listOfFriends1[index]),
               );
             },
           ),

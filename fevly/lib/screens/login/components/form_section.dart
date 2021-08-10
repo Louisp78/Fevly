@@ -42,6 +42,8 @@ class FormSection extends StatelessWidget {
                     height: size.height * 0.05,
                   ),
                   CustomTextField(
+                    padding: EdgeInsets.only(
+                        bottom: kBasicVerticalPadding(size: size)),
                     decoration: basicInputDecoration(
                         hintStyle: kBasicHintStyle(textTheme: textTheme),
                         hintText: "Nom d'utilisateur ou adresse mail"),
@@ -66,6 +68,7 @@ class FormSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   CustomTextField(
+                    padding: EdgeInsets.only(bottom: size.height * 0.02),
                     decoration: basicInputDecoration(
                         hintStyle: kBasicHintStyle(textTheme: textTheme),
                         hintText: "Mot de passe"),
