@@ -34,28 +34,78 @@ extension UserRelationStateExtension on UserRelationState {
         return Icons.person_add_rounded;
     }
   }
+
+  UserRelationState get changeRelation {
+    switch (this) {
+      case UserRelationState.friend:
+      case UserRelationState.requestSent:
+        return UserRelationState.unFriend;
+      case UserRelationState.me:
+        return this;
+      case UserRelationState.unFriend:
+        return UserRelationState.requestSent;
+    }
+  }
 }
 
 //$ CLASS
 //$ ============================================================
 
-class User {
-  String name;
-  String pseudo;
-  String password;
-  String email;
-  UserRelationState relationState;
+class User extends ChangeNotifier {
+  String _name;
+  String _pseudo;
+  String _password;
+  String _email;
+  UserRelationState _relationState;
 
   User(
-      {this.relationState = UserRelationState.me,
-      required this.name,
-      required this.pseudo,
-      required this.password,
-      required this.email})
-      : assert(!containsInString(name, specialChar),
+      {UserRelationState relationState = UserRelationState.me,
+      required String name,
+      required String pseudo,
+      required String password,
+      required String email})
+      : _email = email,
+        _name = name,
+        _password = password,
+        _pseudo = pseudo,
+        _relationState = relationState,
+        assert(!containsInString(name, specialChar),
             "name couldn't contain specialChars."),
         assert(email.contains("@"), "email must contain '@'."),
         assert(!pseudo.contains("@"), "pseudo must not contain '@'.");
+
+  //* GETTER
+  UserRelationState get relationState => _relationState;
+  String get name => _name;
+  String get pseudo => _pseudo;
+  String get password => _password;
+  String get email => _email;
+
+  //* SETTER
+  set relationState(UserRelationState newRelationState) {
+    _relationState = newRelationState;
+    notifyListeners();
+  }
+
+  set name(String newName) {
+    _name = newName;
+    notifyListeners();
+  }
+
+  set pseudo(String newPseudo) {
+    _pseudo = newPseudo;
+    notifyListeners();
+  }
+
+  set email(String newEmail) {
+    _email = newEmail;
+    notifyListeners();
+  }
+
+  set password(String newPass) {
+    _password = newPass;
+    notifyListeners();
+  }
 
   @override
   String toString() {
