@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/models/badge.dart';
+import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,18 @@ String validatorMissed({required String source}) =>
 const String kSnackBarMissingField =
     "Il semble que vous ayez oublié 2 ou 3 trucs...";
 
-String kSnackBarSendFrienRequest({required String userPseudo}) =>
-    "Demande d'ami envoyé à $userPseudo !";
+String kSnackBarUserRelation({required User user}) {
+  switch (user.relationState) {
+    case UserRelationState.unFriend:
+      return "Demande d'ami envoyée à ${user.pseudo}!";
+    case UserRelationState.friend:
+      return "Vous n'êtes plus ami avec ${user.pseudo}.";
+    case UserRelationState.me:
+      return "Avez vous des amis imaginaires?";
+    case UserRelationState.requestSent:
+      return "Nous avons discrètement détruit cette invitation.";
+  }
+}
 
 String needToBeFriendMessage({required String username}) =>
     "Devenez ami avec $username pour voir ses badges.";

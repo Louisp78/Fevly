@@ -5,6 +5,12 @@ import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
+final User kCurrentUser = User(
+    name: "Louis Place",
+    pseudo: "llouisp78",
+    password: "loulou78",
+    email: "placelouis@gmail.com");
+
 final List<String> avatarsList = [
   "louis",
   "vincent",
