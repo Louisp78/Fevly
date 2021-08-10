@@ -31,6 +31,7 @@ class CustomTextButton extends StatelessWidget {
     this.buttonSize = const CustomTextButtonSize.normal(),
     this.backgroundColor,
     this.textColor,
+    this.border,
   }) : super(key: key);
 
   final Widget? prefixIcon;
@@ -43,6 +44,7 @@ class CustomTextButton extends StatelessWidget {
   final bool isActive;
   final CustomTextButtonSize buttonSize;
   final Color? backgroundColor;
+  final Border? border;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class CustomTextButton extends StatelessWidget {
                   ? (lightMode ? kPrimaryColor : kDarkPrimaryColor)
                   : kTextColor),
           borderRadius: BorderRadius.circular(buttonSize.borderRadius),
+          border: border,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
