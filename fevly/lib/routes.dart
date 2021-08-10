@@ -10,6 +10,8 @@ import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
 import 'package:fevly/styles/transition.dart';
 import 'package:flutter/material.dart';
 
+import 'models/user.dart';
+
 class RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -28,20 +30,20 @@ class RouterNav {
           transitionDuration: const Duration(milliseconds: 500),
         );
 
-      case '/signin_step2':
+      case '/signin_step1/signin_step2':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const SignInStep2Screen(),
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-      case '/signin_step2/term_of_use':
+      case '/signin_step1/signin_step2/term_of_use':
         return MaterialPageRoute(builder: (_) => const TermOfUseScreen());
 
       case '/profile':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const ProfileScreen(),
+              ProfileScreen(profileOwner: settings.arguments! as User),
           transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
