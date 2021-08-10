@@ -10,18 +10,12 @@ import 'list_of_badges.dart';
 import 'profile_card.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key, required this.profileOwner}) : super(key: key);
+
+  final User profileOwner;
 
   @override
   Widget build(BuildContext context) {
-    final User profileOwner = User(
-        email: "@",
-        name: "Jean Eude",
-        pseudo: "jeaneude",
-        password: "heheheheheh",
-        // ignore: avoid_redundant_argument_values
-        relationState: UserRelationState.me);
-
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
