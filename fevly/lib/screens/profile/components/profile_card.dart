@@ -2,6 +2,7 @@ import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_dialog_list.dart';
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
@@ -15,16 +16,10 @@ import 'level_label.dart';
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
     Key? key,
-    required this.pseudo,
-    required this.name,
-    required this.level,
-    required this.relationState,
+    required this.profileOwner,
   }) : super(key: key);
 
-  final String pseudo;
-  final String name;
-  final int level;
-  final UserRelationState relationState;
+  final User profileOwner;
 
   @override
   Widget build(BuildContext context) {
@@ -62,20 +57,20 @@ class ProfileCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        pseudo,
+                        profileOwner.pseudo,
                         style:
                             textTheme.headline2?.copyWith(color: Colors.white),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
-                      const LevelLabel(
-                        level: 18,
+                      LevelLabel(
+                        level: profileOwner.level,
                       ),
                     ],
                   ),
                   Text(
-                    name,
+                    profileOwner.name,
                     style: textTheme.headline5?.copyWith(color: Colors.white),
                   ),
                 ],
@@ -105,11 +100,16 @@ class ProfileCard extends StatelessWidget {
           ),
           CustomSmallButton(
             buttonSize: CustomSmallButtonSize.small,
-            text: relationState.name,
+            text: profileOwner.relationState.name,
             lightMode: false,
-            press: () => Navigator.pushNamed(context, "/profile/my_lists"),
+            press: profileOwner.relationState == UserRelationState.me
+                ? () => Navigator.pushNamed(context, "/profile/my_lists")
+                : changeRelationState(
+                    user: profileOwner,
+                    context: context,
+                  ),
             prefixIcon: Icon(
-              relationState.iconData,
+              profileOwner.relationState.iconData,
               color: Colors.white,
               size: kSmallIconSize,
             ),
@@ -119,18 +119,18 @@ class ProfileCard extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               CounterItem(
                 title: "Soirées",
-                count: 31,
+                count: profileOwner.partyCounter,
               ),
               CounterItem(
                 title: "Amis",
-                count: 86,
+                count: profileOwner.listOfFriends.length,
               ),
               CounterItem(
                 title: "Badges",
-                count: 15,
+                count: profileOwner.listOfBadges.length,
               ),
             ],
           ),

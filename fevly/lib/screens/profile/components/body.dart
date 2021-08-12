@@ -2,7 +2,6 @@ import 'package:fevly/constant.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,8 @@ class Body extends StatelessWidget {
     return SizedBox(
       width: size.width,
       child: ChangeNotifierProvider(
-        create: (context) => TextFieldModelView(listOfObjects: badgeList1),
+        create: (context) =>
+            TextFieldModelView(listOfObjects: profileOwner.listOfBadges),
         child: Consumer<TextFieldModelView>(
           builder: (context, searchField, child) => Stack(
             alignment: Alignment.center,
@@ -47,12 +47,7 @@ class Body extends StatelessWidget {
                 Positioned(
                   top: size.height * 0.06,
                   left: size.width * 0.05,
-                  child: ProfileCard(
-                    level: 18,
-                    name: profileOwner.name,
-                    pseudo: profileOwner.pseudo,
-                    relationState: profileOwner.relationState,
-                  ),
+                  child: ProfileCard(profileOwner: profileOwner),
                 ),
             ],
           ),

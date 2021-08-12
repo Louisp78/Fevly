@@ -2,6 +2,7 @@ import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/components/custom_user_list_item.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/functions/create_new_from.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/search/components/user_search_bar.dart';
 import 'package:fevly/screens/search/components/user_search_suggestion.dart';
@@ -73,11 +74,19 @@ class Body extends StatelessWidget {
                   width: size.width,
                   child: Column(
                     children: List.generate(listOfUser.length, (index) {
-                      return CustomUserListItem(
-                        press: () => Navigator.pushNamed(context, '/profile',
-                            arguments: listOfUser[index]),
-                        currentList: listOfUser,
-                        index: index,
+                      return ChangeNotifierProvider(
+                        create: (context) =>
+                            createNewUserFrom(source: listOfUser[index]),
+                        child: Consumer<User>(
+                          builder: (context, user, child) => CustomUserListItem(
+                            currentList: listOfUser,
+                            index: index,
+                            press: () => Navigator.pushNamed(
+                                context, '/profile',
+                                arguments: user),
+                            user: user,
+                          ),
+                        ),
                       );
                     }),
                   ),
