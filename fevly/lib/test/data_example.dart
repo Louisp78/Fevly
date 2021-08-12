@@ -6,10 +6,13 @@ import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 
 final User kCurrentUser = User(
-    name: "Louis Place",
-    pseudo: "llouisp78",
-    password: "loulou78",
-    email: "placelouis@gmail.com");
+  name: "Louis Place",
+  pseudo: "llouisp",
+  password: "loulou78",
+  email: "placelouis@gmail.com",
+  listOfBadges: badgeList1,
+  level: 32,
+);
 
 final List<String> avatarsList = [
   "louis",
@@ -23,78 +26,39 @@ final List<String> avatarsList = [
 ];
 
 List<Badge> badgeList1 = [
-  Badge(
-    name: "Sandale",
-    badgeCategory: BadgeCategory.danse,
-    badgeType: BadgeType.wood,
-    image: "assets/badges/sandale_bois.svg",
-  ),
-  Badge(
-    name: "Sandale",
-    badgeCategory: BadgeCategory.danse,
-    badgeType: BadgeType.metal,
-    image: "assets/badges/sandale_metal.svg",
-  ),
-  Badge(
-    name: "Sandale",
-    badgeCategory: BadgeCategory.danse,
-    badgeType: BadgeType.gold,
-    image: "assets/badges/sandale_or.svg",
-  ),
-  Badge(
-      name: "Sandale",
-      badgeCategory: BadgeCategory.danse,
-      badgeType: BadgeType.diamond,
-      image: "assets/badges/sandale_diamant.svg"),
-  Badge(
-    name: "Lyre",
-    badgeCategory: BadgeCategory.music,
-    badgeType: BadgeType.gold,
-    image: "assets/badges/lyre_or.svg",
-  ),
-  Badge(
-      name: "Lyre",
-      badgeCategory: BadgeCategory.music,
-      badgeType: BadgeType.ruby,
-      image: "assets/badges/lyre_rubis.svg"),
-  Badge(
-      name: "Bouteille",
-      badgeCategory: BadgeCategory.drink,
-      badgeType: BadgeType.wood,
-      image: "assets/badges/bouteille_bois.svg"),
-  Badge(
-    name: "Bouteille",
-    badgeCategory: BadgeCategory.drink,
-    badgeType: BadgeType.ruby,
-    image: "assets/badges/bouteille_rubis.svg",
-  ),
-  Badge(
-      name: "Bouteille",
-      badgeCategory: BadgeCategory.drink,
-      badgeType: BadgeType.special,
-      image: "assets/badges/bouteille_ambroisie.svg"),
-  Badge(
-      name: "Rose",
-      badgeCategory: BadgeCategory.love,
-      badgeType: BadgeType.metal,
-      quantity: 10,
-      image: "assets/badges/rose_metal.svg"),
-  Badge(
-      name: "Rose",
-      quantity: 2,
-      badgeCategory: BadgeCategory.love,
-      badgeType: BadgeType.ruby,
-      image: "assets/badges/rose_rubis.svg"),
-  Badge(
-      name: "Spatule",
-      badgeCategory: BadgeCategory.cook,
-      badgeType: BadgeType.wood,
-      image: "assets/badges/spatules_bois.svg"),
-  Badge(
-      name: "Spatule",
-      badgeCategory: BadgeCategory.cook,
-      badgeType: BadgeType.diamond,
-      image: "assets/badges/spatules_diamant.svg"),
+  Badge.sandal(badgeType: BadgeType.wood),
+  Badge.sandal(badgeType: BadgeType.metal),
+  Badge.sandal(badgeType: BadgeType.gold),
+  Badge.sandal(badgeType: BadgeType.diamond),
+  Badge.lyre(badgeType: BadgeType.gold),
+  Badge.lyre(badgeType: BadgeType.ruby),
+  Badge.bottle(badgeType: BadgeType.wood),
+  Badge.bottle(badgeType: BadgeType.ruby),
+  Badge.bottle(badgeType: BadgeType.special),
+  Badge.rose(badgeType: BadgeType.metal),
+  Badge.rose(badgeType: BadgeType.wood),
+  Badge.spatula(badgeType: BadgeType.diamond),
+  Badge.spatula(badgeType: BadgeType.wood),
+];
+
+List<Badge> badgeList2 = [
+  Badge.rose(badgeType: BadgeType.gold),
+  Badge.rose(badgeType: BadgeType.diamond),
+  Badge.lyre(badgeType: BadgeType.wood),
+  Badge.spatula(badgeType: BadgeType.ruby),
+];
+
+List<Badge> badgeList3 = [
+  Badge.spatula(badgeType: BadgeType.wood),
+  Badge.spatula(badgeType: BadgeType.gold),
+  Badge.spatula(badgeType: BadgeType.ruby),
+  Badge.spatula(badgeType: BadgeType.diamond),
+  Badge.bottle(badgeType: BadgeType.metal),
+];
+
+List<Badge> badgeList4 = [
+  Badge.lyre(badgeType: BadgeType.diamond),
+  Badge.rose(badgeType: BadgeType.wood),
 ];
 
 final listOfUsers1 = [
@@ -135,6 +99,7 @@ final listOfFriends1 = [
     password: "ehehehe",
     email: "vincent.libeskind@gmail.com",
     relationState: UserRelationState.friend,
+    listOfBadges: badgeList2,
   ),
   User(
     name: "Mathilde Fontaine",
@@ -142,6 +107,7 @@ final listOfFriends1 = [
     password: "ehehehe",
     email: "vincent.libeskind@gmail.com",
     relationState: UserRelationState.friend,
+    listOfBadges: badgeList3,
   ),
   User(
     name: "Marie Fontaine",
@@ -149,6 +115,7 @@ final listOfFriends1 = [
     password: "ehehehe",
     email: "vincent.libeskind@gmail.com",
     relationState: UserRelationState.friend,
+    listOfBadges: badgeList4,
   ),
   User(
     name: "Elise Place",
@@ -156,6 +123,7 @@ final listOfFriends1 = [
     password: "ehehehe",
     email: "vincent.libeskind@gmail.com",
     relationState: UserRelationState.friend,
+    listOfBadges: badgeList2,
   ),
 ];
 

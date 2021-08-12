@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: themeData,
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
-      initialRoute: '/profile/my_lists',
+      initialRoute: '/login',
       onGenerateRoute: RouterNav.generateRoute,
     );
   }

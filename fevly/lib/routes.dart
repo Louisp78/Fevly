@@ -8,6 +8,7 @@ import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
 import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
 import 'package:fevly/styles/transition.dart';
+import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 
 import 'models/user.dart';
