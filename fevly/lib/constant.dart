@@ -51,6 +51,15 @@ String kBadgeSpecialName({required BadgeCategory category}) {
   }
 }
 
+String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}) {
+  switch (category) {
+    case BadgeCategory.drink:
+      return "ambroisie";
+    default:
+      throw Exception("SpecialName not define for ${category.name}");
+  }
+}
+
 const double kSmallIconSize = 14;
 
 TextStyle kBasicHintStyle({required TextTheme textTheme}) =>
