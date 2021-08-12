@@ -94,8 +94,9 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.02),
                 DropList(
+                  isButton: true,
                   title: "A apporter",
-                  iconData: Icons.group_add_rounded,
+                  iconData: Icons.add_rounded,
                   listWidget: List.generate(productList1.length, (index) {
                     final Product productList = productList1[index];
                     return ListTileItem(
@@ -104,13 +105,12 @@ class Body extends StatelessWidget {
                             ? EdgeInsets.only(bottom: size.height * 0.035)
                             : null,
                         leading: CustomCircleAvatar(
-                          radius: 20,
-                          icon: SizedBox(
-                            height: 20 *  (32 / 25),
-                            width: 20 *  (32 / 25),
-                            child: SvgPicture.asset("assets/drink/mojito.svg")
-                            )
-                        ),
+                            radius: 20,
+                            icon: SizedBox(
+                                height: 20 * (32 / 25),
+                                width: 20 * (32 / 25),
+                                child: SvgPicture.asset(
+                                    "assets/drink/mojito.svg"))),
                         press: () {});
                   }),
                   addItemPress: () => showModalBottomSheet(
@@ -118,7 +118,7 @@ class Body extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       builder: (BuildContext context) {
                         return const CustomBottomSheetProductList(
-                          title: "Ajouter une liste de courses",
+                          title: "Ajouter un produit",
                         );
                       }),
                 ),
@@ -126,7 +126,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: size.height * 0.001),
                 DropList(
                   title: "Apporté",
-                  iconData: Icons.group_add_rounded,
+                  iconData: Icons.add_rounded,
                   listWidget: List.generate(productList1.length, (index) {
                     final Product productList = productList1[index];
                     return ListTileItem2(
@@ -135,13 +135,12 @@ class Body extends StatelessWidget {
                             ? EdgeInsets.only(bottom: size.height * 0.035)
                             : null,
                         leading: CustomCircleAvatar(
-                          radius: 20,
-                          icon: SizedBox(
-                            height: 20 *  (32 / 25),
-                            width: 20 *  (32 / 25),
-                            child: SvgPicture.asset("assets/drink/mojito.svg")
-                            )
-                        ),
+                            radius: 20,
+                            icon: SizedBox(
+                                height: 20 * (32 / 25),
+                                width: 20 * (32 / 25),
+                                child: SvgPicture.asset(
+                                    "assets/drink/mojito.svg"))),
                         suffix: const CustomCircleAvatar(
                           radius: 20,
                         ),
@@ -158,13 +157,13 @@ class Body extends StatelessWidget {
                 ),
                 CustomTextButton(
                   press: () => showModalBottomSheet(
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        builder: (BuildContext context) {
-                          return const CustomBottomSheetProductAdd(
-                            title: "Ajouter un produit",
-                          );
-                        }),
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (BuildContext context) {
+                        return const CustomBottomSheetProductAdd(
+                          title: "Ajouter un produit",
+                        );
+                      }),
                   text: "Ajouter une course",
                   backgroundColor: kPrimaryColor,
                 ),

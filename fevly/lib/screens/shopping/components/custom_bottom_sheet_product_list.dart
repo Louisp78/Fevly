@@ -79,7 +79,8 @@ class CustomBottomSheetProductList extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: size.width * 0.02),
+                            padding: EdgeInsets.symmetric(
+                                vertical: size.width * 0.02),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -90,7 +91,8 @@ class CustomBottomSheetProductList extends StatelessWidget {
                                 ),
                                 Text(
                                   "Catégorie",
-                                  style: textTheme.headline5?.copyWith(color: kDarkerTextColor),
+                                  style: textTheme.headline5
+                                      ?.copyWith(color: kDarkerTextColor),
                                 ),
                               ],
                             ),
@@ -106,7 +108,8 @@ class CustomBottomSheetProductList extends StatelessWidget {
                         width: size.width * 0.6,
                         height: 35,
                         decoration: basicInputDecoration(
-                            hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
+                            hintStyle:
+                                kBottomSheetHintStyle(textTheme: textTheme),
                             hintText: "Nom du produit"),
                       ),
                     ],
@@ -115,88 +118,88 @@ class CustomBottomSheetProductList extends StatelessWidget {
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: size.width * 0.25,
-                    ),
-                    Text(
-                      modelViewShopping.count.toString(),
-                      style: textTheme.headline2,
-                    ),
-                    SizedBox(width: size.width * 0.02),
-                    CustomIconButton(
-                      press: () => modelViewShopping.count += 1,
-                      icon: Icons.add_rounded,
-                      size: const CustomIconButtonSize.small(),
-                      circle: false,
-                      outline: true,
-                    ),
-                    SizedBox(width: size.width * 0.02),
-                    CustomIconButton( 
-                      press: () => modelViewShopping.count == 0 ? {} : modelViewShopping.count -= 1,
-                      icon: Icons.remove_rounded,
-                      size: const CustomIconButtonSize.small(),
-                      circle: false,
-                      outline: true,
-                    ),
-                    SizedBox(width: size.width * 0.02),
-                    Container(
-                      width: size.width * 0.35,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: kSurfaceLightColor,
-                          boxShadow: [kShadowBase]),
-                      child: DropdownButton<QuantityUnit>(
-                        value: QuantityUnit.paquet,
-                        hint: SizedBox(
-                          width: size.width * 0.3 - 24,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AutoSizeText(
-                                cast<QuantityUnit>(modelViewShopping.isCategorySelected)
-                                    .toString(),
-                                maxLines: 1,
-                                style: textTheme.headline5,
-                              ),
-                              const Spacer(),
-                            ],
-                          ),
+                Row(children: [
+                  SizedBox(
+                    width: size.width * 0.25,
+                  ),
+                  Text(
+                    modelViewShopping.count.toString(),
+                    style: textTheme.headline2,
+                  ),
+                  SizedBox(width: size.width * 0.02),
+                  CustomIconButton(
+                    press: () => modelViewShopping.count += 1,
+                    icon: Icons.add_rounded,
+                    size: const CustomIconButtonSize.small(),
+                    circle: false,
+                    outline: true,
+                  ),
+                  SizedBox(width: size.width * 0.02),
+                  CustomIconButton(
+                    press: () => modelViewShopping.count == 0
+                        ? {}
+                        : modelViewShopping.count -= 1,
+                    icon: Icons.remove_rounded,
+                    size: const CustomIconButtonSize.small(),
+                    circle: false,
+                    outline: true,
+                  ),
+                  SizedBox(width: size.width * 0.02),
+                  Container(
+                    width: size.width * 0.35,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: kSurfaceLightColor,
+                        boxShadow: [kShadowBase]),
+                    child: DropdownButton<QuantityUnit>(
+                      value: QuantityUnit.none,
+                      hint: SizedBox(
+                        width: size.width * 0.3 - 24,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AutoSizeText(
+                              cast<QuantityUnit>(
+                                      modelViewShopping.isCategorySelected)
+                                  .toString(),
+                              maxLines: 1,
+                              style: textTheme.headline5,
+                            ),
+                            const Spacer(),
+                          ],
                         ),
-                        icon: const Icon(Icons.expand_more_rounded),
-                        elevation: 16,
-                        style: textTheme.headline5,
-                        underline: Container(
-                          height: 0,
-                        ),
-                        onChanged: (QuantityUnit? newValue) {
-                          modelViewShopping.isCategorySelected = newValue.toString();
-                        },
-                        items: [
-                          ...QuantityUnit.values,
-                          null
-                        ].map<DropdownMenuItem<QuantityUnit>>((QuantityUnit? list) {
-                          return DropdownMenuItem<QuantityUnit>(
-                            value: list,
-                            child: Text(
-                                list != null ? list.name : "Dupliquer",
-                                style: list == null
-                                    ? textTheme.headline5
-                                        ?.copyWith(color: kPrimaryColor)
-                                    : null),
-                          );
-                        }).toList(),
                       ),
+                      icon: const Icon(Icons.expand_more_rounded),
+                      elevation: 16,
+                      style: textTheme.headline5,
+                      underline: Container(
+                        height: 0,
+                      ),
+                      onChanged: (QuantityUnit? newValue) {
+                        modelViewShopping.isCategorySelected =
+                            newValue.toString();
+                      },
+                      items: [...QuantityUnit.values, null]
+                          .map<DropdownMenuItem<QuantityUnit>>(
+                              (QuantityUnit? list) {
+                        return DropdownMenuItem<QuantityUnit>(
+                          value: list,
+                          child: Text(
+                            list == null ? "None" : list.name,
+                          ),
+                        );
+                      }).toList(),
                     ),
-                  ]
-                ),
+                  ),
+                ]),
                 const Spacer(),
                 CustomTextButton(
                   press: () {},
                   text: "Ajouter",
-                  isActive: modelViewShopping.count != 0 && modelViewShopping.textField != "" && modelViewShopping.isCategorySelected != "",
+                  isActive: modelViewShopping.count != 0 &&
+                      modelViewShopping.textField != "" &&
+                      modelViewShopping.isCategorySelected != "",
                 ),
               ],
             ),
