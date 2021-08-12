@@ -109,4 +109,78 @@ class Badge extends ChangeNotifier {
     quantity: $quantity,
     """;
   }
+
+  //* DEFINED BADGES
+  //* ================================================
+
+  Badge.spatula({
+    int quantity = 1,
+    required BadgeType badgeType,
+  })  : _image =
+            "assets/badges/spatules_${_getBadgeTypeName(badgeCategory: BadgeCategory.cook, badgeType: badgeType)}.svg",
+        _name = "Spatule",
+        _quantity = quantity,
+        _badgeCategory = BadgeCategory.cook,
+        _badgeType = badgeType;
+
+  Badge.sandal({
+    int quantity = 1,
+    required BadgeType badgeType,
+  })  : _image =
+            "assets/badges/sandale_${_getBadgeTypeName(badgeCategory: BadgeCategory.danse, badgeType: badgeType)}.svg",
+        _name = "Sandale",
+        _quantity = quantity,
+        _badgeCategory = BadgeCategory.danse,
+        _badgeType = badgeType;
+
+  Badge.rose({
+    int quantity = 1,
+    required BadgeType badgeType,
+  })  : _image =
+            "assets/badges/rose_${_getBadgeTypeName(badgeCategory: BadgeCategory.love, badgeType: badgeType)}.svg",
+        _name = "Rose",
+        _quantity = quantity,
+        _badgeCategory = BadgeCategory.love,
+        _badgeType = badgeType;
+
+  Badge.bottle({
+    int quantity = 1,
+    required BadgeType badgeType,
+  })  : _image =
+            "assets/badges/bouteille_${_getBadgeTypeName(badgeCategory: BadgeCategory.drink, badgeType: badgeType)}.svg",
+        _name = "Bouteille",
+        _quantity = quantity,
+        _badgeCategory = BadgeCategory.drink,
+        _badgeType = badgeType;
+
+  Badge.lyre({
+    int quantity = 1,
+    required BadgeType badgeType,
+  })  : _image =
+            "assets/badges/lyre_${_getBadgeTypeName(badgeCategory: BadgeCategory.music, badgeType: badgeType)}.svg",
+        _name = "Lyre",
+        _quantity = quantity,
+        _badgeCategory = BadgeCategory.music,
+        _badgeType = badgeType;
+}
+
+//$ PRIVATE METHOD
+//$ ===============================
+
+String _getBadgeTypeName(
+    {required BadgeType badgeType, required BadgeCategory badgeCategory}) {
+  switch (badgeType) {
+    case BadgeType.wood:
+      return "bois";
+    case BadgeType.metal:
+      return "métal";
+    case BadgeType.gold:
+      return "or";
+    case BadgeType.ruby:
+      return "rubis";
+    case BadgeType.diamond:
+      return "diamant";
+    default:
+      return kBadgeSpecialNameNotForDisplay(category: badgeCategory);
+  }
 }
