@@ -3,6 +3,8 @@ import 'package:fevly/functions/contains_in_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'badge.dart';
+
 //$ ENUMERATION
 //$ ============================================================
 
@@ -57,18 +59,28 @@ class User extends ChangeNotifier {
   String _password;
   String _email;
   UserRelationState _relationState;
+  List<Badge> listOfBadges;
+  List<User> listOfFriends;
+  int _level;
+  int _partyCounter;
 
   User(
       {UserRelationState relationState = UserRelationState.me,
       required String name,
       required String pseudo,
       required String password,
-      required String email})
+      required String email,
+      this.listOfBadges = const [],
+      this.listOfFriends = const [],
+      int level = 0,
+      int partyCounter = 0})
       : _email = email,
         _name = name,
         _password = password,
         _pseudo = pseudo,
         _relationState = relationState,
+        _level = level,
+        _partyCounter = partyCounter,
         assert(!containsInString(name, specialChar),
             "name couldn't contain specialChars."),
         assert(email.contains("@"), "email must contain '@'."),
@@ -80,6 +92,8 @@ class User extends ChangeNotifier {
   String get pseudo => _pseudo;
   String get password => _password;
   String get email => _email;
+  int get level => _level;
+  int get partyCounter => _partyCounter;
 
   //* SETTER
   set relationState(UserRelationState newRelationState) {
@@ -106,6 +120,19 @@ class User extends ChangeNotifier {
     _password = newPass;
     notifyListeners();
   }
+
+  set level(int newValue) {
+    _level = newValue;
+    notifyListeners();
+  }
+
+  set partyCounter(int newValue) {
+    _partyCounter = newValue;
+    notifyListeners();
+  }
+
+  //* METHOD
+  //* ============================
 
   @override
   String toString() {
