@@ -11,23 +11,20 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: ChangeNotifierProvider(
-        create: (context) => FormViewModel(),
-        child: Column(
-          children: [
-            CustomAuthAppBar(
-              leading: CustomIconButton(
-                size: const CustomIconButtonSize.small(),
-                press: () => Navigator.pop(context),
-                outline: true,
-                circle: false,
-                icon: Icons.arrow_back_ios_rounded,
-              ),
-              title: "Connexion",
+      child: Column(
+        children: [
+          CustomAuthAppBar(
+            leading: CustomIconButton(
+              size: const CustomIconButtonSize.small(),
+              press: () => Navigator.pop(context),
+              outline: true,
+              circle: false,
+              icon: Icons.arrow_back_ios_rounded,
             ),
-            const FormSection(),
-          ],
-        ),
+            title: "Connexion",
+          ),
+          const FormSection(),
+        ],
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/login/view_models/login_model_view.dart';
 import 'package:fevly/test/data_example.dart';
-import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,11 +13,11 @@ class BottomSection extends StatelessWidget {
   const BottomSection({
     Key? key,
     required this.keyForm,
-    required this.formViewModel,
+    required this.loginViewModel,
   }) : super(key: key);
 
   final GlobalKey<FormState> keyForm;
-  final FormViewModel formViewModel;
+  final LoginViewModel loginViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class BottomSection extends StatelessWidget {
         CustomSmallButton(
           press: () {
             final bool validate =
-                keyForm.currentState!.validate() && formViewModel.isFormValid;
+                keyForm.currentState!.validate() && loginViewModel.isFormValid;
 
             if (validate) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -44,7 +45,18 @@ class BottomSection extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 '/profile',
-                arguments: kCurrentUser,
+                arguments: User(
+                  name: "Louis Place",
+                  pseudo: loginViewModel.login.contains("@")
+                      ? "llouisp78"
+                      : loginViewModel.login,
+                  password: "loulou78",
+                  email: loginViewModel.login.contains("@")
+                      ? loginViewModel.login
+                      : "placelouis@gmail.com",
+                  listOfBadges: badgeList1,
+                  level: 32,
+                ),
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +71,7 @@ class BottomSection extends StatelessWidget {
             }
           },
           text: "Connexion",
-          borderColor: formViewModel.isFormValid ? kPrimaryColor : kTextColor,
+          borderColor: loginViewModel.isFormValid ? kPrimaryColor : kTextColor,
         ),
         SizedBox(
           height: size.height * 0.02,

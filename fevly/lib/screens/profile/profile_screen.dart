@@ -1,6 +1,8 @@
 import 'package:fevly/components/custom_bottom_bar.dart';
+import 'package:fevly/functions/create_new_from.dart';
 import 'package:fevly/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -12,8 +14,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const CustomBottomBar(),
-      body: Body(
-        profileOwner: profileOwner,
+      body: ChangeNotifierProvider(
+        create: (context) => createNewUserFrom(source: profileOwner),
+        child: Consumer<User>(
+          builder: (context, user, child) => Body(
+            profileOwner: user,
+          ),
+        ),
       ),
     );
   }
