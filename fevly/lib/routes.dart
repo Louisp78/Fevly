@@ -33,8 +33,13 @@ class RouterNav {
 
       case '/signin_step1/signin_step2':
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const SignInStep2Screen(),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            final Map args = settings.arguments! as Map;
+            return SignInStep2Screen(
+              email: args['email'] as String,
+              password: args['password'] as String,
+            );
+          },
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );

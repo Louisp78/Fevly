@@ -4,7 +4,7 @@ import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
-import 'package:fevly/view_models/fom_view_model.dart';
+import 'package:fevly/screens/signin/signin_step2/view_models/signin_step2_view_model.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
@@ -15,7 +15,12 @@ import 'package:provider/provider.dart';
 class FormSection extends StatelessWidget {
   const FormSection({
     Key? key,
+    required this.password,
+    required this.email,
   }) : super(key: key);
+
+  final String password;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +29,13 @@ class FormSection extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final _keyForm = GlobalKey<FormState>();
 
-    String name = "";
-    String pseudo = "";
-
     return Form(
       key: _keyForm,
       child: SizedBox(
         height: size.height * 0.8,
         width: size.width * 0.8,
-        child: Consumer<FormViewModel>(
-          builder: (context, formViewModell, child) => Column(
+        child: Consumer<SignInStep2ViewModel>(
+          builder: (context, signInStep2ViewModel, child) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
@@ -50,7 +52,7 @@ class FormSection extends StatelessWidget {
                       text: "Inscription en cours avec ",
                       style: textTheme.bodyText2),
                   TextSpan(
-                    text: "placelouis@gmail.com",
+                    text: email,
                     style: textTheme.bodyText2
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
@@ -68,14 +70,10 @@ class FormSection extends StatelessWidget {
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: "Prénom"),
                 isSelected: true,
-                onChanged: (value) {
-                  name = value;
-                  formViewModell.isFormValid =
-                      pseudo.isNotEmpty && name.isNotEmpty;
-                },
+                onChanged: (value) => signInStep2ViewModel.name = value,
                 onSaved: (value) {
                   if (value != null) {
-                    name = value;
+                    signInStep2ViewModel.name = value;
                   }
                 },
                 validator: (value) {
@@ -92,14 +90,10 @@ class FormSection extends StatelessWidget {
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: "Nom d'utilisateur"),
                 isSelected: true,
-                onChanged: (value) {
-                  pseudo = value;
-                  formViewModell.isFormValid =
-                      pseudo.isNotEmpty && name.isNotEmpty;
-                },
+                onChanged: (value) => signInStep2ViewModel.pseudo = value,
                 onSaved: (value) {
                   if (value != null) {
-                    pseudo = value;
+                    signInStep2ViewModel.pseudo = value;
                   }
                 },
                 validator: (value) {
@@ -119,9 +113,8 @@ class FormSection extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomCheckBox(
-                      press: () => formViewModell.isTermOfUseAccepted =
-                          !formViewModell.isTermOfUseAccepted,
-                      isCheck: formViewModell.isTermOfUseAccepted,
+                      press: () => signInStep2ViewModel.switchTerm(),
+                      isCheck: signInStep2ViewModel.isTermAccepted,
                     ),
                     const SizedBox(
                       width: 20,
@@ -150,18 +143,20 @@ class FormSection extends StatelessWidget {
                 child: CustomTextButton(
                   press: () {
                     final bool validation = _keyForm.currentState!.validate() &&
-                        formViewModell.isFormValid &&
-                        formViewModell.isTermOfUseAccepted;
+                        signInStep2ViewModel.formValidate();
 
                     final bool onlyTermOfUseLeft =
                         _keyForm.currentState!.validate() &&
-                            formViewModell.isFormValid &&
-                            !formViewModell.isTermOfUseAccepted;
+                            signInStep2ViewModel.pseudo.isNotEmpty &&
+                            signInStep2ViewModel.name.isNotEmpty &&
+                            !signInStep2ViewModel.isTermAccepted;
 
                     if (validation) {
-                      // ignore: unused_local_variable
                       final User currentUser = User(
-                          name: name, pseudo: pseudo, password: "", email: "@");
+                          name: signInStep2ViewModel.name,
+                          pseudo: signInStep2ViewModel.pseudo,
+                          password: password,
+                          email: email);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: kSurfaceColor,
@@ -172,6 +167,8 @@ class FormSection extends StatelessWidget {
                           ),
                         ),
                       );
+                      Navigator.pushNamed(context, "/profile",
+                          arguments: currentUser);
                     } else if (onlyTermOfUseLeft) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -197,7 +194,7 @@ class FormSection extends StatelessWidget {
                     }
                   },
                   text: "S'inscrire",
-                  isActive: formViewModell.validation,
+                  isActive: signInStep2ViewModel.formValidate(),
                 ),
               ),
             ],
