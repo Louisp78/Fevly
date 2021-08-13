@@ -6,7 +6,7 @@ import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
-import 'package:fevly/test/data_example.dart';
+import 'package:fevly/test/data_party.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

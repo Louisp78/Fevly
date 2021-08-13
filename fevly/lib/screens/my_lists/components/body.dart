@@ -4,11 +4,14 @@ import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_guest_list
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/test/data_example.dart';
+import 'package:fevly/screens/search/search_screen.dart';
+import 'package:fevly/test/data_guest_list.dart';
+import 'package:fevly/test/data_list_of_user.dart';
+import 'package:fevly/test/data_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_product_list.dart';
-import '../../../components/custom_drop_list.dart';
+import 'package:fevly/components/custom_drop_list.dart';
 import 'list_tile_item.dart';
 
 class Body extends StatelessWidget {
@@ -42,8 +45,17 @@ class Body extends StatelessWidget {
                       leading: const CustomCircleAvatar(
                         radius: 20,
                       ),
-                      press: () => Navigator.pushNamed(context, "/search",
-                          arguments: guestList),
+                      press: () =>
+                          Navigator.pushNamed(context, "/search", arguments: {
+                        'guestList': guestList,
+                        'appBar':
+                            buildAppBarForSearchScreen(guestList, context),
+                        'suggestionList1Name': "Dans la liste",
+                        'suggestionList2Name': "Récent",
+                        'userSuggestionList1': guestList.listOfUser,
+                        'userSuggestionList2': listOfUsers1,
+                        'type': SearchScreenType.addToAList,
+                      }),
                     );
                   }),
                   addItemPress: () => showModalBottomSheet(
@@ -103,6 +115,20 @@ class Body extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  //$ METHOD
+  //$ =================================
+  CustomBasicAppBar buildAppBarForSearchScreen(
+      GuestList guestList, BuildContext context) {
+    return CustomBasicAppBar(
+      title: guestList.name,
+      subtitleText: guestList.numberOfGuests > 1
+          ? "${guestList.numberOfGuests} invités"
+          : "${guestList.numberOfGuests} invité",
+      iconData: Icons.arrow_back_ios_rounded,
+      press: () => Navigator.pop(context),
     );
   }
 }
