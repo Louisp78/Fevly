@@ -1,8 +1,6 @@
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/screens/login/view_models/login_model_view.dart';
-
-import 'package:fevly/view_models/fom_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +19,6 @@ class FormSection extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
     final _keyForm = GlobalKey<FormState>();
-    String password = "";
-    String username = "";
     const String examplePassword = "loulou78";
     return ChangeNotifierProvider(
       create: (context) => LoginViewModel(),

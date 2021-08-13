@@ -2,32 +2,52 @@ import 'package:fevly/components/custom_drop_list.dart';
 import 'package:fevly/components/custom_user_list_item.dart';
 import 'package:fevly/functions/create_new_from.dart';
 import 'package:fevly/models/user.dart';
-import 'package:fevly/test/data_example.dart';
+import 'package:fevly/screens/search/search_screen.dart';
+import 'package:fevly/view_models/list_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSearchSuggestion extends StatelessWidget {
   const UserSearchSuggestion({
-    Key? key,
-  }) : super(key: key);
+    this.typeOfListItem = SearchScreenType.changeRelationState,
+    required this.userSuggestionList1,
+    required this.userSuggestionList2,
+    required this.suggestionList1Name,
+    required this.suggestionList2Name,
+    this.listUserViewModel,
+  }) : assert(
+            typeOfListItem == SearchScreenType.changeRelationState &&
+                    listUserViewModel == null ||
+                typeOfListItem == SearchScreenType.addToAList &&
+                    listUserViewModel != null,
+            "Need to define GuestList or not.");
+
+  final SearchScreenType typeOfListItem;
+  final List<User> userSuggestionList1;
+  final List<User> userSuggestionList2;
+  final String suggestionList1Name;
+  final String suggestionList2Name;
+  final ListUserViewModel? listUserViewModel;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CustomDropList(
-          title: "Récent",
+          title: suggestionList1Name,
           displayButton: false,
           listWidget: List.generate(
-            listOfUsers1.length,
+            userSuggestionList1.length,
             (index) {
               return ChangeNotifierProvider(
                 create: (context) =>
-                    createNewUserFrom(source: listOfUsers1[index]),
+                    createNewUserFrom(source: userSuggestionList1[index]),
                 child: Consumer<User>(
                   builder: (context, user, child) => CustomUserListItem(
-                    currentList: listOfUsers1,
+                    currentList: userSuggestionList1,
                     index: index,
+                    type: typeOfListItem,
+                    listOfUserViewModel: listUserViewModel,
                     press: () => Navigator.pushNamed(context, '/profile',
                         arguments: user),
                     user: user,
@@ -38,18 +58,20 @@ class UserSearchSuggestion extends StatelessWidget {
           ),
         ),
         CustomDropList(
-          title: "Amis",
+          title: suggestionList2Name,
           displayButton: false,
           listWidget: List.generate(
-            listOfUsers1.length,
+            userSuggestionList2.length,
             (index) {
               return ChangeNotifierProvider(
                 create: (context) =>
-                    createNewUserFrom(source: listOfFriends1[index]),
+                    createNewUserFrom(source: userSuggestionList2[index]),
                 child: Consumer<User>(
                   builder: (context, user, child) => CustomUserListItem(
-                    currentList: listOfFriends1,
+                    currentList: userSuggestionList2,
                     index: index,
+                    type: typeOfListItem,
+                    listOfUserViewModel: listUserViewModel,
                     press: () => Navigator.pushNamed(context, '/profile',
                         arguments: user),
                     user: user,
