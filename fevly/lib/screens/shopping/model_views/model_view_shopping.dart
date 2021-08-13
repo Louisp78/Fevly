@@ -1,27 +1,25 @@
+import 'package:fevly/models/product.dart';
 import 'package:flutter/cupertino.dart';
 
-class ModelViewShopping extends ChangeNotifier{
+class ModelViewShopping extends ChangeNotifier {
   int _count;
   String _textField;
-  String _isCategorySelected;
+  QuantityUnit? _category;
   bool _selection;
 
   ModelViewShopping(
-    {
-      int count = 0,
+      {int count = 0,
       String textField = "",
-      String isCategorySelected = "",
-      bool selection = false
-    }
-  )
-  : _count = count,
-  _textField = textField,
-  _isCategorySelected = isCategorySelected,
-  _selection = selection;
+      QuantityUnit? category,
+      bool selection = false})
+      : _count = count,
+        _textField = textField,
+        _category = category,
+        _selection = selection;
 
   int get count => _count;
   String get textField => _textField;
-  String get isCategorySelected => _isCategorySelected;
+  QuantityUnit? get category => _category;
   bool get selection => _selection;
 
   set count(int value) {
@@ -34,8 +32,8 @@ class ModelViewShopping extends ChangeNotifier{
     notifyListeners();
   }
 
-  set isCategorySelected(String value) {
-    _isCategorySelected = value;
+  set category(QuantityUnit? value) {
+    _category = value;
     notifyListeners();
   }
 
