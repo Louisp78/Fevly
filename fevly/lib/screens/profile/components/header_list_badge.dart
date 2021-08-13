@@ -55,7 +55,7 @@ class HeaderListBadge extends StatelessWidget {
             ),
           ),
           Text(
-            "${badgeList1.length}/100",
+            "${searchField.listOfObjects!.length}/100",
             style: textTheme.headline6?.copyWith(color: kTextColor),
           )
         ],
