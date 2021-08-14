@@ -3,14 +3,11 @@ import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product.dart';
-import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/shopping/model_views/model_view_shopping.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -153,18 +150,21 @@ class CustomBottomSheetProductList extends StatelessWidget {
                         color: kSurfaceLightColor,
                         boxShadow: [kShadowBase]),
                     child: DropdownButton<QuantityUnit>(
-                      value: QuantityUnit.none,
+                      value: modelViewShopping.category,
                       hint: SizedBox(
                         width: size.width * 0.3 - 24,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AutoSizeText(
-                              cast<QuantityUnit>(
-                                      modelViewShopping.isCategorySelected)
-                                  .toString(),
+                              modelViewShopping.category != null
+                                  ? modelViewShopping.category!.name
+                                  : "Ajouter",
                               maxLines: 1,
-                              style: textTheme.headline5,
+                              style: modelViewShopping.category != null
+                                  ? textTheme.headline5
+                                  : textTheme.headline5
+                                      ?.copyWith(color: kPrimaryColor),
                             ),
                             const Spacer(),
                           ],
@@ -177,16 +177,15 @@ class CustomBottomSheetProductList extends StatelessWidget {
                         height: 0,
                       ),
                       onChanged: (QuantityUnit? newValue) {
-                        modelViewShopping.isCategorySelected =
-                            newValue.toString();
+                        modelViewShopping.category = newValue;
                       },
-                      items: [...QuantityUnit.values, null]
+                      items: [...QuantityUnit.values]
                           .map<DropdownMenuItem<QuantityUnit>>(
-                              (QuantityUnit? list) {
+                              (QuantityUnit? unit) {
                         return DropdownMenuItem<QuantityUnit>(
-                          value: list,
+                          value: unit,
                           child: Text(
-                            list == null ? "None" : list.name,
+                            unit == QuantityUnit.none ? "Aucun" : unit!.name,
                           ),
                         );
                       }).toList(),
@@ -199,7 +198,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                   text: "Ajouter",
                   isActive: modelViewShopping.count != 0 &&
                       modelViewShopping.textField != "" &&
-                      modelViewShopping.isCategorySelected != "",
+                      modelViewShopping.category != null,
                 ),
               ],
             ),
