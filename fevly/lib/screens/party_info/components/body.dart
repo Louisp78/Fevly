@@ -111,19 +111,14 @@ class Body extends StatelessWidget {
           press: () {},
           title: listParties1[0].name,
           subtitle: "${listParties1[0].guestsLength} participants",
-          prefixIcon: IconButton(
-            icon: const Icon(Icons.info_rounded),
-            color: Colors.black,
-            onPressed: () {},
-          ),
           firstSuffixIcon: IconButton(
-            icon: const Icon(Icons.alarm),
-            color: kSecondaryColor,
+            icon: const Icon(Icons.login_rounded),
+            color: Colors.black,
             onPressed: () {},
           ),
           secondSuffixIcon: IconButton(
-            icon: const Icon(Icons.group_rounded),
-            color: Colors.black,
+            icon: const Icon(Icons.edit_rounded),
+            color: kSecondaryColor,
             onPressed: () {},
           ),
         ),
