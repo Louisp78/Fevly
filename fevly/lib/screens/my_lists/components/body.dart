@@ -42,8 +42,7 @@ class Body extends StatelessWidget {
                       leading: const CustomCircleAvatar(
                         radius: 20,
                       ),
-                      press: () => Navigator.pushNamed(
-                          context, "/profile/my_lists/guest_list",
+                      press: () => Navigator.pushNamed(context, "/search",
                           arguments: guestList),
                     );
                   }),
@@ -100,6 +99,7 @@ class Body extends StatelessWidget {
             iconData: Icons.arrow_back_ios_rounded,
             press: () => Navigator.pop(context),
             title: "Mes Listes",
+            subtitleText: "4 listes",
           ),
         ],
       ),

@@ -49,7 +49,7 @@ InputDecoration basicInputDecoration(
       ),
     );
 
-InputDecoration badgeSearchInputDecoration(
+InputDecoration smallSearchInputDecoration(
         {required TextStyle hintStyle,
         required Size size,
         required String hintText}) =>
@@ -98,5 +98,53 @@ InputDecoration badgeSearchInputDecoration(
           color: kTextColor,
         ),
         borderRadius: BorderRadius.circular(30),
+      ),
+    );
+
+InputDecoration searchInputDecoration(
+        {required TextStyle hintStyle,
+        required Size size,
+        required String hintText}) =>
+    InputDecoration(
+      filled: true,
+      prefixIcon: const Icon(
+        Icons.search_rounded,
+        color: kTextColor,
+        size: kSmallIconSize,
+      ),
+      hintText: hintText,
+      fillColor: kSurfaceColor,
+      hintStyle: hintStyle,
+      contentPadding: EdgeInsets.only(
+        left: size.width * 0.045,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(
+          color: kPrimaryColor,
+          width: 3.0,
+        ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(
+          color: kErrorColor,
+          width: 1.5,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(
+          color: kErrorColor,
+          width: 3.0,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide.none,
       ),
     );

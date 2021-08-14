@@ -6,6 +6,7 @@ import 'package:fevly/screens/party_info/party_info_screen.dart';
 import 'package:fevly/screens/product_list/product_list_screen.dart';
 import 'package:fevly/screens/profile/profile_screen.dart';
 import 'package:fevly/screens/shopping/shopping_screen.dart';
+import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
 import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
 import 'package:fevly/styles/transition.dart';
@@ -68,18 +69,21 @@ class RouterNav {
             productList: settings.arguments! as ProductList,
           ),
         );
+      case '/search':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const SearchScreen(),
+        );
 
       case '/party/party_info':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const PartyInfoScreen(
-          ),
+              const PartyInfoScreen(),
         );
       case '/party':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const ShoppingScreen(
-          ),
+              const ShoppingScreen(),
         );
 
       default:
