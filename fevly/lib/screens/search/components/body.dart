@@ -30,9 +30,9 @@ class Body extends StatelessWidget {
   final Widget appBar;
   final List<User> userSearchList;
   final List<User> userSuggestionList1;
-  final List<User> userSuggestionList2;
+  final List<User>? userSuggestionList2;
   final String suggestionList1Name;
-  final String suggestionList2Name;
+  final String? suggestionList2Name;
   final SearchScreenType type;
   final GuestList? guestList;
 

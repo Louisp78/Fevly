@@ -29,8 +29,8 @@ class SearchScreen extends StatelessWidget {
   final SearchScreenType type;
   final String suggestionList1Name;
   final List<User> userSuggestionList1;
-  final String suggestionList2Name;
-  final List<User> userSuggestionList2;
+  final String? suggestionList2Name;
+  final List<User>? userSuggestionList2;
 
   @override
   Widget build(BuildContext context) {

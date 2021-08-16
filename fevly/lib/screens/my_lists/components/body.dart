@@ -1,5 +1,6 @@
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
 import 'package:fevly/screens/my_lists/components/custom_bottom_sheet_guest_list.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/models/guest_list.dart';
@@ -115,20 +116,6 @@ class Body extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  //$ METHOD
-  //$ =================================
-  CustomBasicAppBar buildAppBarForSearchScreen(
-      GuestList guestList, BuildContext context) {
-    return CustomBasicAppBar(
-      title: guestList.name,
-      subtitleText: guestList.numberOfGuests > 1
-          ? "${guestList.numberOfGuests} invités"
-          : "${guestList.numberOfGuests} invité",
-      iconData: Icons.arrow_back_ios_rounded,
-      press: () => Navigator.pop(context),
     );
   }
 }
