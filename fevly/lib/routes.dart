@@ -1,6 +1,7 @@
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
+import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/screens/my_lists/my_lists_screen.dart';
 import 'package:fevly/screens/product_list/product_list_screen.dart';
@@ -83,12 +84,20 @@ class RouterNav {
               guestList: args['guestList'] as GuestList,
               appBar: args['appBar'] as Widget,
               suggestionList1Name: args['suggestionList1Name'] as String,
-              suggestionList2Name: args['suggestionList2Name'] as String,
+              suggestionList2Name: args['suggestionList2Name'] as String?,
               userSuggestionList1: args['userSuggestionList1'] as List<User>,
-              userSuggestionList2: args['userSuggestionList2'] as List<User>,
+              userSuggestionList2: args['userSuggestionList2'] as List<User>?,
               type: args['type'] as SearchScreenType,
             );
           },
+        );
+
+      case '/dashboard':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const DashboardScreen(),
+          transitionsBuilder: slideUpTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
         );
 
       default:
