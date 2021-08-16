@@ -1,6 +1,7 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_dialog_list.dart';
 import 'package:fevly/components/custom_small_button.dart';
+import 'package:fevly/components/level_label.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'counter_item.dart';
-import 'level_label.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({

@@ -15,18 +15,22 @@ class UserSearchSuggestion extends StatelessWidget {
     required this.suggestionList1Name,
     required this.suggestionList2Name,
     this.listUserViewModel,
-  }) : assert(
+  })  : assert(
             typeOfListItem == SearchScreenType.changeRelationState &&
                     listUserViewModel == null ||
                 typeOfListItem == SearchScreenType.addToAList &&
                     listUserViewModel != null,
-            "Need to define GuestList or not.");
+            "Need to define GuestList or not."),
+        assert(
+            userSuggestionList2 == null && suggestionList2Name == null ||
+                userSuggestionList2 != null && suggestionList2Name != null,
+            "userSuggestionList2 must be define in the same time than name.");
 
   final SearchScreenType typeOfListItem;
   final List<User> userSuggestionList1;
-  final List<User> userSuggestionList2;
+  final List<User>? userSuggestionList2;
   final String suggestionList1Name;
-  final String suggestionList2Name;
+  final String? suggestionList2Name;
   final ListUserViewModel? listUserViewModel;
 
   @override
@@ -57,30 +61,31 @@ class UserSearchSuggestion extends StatelessWidget {
             },
           ),
         ),
-        CustomDropList(
-          title: suggestionList2Name,
-          displayButton: false,
-          listWidget: List.generate(
-            userSuggestionList2.length,
-            (index) {
-              return ChangeNotifierProvider(
-                create: (context) =>
-                    createNewUserFrom(source: userSuggestionList2[index]),
-                child: Consumer<User>(
-                  builder: (context, user, child) => CustomUserListItem(
-                    currentList: userSuggestionList2,
-                    index: index,
-                    type: typeOfListItem,
-                    listOfUserViewModel: listUserViewModel,
-                    press: () => Navigator.pushNamed(context, '/profile',
-                        arguments: user),
-                    user: user,
+        if (userSuggestionList2 != null)
+          CustomDropList(
+            title: suggestionList2Name!,
+            displayButton: false,
+            listWidget: List.generate(
+              userSuggestionList2!.length,
+              (index) {
+                return ChangeNotifierProvider(
+                  create: (context) =>
+                      createNewUserFrom(source: userSuggestionList2![index]),
+                  child: Consumer<User>(
+                    builder: (context, user, child) => CustomUserListItem(
+                      currentList: userSuggestionList2!,
+                      index: index,
+                      type: typeOfListItem,
+                      listOfUserViewModel: listUserViewModel,
+                      press: () => Navigator.pushNamed(context, '/profile',
+                          arguments: user),
+                      user: user,
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
       ],
     );
   }
