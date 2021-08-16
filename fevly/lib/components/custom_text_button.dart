@@ -26,12 +26,13 @@ class CustomTextButton extends StatelessWidget {
     this.lightMode = true,
     this.secondary = false,
     required this.press,
-    required this.text,
+    this.text = "",
     this.isActive = true,
     this.buttonSize = const CustomTextButtonSize.normal(),
     this.backgroundColor,
     this.textColor,
     this.border,
+    this.textWidget,
   }) : super(key: key);
 
   final Widget? prefixIcon;
@@ -45,6 +46,7 @@ class CustomTextButton extends StatelessWidget {
   final CustomTextButtonSize buttonSize;
   final Color? backgroundColor;
   final Border? border;
+  final Text? textWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +76,13 @@ class CustomTextButton extends StatelessWidget {
           children: [
             if (prefixIcon != null) prefixIcon!,
             if (prefixIcon != null) const SizedBox(width: 10),
-            Text(
-              text,
-              style: textStyle.copyWith(
-                  color:
-                      textColor ?? (lightMode ? Colors.white : Colors.black)),
-            ),
+            textWidget ??
+                Text(
+                  text,
+                  style: textStyle.copyWith(
+                      color: textColor ??
+                          (lightMode ? Colors.white : Colors.black)),
+                ),
             if (suffixIcon != null) const SizedBox(width: 10),
             if (suffixIcon != null) suffixIcon!,
           ],

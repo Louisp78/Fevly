@@ -75,6 +75,7 @@ double kGridCrossSpacing({required Size size}) => size.width * 0.05;
 double kGridMainSpacing({required Size size}) => size.height * 0.02;
 double kBasicVerticalPadding({required Size size}) => size.height * 0.03;
 double kBasicHorizontalPadding({required Size size}) => size.width * 0.05;
+double kHeightAppBar = 110.0;
 
 AutoSizeText kBasicTitleForAppBar(
         {required String title, required TextTheme textTheme}) =>

@@ -2,10 +2,10 @@ import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
 
 final productListForParty1 =
-    ProductList(listOfProduct: productList3, name: "Liste de courses party 1");
+    ProductList(listOfProduct: productList3, name: "Soirée exemple 1");
 
 final productListForParty2 =
-    ProductList(listOfProduct: productList3, name: "Liste de courses party 2");
+    ProductList(listOfProduct: productList3, name: "Soirée exemple 2");
 
 List<ProductList> productListListForDropdown = [
   ProductList(listOfProduct: productList1, name: "Liste de courses 1"),
@@ -14,36 +14,66 @@ List<ProductList> productListListForDropdown = [
 
 List<Product> productList1 = [
   Product(
-      name: "Kronenbourg",
+      name: "Cocktail",
       price: 12,
       quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
-      unit: QuantityUnit.pack),
+      image: "assets/drink/cocktail_1.svg",
+      unit: QuantityUnit.part),
+  Product(
+      name: "Cocktail",
+      price: 12,
+      quantity: 13,
+      image: "assets/drink/cocktail_2.svg",
+      unit: QuantityUnit.part),
+  Product(
+      name: "Cocktail",
+      price: 12,
+      quantity: 7,
+      image: "assets/drink/cocktail_3.svg",
+      unit: QuantityUnit.part),
+  Product(
+      name: "Cocktail",
+      price: 12,
+      quantity: 3,
+      image: "assets/drink/cocktail_4.svg",
+      unit: QuantityUnit.part),
   Product(
       name: "Pizza",
       price: 14,
       quantity: 4,
-      image: "assets/products/pint_of_beer.svg",
-      unit: QuantityUnit.part),
+      image: "assets/food/pizza_slice.svg",
+      unit: QuantityUnit.pack),
   Product(
-      name: "Chips",
+      name: "Nachos",
       price: 4.99,
       quantity: 2,
-      image: "assets/products/pint_of_beer.svg",
-      unit: QuantityUnit.paquet),
+      image: "assets/food/nachos.svg",
+      unit: QuantityUnit.part),
   Product(
     name: "PopCorn",
     price: 2.50,
-    quantity: 1,
-    image: "assets/products/pint_of_beer.svg",
+    quantity: 2,
+    image: "assets/food/popcorn.svg",
     unit: QuantityUnit.paquet,
   ),
   Product(
       name: "Vodka",
       price: 17,
-      quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
+      quantity: 2,
+      image: "assets/drink/vodka_1.svg",
       unit: QuantityUnit.L),
+  Product(
+      name: "Long Island",
+      price: 17,
+      quantity: 5,
+      image: "assets/drink/long_island.svg",
+      unit: QuantityUnit.part),
+  Product(
+      name: "Cookie",
+      price: 17,
+      quantity: 20,
+      image: "assets/food/cookie.svg",
+      unit: QuantityUnit.paquet),
 ];
 List<Product> productList2 = [
   Product(
@@ -62,16 +92,16 @@ List<Product> productList2 = [
 
 List<Product> productList3 = [
   Product(
-      name: "Kronenbourg",
+      name: "Rum",
       price: 12,
-      quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
-      unit: QuantityUnit.pack),
+      quantity: 2,
+      image: "assets/drink/rum.svg",
+      unit: QuantityUnit.L),
   Product(
       name: "Vodka",
       price: 17,
       quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
+      image: "assets/drink/vodka_2.svg",
       unit: QuantityUnit.L),
 ];
 
@@ -79,21 +109,21 @@ List<Product> productList4 = [
   Product(
       name: "Kronenbourg",
       price: 12,
-      quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
-      unit: QuantityUnit.pack),
+      quantity: 50,
+      image: "assets/drink/beer.svg",
+      unit: QuantityUnit.cL),
   Product(
     name: "PopCorn",
     price: 2.50,
     quantity: 1,
-    image: "assets/products/pint_of_beer.svg",
+    image: "assets/food/popcorn.svg",
     unit: QuantityUnit.paquet,
   ),
   Product(
       name: "Vodka",
       price: 17,
       quantity: 1,
-      image: "assets/products/pint_of_beer.svg",
+      image: "assets/drink/vodka_1.svg",
       unit: QuantityUnit.L),
 ];
 
