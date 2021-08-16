@@ -68,7 +68,7 @@ const TextTheme textTheme = TextTheme(
 
   // QS 8 Medium
   button: TextStyle(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.bold,
     color: Colors.black,
     fontSize: 8.0,
   ),

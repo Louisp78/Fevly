@@ -2,6 +2,7 @@ import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 //$ CLASS
 //$ ==================================
@@ -12,6 +13,10 @@ class Party extends ChangeNotifier {
   GuestList _guests;
   ProductList _products;
   String _address;
+  DateTime _startDate;
+  DateTime _endDate;
+  //! Pour l'instant c'est un String en attendant une implémentation de Google Maps
+  String _location;
 
   Party({
     required String name,
@@ -20,12 +25,18 @@ class Party extends ChangeNotifier {
     required List<User> listOfOrganizer,
     required GuestList guests,
     required ProductList products,
+    required DateTime startDate,
+    required DateTime endDate,
+    required String location,
   })  : _listOfOrganizer = listOfOrganizer,
         _guests = guests,
         _name = name,
         _description = description,
         _products = products,
         _address = address,
+        _startDate = startDate,
+        _endDate = endDate,
+        _location = location,
         assert(description.length < 1000, "Description too long."),
         assert(name.length < 21, "Name too long."),
         assert(listOfOrganizer.isNotEmpty,
@@ -41,6 +52,9 @@ class Party extends ChangeNotifier {
   String get address => _address;
   ProductList get products => _products;
   GuestList get guests => _guests;
+  DateTime get startDate => _startDate;
+  DateTime get endDate => _endDate;
+  String get location => _location;
 
   // * SETTER
 
@@ -79,6 +93,23 @@ class Party extends ChangeNotifier {
     notifyListeners();
   }
 
+  set startDate(DateTime newDate) {
+    _startDate = newDate;
+    notifyListeners();
+  }
+
+  set endDate(DateTime newDate) {
+    _endDate = newDate;
+    notifyListeners();
+  }
+
+  set location(String newLocation) {
+    _location = newLocation;
+    notifyListeners();
+  }
+
+  String startDateFormat() => DateFormat('d MMMM', 'en_FR').format(startDate);
+
   // * OVERRIDE
   @override
   String toString() {
@@ -89,4 +120,6 @@ class Party extends ChangeNotifier {
     numberOrganizers : $listOfOrganizerLength
     """;
   }
+
+  int numberOfDaysLeft() => DateTime.now().difference(startDate).inDays;
 }
