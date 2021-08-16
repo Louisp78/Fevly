@@ -16,6 +16,7 @@ class CustomSmallButton extends StatelessWidget {
     required this.press,
     this.borderColor,
     this.textColor,
+    this.borderWidth,
   }) : super(key: key);
 
   final String text;
@@ -27,6 +28,7 @@ class CustomSmallButton extends StatelessWidget {
   final bool withBorder;
   final GestureTapCallback press;
   final Color? borderColor;
+  final double? borderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class CustomSmallButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           border: withBorder
               ? Border.all(
-                  width: 4,
+                  width: borderWidth ?? 4,
                   color: borderColor == null
                       ? (lightMode
                           ? kPrimaryVariantColor

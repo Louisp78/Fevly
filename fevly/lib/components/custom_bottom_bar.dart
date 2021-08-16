@@ -36,7 +36,6 @@ class CustomBottomBar extends StatelessWidget {
               icon: const Icon(Icons.search_rounded)),
           CustomIconButton(
             press: () {},
-            size: const CustomIconButtonSize.normal(),
             icon: Icons.add_rounded,
             circle: false,
           ),
