@@ -1,10 +1,8 @@
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/screens/tutorial/components/splash_content.dart';
-import 'package:fevly/styles/colors.dart';
-import 'package:fevly/styles/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'build_dot.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -36,8 +34,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return SizedBox(
       height: size.height,
       child: Stack(
@@ -62,8 +58,10 @@ class _BodyState extends State<Body> {
                     width: size.width,
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(splashData.length,
-                            (index) => buildDot(index: index))),
+                        children: List.generate(
+                            splashData.length,
+                            (index) => buildDot(
+                                index: index, currentPage: currentPage))),
                   ),
                   SizedBox(height: size.height * 0.02),
                   CustomTextButton(
@@ -78,18 +76,6 @@ class _BodyState extends State<Body> {
               )),
         ],
       ),
-    );
-  }
-
-  AnimatedContainer buildDot({required int index}) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      margin: const EdgeInsets.only(right: 5),
-      height: 6,
-      width: currentPage == index ? 20 : 6,
-      decoration: BoxDecoration(
-          color: currentPage == index ? kPrimaryColor : kPrimaryVariantColor,
-          borderRadius: BorderRadius.circular(3)),
     );
   }
 }
