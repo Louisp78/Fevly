@@ -110,7 +110,7 @@ class Body extends StatelessWidget {
           iconData: Icons.arrow_back_ios_rounded,
           press: () {},
           title: listParties1[0].name,
-          subtitle: "${listParties1[0].guestsLength} participants",
+          subtitleText: "${listParties1[0].guestsLength} participants",
           firstSuffixIcon: IconButton(
             icon: const Icon(Icons.login_rounded),
             color: Colors.black,
