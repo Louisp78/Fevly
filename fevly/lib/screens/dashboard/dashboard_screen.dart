@@ -32,14 +32,7 @@ class DashboardScreen extends StatelessWidget {
               return SafeArea(
                 child: Scaffold(
                   floatingActionButton: tabControllerViewModel.index == 1
-                      ? Padding(
-                          padding: const EdgeInsets.only(bottom: 60),
-                          child: FloatingActionButton(
-                            backgroundColor: kPrimaryColor,
-                            onPressed: () {},
-                            child: const Icon(Icons.add_rounded),
-                          ),
-                        )
+                      ? buildFloatingActionButton() //! Need to set showBottomSheet
                       : null,
                   body: Stack(
                     children: [
@@ -70,6 +63,19 @@ class DashboardScreen extends StatelessWidget {
               );
             }),
           )),
+    );
+  }
+
+  //$ METHOD
+  //$ ===========================================
+  Padding buildFloatingActionButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 60),
+      child: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
+        onPressed: () {},
+        child: const Icon(Icons.add_rounded),
+      ),
     );
   }
 }

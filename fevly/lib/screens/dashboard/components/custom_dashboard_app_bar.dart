@@ -75,17 +75,14 @@ class CustomDashboardAppBar extends StatelessWidget {
           Expanded(
             child: Container(
               padding: EdgeInsets.only(
-                  left: kBasicHorizontalPadding(size: size) * 1.2),
+                  left: kBasicHorizontalPadding(size: size) * 2.5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () {},
-                    child: const Icon(Icons.inventory_rounded),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: const Icon(Icons.people_alt_rounded),
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/profile/my_lists'),
+                    child: const Icon(Icons.format_list_bulleted_rounded),
                   ),
                   InkWell(
                     onTap: () {},
