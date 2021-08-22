@@ -1,4 +1,5 @@
 import 'package:fevly/constant.dart';
+import 'package:fevly/models/badge.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
@@ -21,8 +22,10 @@ class Body extends StatelessWidget {
     return SizedBox(
       width: size.width,
       child: ChangeNotifierProvider(
-        create: (context) =>
-            TextFieldModelView(listOfObjects: profileOwner.listOfBadges),
+        create: (context) => TextFieldModelView(
+            listOfObjects: List<Badge>.generate(
+                profileOwner.listOfBadges.length,
+                (index) => profileOwner.listOfBadges[index])),
         child: Consumer<TextFieldModelView>(
           builder: (context, searchField, child) => Stack(
             alignment: Alignment.center,
@@ -77,6 +80,7 @@ class Body extends StatelessWidget {
       default:
         return ListOfBadges(
           searchField: searchField,
+          defaultListOfBadge: profileOwner.listOfBadges,
         );
     }
   }

@@ -4,7 +4,7 @@ import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'custom_product_item.dart';
+import '../../../../components/custom_product_item.dart';
 
 class ProductsOfPartySection extends StatelessWidget {
   const ProductsOfPartySection({

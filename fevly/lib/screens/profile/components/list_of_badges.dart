@@ -10,9 +10,11 @@ class ListOfBadges extends StatelessWidget {
   const ListOfBadges({
     Key? key,
     required this.searchField,
+    required this.defaultListOfBadge,
   }) : super(key: key);
 
   final TextFieldModelView searchField;
+  final List<Badge> defaultListOfBadge;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class ListOfBadges extends StatelessWidget {
             top: 0,
             child: HeaderListBadge(
               searchField: searchField,
+              defaultListOfBadge: defaultListOfBadge,
             ),
           ),
         ],

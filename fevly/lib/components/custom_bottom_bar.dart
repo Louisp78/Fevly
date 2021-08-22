@@ -26,7 +26,7 @@ class CustomBottomBar extends StatelessWidget {
           IconButton(
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(context, '/dashboard'),
             icon: const Icon(Icons.home_rounded),
           ),
           IconButton(

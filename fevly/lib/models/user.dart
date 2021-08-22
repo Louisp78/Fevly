@@ -1,5 +1,7 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
+import 'package:fevly/models/guest_list.dart';
+import 'package:fevly/models/product_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -63,6 +65,8 @@ class User extends ChangeNotifier {
   List<User> listOfFriends;
   int _level;
   int _partyCounter;
+  List<GuestList> listOfGuestList;
+  List<ProductList> listOfProductList;
 
   User(
       {UserRelationState relationState = UserRelationState.me,
@@ -72,6 +76,8 @@ class User extends ChangeNotifier {
       required String email,
       this.listOfBadges = const [],
       this.listOfFriends = const [],
+      this.listOfGuestList = const [],
+      this.listOfProductList = const [],
       int level = 0,
       int partyCounter = 0})
       : _email = email,
