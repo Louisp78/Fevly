@@ -10,9 +10,13 @@ class CustomProductItem extends StatelessWidget {
   const CustomProductItem({
     Key? key,
     required this.product,
+    this.imgSize,
+    this.containerSize,
   }) : super(key: key);
 
   final Product product;
+  final double? imgSize;
+  final double? containerSize;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +25,8 @@ class CustomProductItem extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       margin: EdgeInsets.only(left: kBasicHorizontalPadding(size: size)),
-      height: size.height * 0.17,
-      width: size.height * 0.17,
+      height: containerSize ?? size.height * 0.17,
+      width: containerSize ?? size.height * 0.17,
       decoration: BoxDecoration(
         color: kSurfaceLightColor,
         boxShadow: [kShadowBase],
@@ -33,8 +37,8 @@ class CustomProductItem extends StatelessWidget {
         children: [
           SvgPicture.asset(
             product.image,
-            width: size.height * 0.08,
-            height: size.height * 0.08,
+            width: imgSize ?? size.height * 0.08,
+            height: imgSize ?? size.height * 0.08,
           ),
           SizedBox(
             height: size.height * 0.01,

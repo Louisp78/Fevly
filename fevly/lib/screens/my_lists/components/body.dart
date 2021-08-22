@@ -16,7 +16,14 @@ import 'package:fevly/components/custom_drop_list.dart';
 import 'list_tile_item.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({
+    Key? key,
+    required this.listOfProductList,
+    required this.listOfGuestList,
+  }) : super(key: key);
+
+  final List<ProductList> listOfProductList;
+  final List<GuestList> listOfGuestList;
 
   @override
   Widget build(BuildContext context) {

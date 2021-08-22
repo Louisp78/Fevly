@@ -1,7 +1,7 @@
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   const CustomTextField({
     Key? key,
     this.obscureText = false,
@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     this.width,
     this.height,
     this.padding,
+    this.withCleaning = false,
   }) : super(key: key);
   final bool isSelected;
   final bool obscureText;
@@ -22,25 +23,42 @@ class CustomTextField extends StatelessWidget {
   final InputDecoration decoration;
   final double? width, height;
   final EdgeInsets? padding;
+  final bool withCleaning;
 
+  @override
+  _CustomTextFieldState createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: width ?? size.width * 0.8,
-      height: height,
-      padding: padding,
+      width: widget.width ?? size.width * 0.8,
+      height: widget.height,
+      padding: widget.padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextFormField(
-          onChanged: onChanged,
-          validator: validator,
-          onSaved: onSaved,
+          controller: _controller,
+          onEditingComplete: widget.withCleaning
+              ? () {
+                  _controller.clear();
+                  FocusScope.of(context).unfocus();
+
+                  setState(() {});
+                }
+              : null,
+          onChanged: widget.onChanged,
+          validator: widget.validator,
+          onSaved: widget.onSaved,
           cursorColor: kPrimaryColor,
-          obscureText: obscureText,
-          decoration: decoration //basicInputDecoration(textTheme, hintText),
+          obscureText: widget.obscureText,
+          decoration:
+              widget.decoration //basicInputDecoration(textTheme, hintText),
           ),
     );
   }
