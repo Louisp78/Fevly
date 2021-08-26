@@ -24,6 +24,7 @@ class BottomSection extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -35,10 +36,11 @@ class BottomSection extends StatelessWidget {
             if (validate) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: kSurfaceColor,
+                  backgroundColor: themeColor.kSurfaceColor,
                   content: Text(
                     'Félicitation connexion réussie!',
-                    style: textTheme.headline4?.copyWith(color: kDoneColor),
+                    style: textTheme.headline4
+                        ?.copyWith(color: themeColor.kDoneColor),
                   ),
                 ),
               );
@@ -61,17 +63,23 @@ class BottomSection extends StatelessWidget {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: kSurfaceColor,
+                  backgroundColor: themeColor.kSurfaceColor,
                   content: Text(
                     kSnackBarMissingField,
-                    style: textTheme.headline4?.copyWith(color: kPrimaryColor),
+                    style: textTheme.headline4
+                        ?.copyWith(color: themeColor.kPrimaryColor),
                   ),
                 ),
               );
             }
           },
           text: "Connexion",
-          borderColor: loginViewModel.isFormValid ? kPrimaryColor : kTextColor,
+          textColor: loginViewModel.isFormValid
+              ? themeColor.kPrimaryColor
+              : textTheme.headline1!.color,
+          borderColor: loginViewModel.isFormValid
+              ? themeColor.kPrimaryColor
+              : themeColor.kTextColor,
         ),
         SizedBox(
           height: size.height * 0.02,

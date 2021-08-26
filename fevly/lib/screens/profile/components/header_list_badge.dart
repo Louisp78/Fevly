@@ -23,10 +23,12 @@ class HeaderListBadge extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     final TextEditingController _controller = TextEditingController();
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          color: themeColor.kBaseColor,
+          borderRadius: BorderRadius.circular(20)),
       padding: EdgeInsets.only(
           left: size.width * 0.05,
           right: size.width * 0.05,

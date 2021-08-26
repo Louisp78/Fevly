@@ -69,10 +69,11 @@ class DashboardScreen extends StatelessWidget {
   //$ METHOD
   //$ ===========================================
   Padding buildFloatingActionButton() {
+    final ThemeColor themeColor = initThemeColor();
     return Padding(
       padding: const EdgeInsets.only(bottom: 60),
       child: FloatingActionButton(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: themeColor.kPrimaryColor,
         onPressed: () {},
         child: const Icon(Icons.add_rounded),
       ),

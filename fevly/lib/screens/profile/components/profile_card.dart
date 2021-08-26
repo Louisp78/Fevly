@@ -140,6 +140,7 @@ class ProfileCard extends StatelessWidget {
   }
 
   CustomDialogList buildDialog(TextTheme textTheme) {
+    final ThemeColor themeColor = initThemeColor();
     return CustomDialogList(title: "Options", listOptions: [
       ...List.generate(
         listParties1.length,
@@ -149,11 +150,13 @@ class ProfileCard extends StatelessWidget {
               text: TextSpan(children: [
             TextSpan(
               text: "Inviter à ",
-              style: textTheme.headline5,
+              style: textTheme.headline5
+                  ?.copyWith(color: themeColor.kBaseOppositeColor),
             ),
             TextSpan(
               text: "${listParties1[index].name}.",
-              style: textTheme.headline5?.copyWith(color: kPrimaryColor),
+              style: textTheme.headline5
+                  ?.copyWith(color: themeColor.kPrimaryColor),
             ),
           ])),
         ),

@@ -64,6 +64,7 @@ class Body extends StatelessWidget {
       required TextTheme textTheme,
       required Size size,
       required TextFieldModelView searchField}) {
+    final ThemeColor themeColor = initThemeColor();
     switch (profileOwner.relationState) {
       case UserRelationState.unFriend:
       case UserRelationState.requestSent:
@@ -75,7 +76,8 @@ class Body extends StatelessWidget {
               needToBeFriendMessage(
                 username: profileOwner.pseudo,
               ),
-              style: textTheme.headline5?.copyWith(color: kTextColor)),
+              style:
+                  textTheme.headline5?.copyWith(color: themeColor.kTextColor)),
         );
       default:
         return ListOfBadges(

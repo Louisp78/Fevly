@@ -37,7 +37,7 @@ class CustomUserListItem extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
-
+    final ThemeColor themeColor = initThemeColor();
     return InkWell(
       onTap: press,
       child: Container(
@@ -45,7 +45,7 @@ class CustomUserListItem extends StatelessWidget {
         margin: EdgeInsets.only(bottom: kBasicVerticalPadding(size: size)),
         width: size.width * 0.9,
         decoration: BoxDecoration(
-          color: kSurfaceLightColor,
+          color: themeColor.kSurfaceLightColor,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [kShadowBase],
         ),
@@ -64,16 +64,16 @@ class CustomUserListItem extends StatelessWidget {
               CustomTextButton(
                 buttonSize: const CustomTextButtonSize.small(),
                 text: user.relationState.name,
-                backgroundColor: kSurfaceColor,
+                backgroundColor: themeColor.kSurfaceColor,
                 textColor: user.relationState != UserRelationState.friend
-                    ? kPrimaryColor
+                    ? themeColor.kPrimaryColor
                     : Colors.black,
                 suffixIcon: Icon(user.relationState.iconData,
-                    color: kPrimaryColor, size: kSmallIconSize),
+                    color: themeColor.kPrimaryColor, size: kSmallIconSize),
                 border: user.relationState == UserRelationState.friend
                     ? Border.all(
                         width: 4,
-                        color: kPrimaryColor,
+                        color: themeColor.kPrimaryColor,
                       )
                     : null,
                 press: changeRelationState(
@@ -94,8 +94,8 @@ class CustomUserListItem extends StatelessWidget {
                   },
                   icon: listOfUserViewModel!.list
                           .any((element) => element.pseudo == user.pseudo)
-                      ? const Icon(Icons.how_to_reg_rounded,
-                          color: kSecondaryColor)
+                      ? Icon(Icons.how_to_reg_rounded,
+                          color: themeColor.kSecondaryColor)
                       : const Icon(Icons.person_add_rounded))
           ],
         ),

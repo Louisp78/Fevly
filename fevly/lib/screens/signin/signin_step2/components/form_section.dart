@@ -28,7 +28,7 @@ class FormSection extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final _keyForm = GlobalKey<FormState>();
-
+    final ThemeColor themeColor = initThemeColor();
     return Form(
       key: _keyForm,
       child: SizedBox(
@@ -159,11 +159,11 @@ class FormSection extends StatelessWidget {
                           email: email);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          backgroundColor: kSurfaceColor,
+                          backgroundColor: themeColor.kSurfaceColor,
                           content: Text(
                             'Félicitation profile validé!',
                             style: textTheme.headline4
-                                ?.copyWith(color: kDoneColor),
+                                ?.copyWith(color: themeColor.kDoneColor),
                           ),
                         ),
                       );
@@ -172,22 +172,22 @@ class FormSection extends StatelessWidget {
                     } else if (onlyTermOfUseLeft) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          backgroundColor: kSurfaceColor,
+                          backgroundColor: themeColor.kSurfaceColor,
                           content: Text(
                             "Il ne vous reste plus qu'à accepter les conditions d'utilisation.",
                             style: textTheme.headline4
-                                ?.copyWith(color: kPrimaryColor),
+                                ?.copyWith(color: themeColor.kPrimaryColor),
                           ),
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          backgroundColor: kSurfaceColor,
+                          backgroundColor: themeColor.kSurfaceColor,
                           content: Text(
                             kSnackBarMissingField,
                             style: textTheme.headline4
-                                ?.copyWith(color: kPrimaryColor),
+                                ?.copyWith(color: themeColor.kPrimaryColor),
                           ),
                         ),
                       );

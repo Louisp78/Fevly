@@ -9,20 +9,22 @@ class DashboardMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final ThemeColor themeColor = initThemeColor();
     return Center(
       child: Container(
         width: size.width * 0.4,
         height: 45,
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(24)),
-        child: const TabBar(
-          labelColor: kPrimaryColor,
-          indicatorColor: kPrimaryColor,
+            color: themeColor.kSurfaceColor,
+            borderRadius: BorderRadius.circular(24)),
+        child: TabBar(
+          labelColor: themeColor.kPrimaryColor,
+          indicatorColor: themeColor.kPrimaryColor,
           indicatorSize: TabBarIndicatorSize.label,
-          unselectedLabelColor: Colors.black,
+          unselectedLabelColor: themeColor.kBaseOppositeColor,
           indicatorWeight: 3,
-          tabs: [
+          tabs: const [
             Tab(
               icon: Icon(Icons.groups_rounded, size: 31),
             ),

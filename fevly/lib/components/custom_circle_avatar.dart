@@ -6,26 +6,27 @@ class CustomCircleAvatar extends StatelessWidget {
     Key? key,
     this.radius = 25,
     this.icon,
-    this.backgroundColor = kSurfaceColor,
+    this.backgroundColor,
   }) : super(key: key);
 
   final double radius;
   final Widget? icon;
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
+    final ThemeColor themeColor = initThemeColor();
     return FittedBox(
       fit: BoxFit.scaleDown,
       alignment: Alignment.topLeft,
       child: CircleAvatar(
           radius: radius,
-          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor ?? themeColor.kSurfaceColor,
           child: icon ??
               Icon(
                 Icons.person,
                 size: radius * (32 / 25),
-                color: kPrimaryColor,
+                color: themeColor.kPrimaryColor,
               )),
     );
   }

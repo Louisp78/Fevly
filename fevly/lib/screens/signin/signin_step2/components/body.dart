@@ -1,6 +1,7 @@
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/screens/signin/signin_step2/view_models/signin_step2_view_model.dart';
+import 'package:fevly/styles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'form_section.dart';
@@ -31,6 +32,9 @@ class Body extends StatelessWidget {
                 outline: true,
                 circle: false,
                 icon: Icons.arrow_back_ios_rounded,
+                iconColor: themeColor.kBaseOppositeColor,
+                backgroundColor: themeColor.kBaseColor,
+                borderColor: themeColor.kBaseOppositeColor,
               ),
             ),
             FormSection(

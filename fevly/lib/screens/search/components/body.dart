@@ -57,6 +57,7 @@ class Body extends StatelessWidget {
                   ),
                   UserSearchBar(
                     textFieldModelView: textFieldModelView,
+                    sourceList: userSearchList,
                   ),
                   buildListOfUser(
                       size: size,

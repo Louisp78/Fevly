@@ -9,26 +9,29 @@ SnackBar buildCustomSnackBar({
   required Size size,
   required String text,
   required GestureTapCallback undoPress,
-}) =>
-    SnackBar(
-      backgroundColor: kSurfaceColor,
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: size.width * 0.6,
-            child: AutoSizeText(
-              text,
-              style: textTheme.headline5?.copyWith(color: kPrimaryColor),
-              minFontSize: 10,
-              maxLines: 2,
-            ),
+}) {
+  final ThemeColor themeColor = initThemeColor();
+  return SnackBar(
+    backgroundColor: themeColor.kSurfaceColor,
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: size.width * 0.6,
+          child: AutoSizeText(
+            text,
+            style:
+                textTheme.headline5?.copyWith(color: themeColor.kPrimaryColor),
+            minFontSize: 10,
+            maxLines: 2,
           ),
-          CustomSmallButton(
-            text: "Annuler",
-            press: undoPress,
-            buttonSize: CustomSmallButtonSize.small,
-          )
-        ],
-      ),
-    );
+        ),
+        CustomSmallButton(
+          text: "Annuler",
+          press: undoPress,
+          buttonSize: CustomSmallButtonSize.small,
+        )
+      ],
+    ),
+  );
+}
