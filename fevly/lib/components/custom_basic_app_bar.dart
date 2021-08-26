@@ -35,13 +35,14 @@ class CustomBasicAppBar extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return Container(
       width: size.width,
       height: 110,
       padding: const EdgeInsets.only(bottom: 20),
       alignment: Alignment.center,
-      decoration:
-          BoxDecoration(color: kSurfaceLightColor, boxShadow: [kShadowBase]),
+      decoration: BoxDecoration(
+          color: themeColor.kSurfaceLightColor, boxShadow: [kShadowBase]),
       child: Stack(
         alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none,
@@ -78,7 +79,7 @@ class CustomBasicAppBar extends StatelessWidget {
               left: 0,
               child: IconButton(
                 onPressed: press,
-                icon: Icon(iconData),
+                icon: Icon(iconData, color: themeColor.kBaseOppositeColor),
               ),
             ),
           if (prefixIcon != null)

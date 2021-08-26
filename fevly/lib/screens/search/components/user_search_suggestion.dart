@@ -15,13 +15,7 @@ class UserSearchSuggestion extends StatelessWidget {
     required this.suggestionList1Name,
     required this.suggestionList2Name,
     this.listUserViewModel,
-  })  : assert(
-            typeOfListItem == SearchScreenType.changeRelationState &&
-                    listUserViewModel == null ||
-                typeOfListItem == SearchScreenType.addToAList &&
-                    listUserViewModel != null,
-            "Need to define GuestList or not."),
-        assert(
+  }) : assert(
             userSuggestionList2 == null && suggestionList2Name == null ||
                 userSuggestionList2 != null && suggestionList2Name != null,
             "userSuggestionList2 must be define in the same time than name.");

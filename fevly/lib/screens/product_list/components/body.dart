@@ -1,6 +1,5 @@
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
-import 'package:fevly/components/custom_grid_item.dart';
 import 'package:fevly/components/custom_product_item.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';

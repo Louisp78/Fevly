@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:fevly/routes.dart';
 import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/styles/theme.dart';
@@ -20,10 +19,11 @@ class MyApp extends StatelessWidget {
     );
     return MaterialApp(
       title: 'Fevly',
-      theme: themeData,
+      theme: lightThemeData,
+      darkTheme: darkThemeData,
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
-      initialRoute: '/dashboard',
+      initialRoute: '/login',
       onGenerateRoute: RouterNav.generateRoute,
     );
   }

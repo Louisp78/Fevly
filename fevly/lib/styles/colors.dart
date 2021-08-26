@@ -59,6 +59,8 @@ class ThemeColor {
       kPrimaryVariantColor,
       kSecondaryColor,
       kSecondaryVariantColor,
+      kBaseColor,
+      kBaseOppositeColor,
       kTextColor = const Color(0xffAAAAAA),
       kDarkerTextColor = const Color(0xff767676),
       kErrorColor = const Color(0xffFF0000),
@@ -71,8 +73,10 @@ class ThemeColor {
     this.kPrimaryVariantColor = const Color(0xffFFC7FF),
     this.kSecondaryColor = const Color(0xffFF4545),
     this.kSecondaryVariantColor = const Color(0xffFF7C71),
-    this.kSurfaceLightColor = const Color(0xffE040FB),
-    this.kSurfaceColor = const Color(0xffE040FB),
+    this.kSurfaceLightColor = const Color(0xffFBFBFB),
+    this.kSurfaceColor = const Color(0xffEEEEEE),
+    this.kBaseColor = const Color(0xffffffff),
+    this.kBaseOppositeColor = const Color(0xff000000),
   });
 
   ThemeColor.darkMode({
@@ -80,7 +84,15 @@ class ThemeColor {
     this.kPrimaryVariantColor = const Color(0xffFFD6FF),
     this.kSecondaryColor = const Color(0xffFF7C71),
     this.kSecondaryVariantColor = const Color(0xffFFAEA0),
-    this.kSurfaceLightColor = const Color(0xffE040FB),
-    this.kSurfaceColor = const Color(0xffE040FB),
+    this.kSurfaceLightColor = const Color(0xff424242),
+    this.kSurfaceColor = const Color(0xff1D1D1D),
+    this.kBaseColor = const Color(0xff000000),
+    this.kBaseOppositeColor = const Color(0xffffffff),
   });
+}
+
+ThemeColor initThemeColor() {
+  return ThemeMode.system == ThemeMode.light
+      ? ThemeColor.lightMode()
+      : ThemeColor.darkMode();
 }

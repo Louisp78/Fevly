@@ -56,8 +56,9 @@ class CustomTextButton extends StatelessWidget {
         buttonSize.height == const CustomTextButtonSize.normal().height
             ? textTheme.headline4!
             : textTheme.headline5!;
+    final ThemeColor themeColor = initThemeColor();
     return InkWell(
-      highlightColor: kPrimaryColor,
+      highlightColor: themeColor.kPrimaryColor,
       borderRadius: BorderRadius.circular(buttonSize.borderRadius),
       onTap: press,
       child: Container(

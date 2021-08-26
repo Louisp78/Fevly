@@ -14,13 +14,14 @@ class CustomDashboardAppBar extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),
       height: 85,
       width: size.width,
       decoration: BoxDecoration(
-        color: kSurfaceLightColor,
+        color: themeColor.kSurfaceColor,
         boxShadow: [kShadowBase],
       ),
       child: Row(
@@ -82,11 +83,15 @@ class CustomDashboardAppBar extends StatelessWidget {
                   InkWell(
                     onTap: () =>
                         Navigator.pushNamed(context, '/profile/my_lists'),
-                    child: const Icon(Icons.format_list_bulleted_rounded),
+                    child: Icon(
+                      Icons.format_list_bulleted_rounded,
+                      color: themeColor.kBaseOppositeColor,
+                    ),
                   ),
                   InkWell(
                     onTap: () {},
-                    child: const Icon(Icons.notifications_rounded),
+                    child: Icon(Icons.notifications_rounded,
+                        color: themeColor.kBaseOppositeColor),
                   ),
                 ],
               ),

@@ -24,6 +24,7 @@ class CustomPartyItem extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -35,7 +36,7 @@ class CustomPartyItem extends StatelessWidget {
               left: kBasicHorizontalPadding(size: size),
               right: kBasicHorizontalPadding(size: size)),
           decoration: BoxDecoration(
-            color: kSurfaceLightColor,
+            color: themeColor.kSurfaceLightColor,
             boxShadow: [kShadowBase],
             borderRadius: BorderRadius.circular(24),
           ),
@@ -63,6 +64,8 @@ class CustomPartyItem extends StatelessWidget {
                         press: () {},
                         size: const CustomIconButtonSize.small(),
                         icon: Icons.arrow_forward_rounded,
+                        iconColor: themeColor.kBaseOppositeColor,
+                        backgroundColor: themeColor.kBaseColor,
                         outline: true,
                         circle: false,
                       ),
@@ -75,7 +78,7 @@ class CustomPartyItem extends StatelessWidget {
                 height: 200,
                 padding: EdgeInsets.all(size.width * 0.08),
                 decoration: BoxDecoration(
-                  color: kSurfaceColor,
+                  color: themeColor.kSurfaceColor,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
@@ -86,6 +89,7 @@ class CustomPartyItem extends StatelessWidget {
                         press: () {},
                         text: "Dans ${party.numberOfDaysLeft()}j",
                         buttonSize: const CustomTextButtonSize.verySmall(),
+                        backgroundColor: themeColor.kPrimaryColor,
                       ),
                     ),
                     const SizedBox(
@@ -104,11 +108,17 @@ class CustomPartyItem extends StatelessWidget {
                             text: party.listOfOrganizer[0].pseudo,
                           ),
                           InfoItem(
-                            leading: const Icon(Icons.event_rounded),
+                            leading: Icon(
+                              Icons.event_rounded,
+                              color: themeColor.kBaseOppositeColor,
+                            ),
                             text: party.startDateFormat(),
                           ),
                           InfoItem(
-                            leading: const Icon(Icons.group_rounded),
+                            leading: Icon(
+                              Icons.group_rounded,
+                              color: themeColor.kBaseOppositeColor,
+                            ),
                             text: "${party.guestsLength} invités",
                           ),
                         ],
@@ -128,13 +138,14 @@ class CustomPartyItem extends StatelessWidget {
   }
 
   Container buildNotificationCounter(Size size, TextTheme textTheme) {
+    final ThemeColor themeColor = initThemeColor();
     return Container(
       width: size.width * 0.07,
       height: size.width * 0.07,
       alignment: Alignment.center,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: kSecondaryColor,
+        color: themeColor.kSecondaryColor,
       ),
       child: Text(
         "5",

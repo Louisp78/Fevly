@@ -13,6 +13,7 @@ class DashboardShoppingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final ThemeColor themeColor = initThemeColor();
     return SizedBox(
       height: size.height,
       child: SingleChildScrollView(
@@ -24,9 +25,10 @@ class DashboardShoppingScreen extends StatelessWidget {
             CustomSmallButton(
               press: () {},
               text: "10 produits",
+              textColor: themeColor.kBaseOppositeColor,
               buttonSize: CustomSmallButtonSize.small,
               borderWidth: 3,
-              borderColor: kPrimaryColor,
+              borderColor: themeColor.kPrimaryColor,
             ),
             SizedBox(
               height: kBasicVerticalPadding(size: size) * 1.5,

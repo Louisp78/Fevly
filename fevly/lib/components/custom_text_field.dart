@@ -34,7 +34,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
+    final ThemeColor themeColor = initThemeColor();
     return Container(
       width: widget.width ?? size.width * 0.8,
       height: widget.height,
@@ -55,7 +55,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onChanged: widget.onChanged,
           validator: widget.validator,
           onSaved: widget.onSaved,
-          cursorColor: kPrimaryColor,
+          cursorColor: themeColor.kPrimaryColor,
           obscureText: widget.obscureText,
           decoration:
               widget.decoration //basicInputDecoration(textTheme, hintText),

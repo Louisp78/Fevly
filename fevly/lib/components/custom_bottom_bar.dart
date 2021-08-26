@@ -1,3 +1,4 @@
+import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,14 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final ThemeColor themeColor = initThemeColor();
     return Container(
       width: size.width,
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          color: Colors.white,
+          color: themeColor.kSurfaceColor,
           boxShadow: [kShadowBottomBar]),
       height: 60,
       child: Row(
@@ -27,28 +29,39 @@ class CustomBottomBar extends StatelessWidget {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             onPressed: () => Navigator.pushNamed(context, '/dashboard'),
-            icon: const Icon(Icons.home_rounded),
+            icon: Icon(
+              Icons.home_rounded,
+              color: themeColor.kBaseOppositeColor,
+            ),
           ),
           IconButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               onPressed: () {},
-              icon: const Icon(Icons.search_rounded)),
+              icon: Icon(Icons.search_rounded,
+                  color: themeColor.kBaseOppositeColor)),
           CustomIconButton(
             press: () {},
             icon: Icons.add_rounded,
             circle: false,
+            iconColor: themeColor.kBaseColor,
           ),
           IconButton(
               onPressed: () {},
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              icon: const Icon(Icons.notifications_rounded)),
+              icon: Icon(
+                Icons.notifications_rounded,
+                color: themeColor.kBaseOppositeColor,
+              )),
           IconButton(
               onPressed: () {},
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              icon: const Icon(Icons.person_rounded)),
+              icon: Icon(
+                Icons.person_rounded,
+                color: themeColor.kBaseOppositeColor,
+              )),
         ],
       ),
     );

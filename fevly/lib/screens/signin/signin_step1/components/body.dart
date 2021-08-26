@@ -1,6 +1,7 @@
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/screens/signin/signin_step1/view_models/signin_step1_view_model.dart';
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final ThemeColor themeColor = initThemeColor();
     return SingleChildScrollView(
       child: SizedBox(
         width: size.width,
@@ -28,6 +30,9 @@ class Body extends StatelessWidget {
                   outline: true,
                   circle: false,
                   icon: Icons.arrow_back_ios_rounded,
+                  iconColor: themeColor.kBaseOppositeColor,
+                  backgroundColor: themeColor.kBaseColor,
+                  borderColor: themeColor.kBaseOppositeColor,
                 ),
               ),
               const FormSection(),

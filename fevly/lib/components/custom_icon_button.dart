@@ -35,6 +35,7 @@ class CustomIconButton extends StatelessWidget {
     this.backgroundColor,
     this.iconColor,
     this.withShadow = false,
+    this.borderColor,
   }) : super(key: key);
 
   final GestureTapCallback press;
@@ -45,6 +46,7 @@ class CustomIconButton extends StatelessWidget {
   final IconData icon;
   final Color? iconColor;
   final Color? backgroundColor;
+  final Color? borderColor;
   final bool withShadow;
 
   @override
@@ -56,9 +58,10 @@ class CustomIconButton extends StatelessWidget {
               : (lightMode ? kPrimaryColor : kDarkPrimaryColor)),
       border: Border.all(
         width: outline ? 2.0 : 0.0,
-        color: outline
-            ? (lightMode ? Colors.black : Colors.white)
-            : Colors.transparent,
+        color: borderColor ??
+            (outline
+                ? (lightMode ? Colors.black : Colors.white)
+                : Colors.transparent),
       ),
       boxShadow: withShadow ? [kDarkShadowBase] : null,
     );
