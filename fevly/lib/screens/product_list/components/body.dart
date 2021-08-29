@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
-import 'package:fevly/components/custom_grid_item.dart';
+import 'package:fevly/components/custom_product_item.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
@@ -52,7 +52,7 @@ class Body extends StatelessWidget {
                               sourceList: productList.listOfProduct,
                               search: searchField.textValue);
                         },
-                        decoration: badgeSearchInputDecoration(
+                        decoration: smallSearchInputDecoration(
                           hintStyle: kSearchHintStyle(textTheme: textTheme),
                           hintText: "Rechercher un produit",
                           size: size,
@@ -66,18 +66,20 @@ class Body extends StatelessWidget {
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 3,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: kBasicHorizontalPadding(size: size),
-                      vertical: kBasicVerticalPadding(size: size),
+                    padding: EdgeInsets.only(
+                      right: kBasicHorizontalPadding(size: size),
+                      top: kBasicVerticalPadding(size: size),
+                      bottom: 60 + kBasicVerticalPadding(size: size),
                     ),
-                    mainAxisSpacing: kGridMainSpacing(size: size),
-                    crossAxisSpacing: kGridCrossSpacing(size: size),
+                    mainAxisSpacing: kGridMainSpacing(size: size) * 1.5,
+                    crossAxisSpacing: kGridCrossSpacing(size: size) * 0.25,
                     children: List.generate(searchField.listOfObjects!.length,
                         (index) {
                       final Product currentProduct =
                           searchField.listOfObjects![index] as Product;
-                      return CustomGridItem(
+                      return CustomProductItem(
                         product: currentProduct,
+                        imgSize: size.width * 0.12,
                       );
                     }),
                   ),

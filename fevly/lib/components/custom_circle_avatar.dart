@@ -4,26 +4,30 @@ import 'package:flutter/material.dart';
 class CustomCircleAvatar extends StatelessWidget {
   const CustomCircleAvatar({
     Key? key,
-    this.radius = 25, this.icon,
+    this.radius = 25,
+    this.icon,
+    this.backgroundColor,
   }) : super(key: key);
 
   final double radius;
   final Widget? icon;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
+    final ThemeColor themeColor = initThemeColor();
     return FittedBox(
       fit: BoxFit.scaleDown,
       alignment: Alignment.topLeft,
       child: CircleAvatar(
-        radius: radius,
-        backgroundColor: kSurfaceColor,
-        child: icon ?? Icon(
-          Icons.person,
-          size: radius * (32 / 25),
-          color: kPrimaryColor,
-        )
-      ),
+          radius: radius,
+          backgroundColor: backgroundColor ?? themeColor.kSurfaceColor,
+          child: icon ??
+              Icon(
+                Icons.person,
+                size: radius * (32 / 25),
+                color: themeColor.kPrimaryColor,
+              )),
     );
   }
 }

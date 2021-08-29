@@ -1,8 +1,8 @@
 import 'package:fevly/constant.dart';
+import 'package:fevly/models/badge.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -10,25 +10,22 @@ import 'list_of_badges.dart';
 import 'profile_card.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key, required this.profileOwner}) : super(key: key);
+
+  final User profileOwner;
 
   @override
   Widget build(BuildContext context) {
-    final User profileOwner = User(
-        email: "@",
-        name: "Jean Eude",
-        pseudo: "jeaneude",
-        password: "heheheheheh",
-        // ignore: avoid_redundant_argument_values
-        relationState: UserRelationState.me);
-
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return SizedBox(
       width: size.width,
       child: ChangeNotifierProvider(
-        create: (context) => TextFieldModelView(listOfObjects: badgeList1),
+        create: (context) => TextFieldModelView(
+            listOfObjects: List<Badge>.generate(
+                profileOwner.listOfBadges.length,
+                (index) => profileOwner.listOfBadges[index])),
         child: Consumer<TextFieldModelView>(
           builder: (context, searchField, child) => Stack(
             alignment: Alignment.center,
@@ -53,12 +50,7 @@ class Body extends StatelessWidget {
                 Positioned(
                   top: size.height * 0.06,
                   left: size.width * 0.05,
-                  child: ProfileCard(
-                    level: 18,
-                    name: profileOwner.name,
-                    pseudo: profileOwner.pseudo,
-                    relationState: profileOwner.relationState,
-                  ),
+                  child: ProfileCard(profileOwner: profileOwner),
                 ),
             ],
           ),
@@ -72,6 +64,7 @@ class Body extends StatelessWidget {
       required TextTheme textTheme,
       required Size size,
       required TextFieldModelView searchField}) {
+    final ThemeColor themeColor = initThemeColor();
     switch (profileOwner.relationState) {
       case UserRelationState.unFriend:
       case UserRelationState.requestSent:
@@ -83,11 +76,13 @@ class Body extends StatelessWidget {
               needToBeFriendMessage(
                 username: profileOwner.pseudo,
               ),
-              style: textTheme.headline5?.copyWith(color: kTextColor)),
+              style:
+                  textTheme.headline5?.copyWith(color: themeColor.kTextColor)),
         );
       default:
         return ListOfBadges(
           searchField: searchField,
+          defaultListOfBadge: profileOwner.listOfBadges,
         );
     }
   }

@@ -1,7 +1,7 @@
 //$ ENUMERATION
 //$ ============================================================
 
-enum QuantityUnit { none, L, m, cm, pack, paquet, part }
+enum QuantityUnit { none, L, cL, m, cm, pack, paquet, part }
 
 extension QuantityUnitExtension on QuantityUnit {
   String get name {
@@ -10,6 +10,8 @@ extension QuantityUnitExtension on QuantityUnit {
         return "paquet";
       case QuantityUnit.L:
         return "L";
+      case QuantityUnit.cL:
+        return "cL";
       case QuantityUnit.cm:
         return "cm";
       case QuantityUnit.m:
@@ -58,6 +60,8 @@ class Product {
         return quantity > 1 ? "paquets" : "paquet";
       case QuantityUnit.L:
         return "L";
+      case QuantityUnit.cL:
+        return "cL";
       case QuantityUnit.cm:
         return "cm";
       case QuantityUnit.m:
@@ -74,6 +78,7 @@ class Product {
   String getStringQuantity() {
     switch (unit) {
       case QuantityUnit.L:
+      case QuantityUnit.cL:
       case QuantityUnit.cm:
       case QuantityUnit.m:
         return quantity.toStringAsFixed(1);
@@ -81,4 +86,6 @@ class Product {
         return quantity.toStringAsFixed(0);
     }
   }
+
+  String getQuantity() => "${getStringQuantity()} ${getQuantityUnitName()}";
 }

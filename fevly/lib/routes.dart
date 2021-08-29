@@ -1,5 +1,7 @@
+import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
+import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/screens/my_lists/my_lists_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
@@ -10,7 +12,10 @@ import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
 import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
 import 'package:fevly/styles/transition.dart';
+import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
+
+import 'models/user.dart';
 
 class RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -30,20 +35,25 @@ class RouterNav {
           transitionDuration: const Duration(milliseconds: 500),
         );
 
-      case '/signin_step2':
+      case '/signin_step1/signin_step2':
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const SignInStep2Screen(),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            final Map args = settings.arguments! as Map;
+            return SignInStep2Screen(
+              email: args['email'] as String,
+              password: args['password'] as String,
+            );
+          },
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-      case '/signin_step2/term_of_use':
+      case '/signin_step1/signin_step2/term_of_use':
         return MaterialPageRoute(builder: (_) => const TermOfUseScreen());
 
       case '/profile':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const ProfileScreen(),
+              ProfileScreen(profileOwner: settings.arguments! as User),
           transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
@@ -51,7 +61,10 @@ class RouterNav {
       case '/profile/my_lists':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const MyListsScreen(),
+              MyListsScreen(
+            listOfGuestList: kCurrentUser.listOfGuestList,
+            listOfProductList: kCurrentUser.listOfProductList,
+          ),
         );
 
       case '/profile/my_lists/product_list':
@@ -71,8 +84,26 @@ class RouterNav {
         );
       case '/search':
         return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            final Map args = settings.arguments! as Map;
+            return SearchScreen(
+              guestList: args['guestList'] as GuestList,
+              appBar: args['appBar'] as Widget,
+              suggestionList1Name: args['suggestionList1Name'] as String,
+              suggestionList2Name: args['suggestionList2Name'] as String?,
+              userSuggestionList1: args['userSuggestionList1'] as List<User>,
+              userSuggestionList2: args['userSuggestionList2'] as List<User>?,
+              type: args['type'] as SearchScreenType,
+            );
+          },
+        );
+
+      case '/dashboard':
+        return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const SearchScreen(),
+              const DashboardScreen(),
+          transitionsBuilder: slideUpTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
         );
 
       case '/party/party_info':

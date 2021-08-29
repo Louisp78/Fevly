@@ -18,14 +18,14 @@ class CustomGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return GestureDetector(
       onTap: () {},
       child: Container(
         decoration: BoxDecoration(
-          color: kSurfaceLightColor,
+          color: themeColor.kSurfaceLightColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [kShadowBase],
         ),
@@ -34,8 +34,6 @@ class CustomGridItem extends StatelessWidget {
           children: [
             SvgPicture.asset(
               badge != null ? badge!.image : product!.image,
-              width: size.width * 0.11,
-              height: size.width * 0.11,
               fit: BoxFit.scaleDown,
             ),
             const SizedBox(

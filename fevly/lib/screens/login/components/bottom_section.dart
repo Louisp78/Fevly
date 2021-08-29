@@ -1,8 +1,10 @@
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/view_models/fom_view_model.dart';
+import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/login/view_models/login_model_view.dart';
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/test/data_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,51 +13,73 @@ class BottomSection extends StatelessWidget {
   const BottomSection({
     Key? key,
     required this.keyForm,
-    required this.formViewModel,
+    required this.loginViewModel,
   }) : super(key: key);
 
   final GlobalKey<FormState> keyForm;
-  final FormViewModel formViewModel;
+  final LoginViewModel loginViewModel;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomSmallButton(
           press: () {
             final bool validate =
-                keyForm.currentState!.validate() && formViewModel.isFormValid;
+                keyForm.currentState!.validate() && loginViewModel.isFormValid;
 
             if (validate) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: kSurfaceColor,
+                  backgroundColor: themeColor.kSurfaceColor,
                   content: Text(
                     'Félicitation connexion réussie!',
-                    style: textTheme.headline4?.copyWith(color: kDoneColor),
+                    style: textTheme.headline4
+                        ?.copyWith(color: themeColor.kDoneColor),
                   ),
                 ),
               );
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(
+                context,
+                '/profile',
+                arguments: User(
+                  name: "Louis Place",
+                  pseudo: loginViewModel.login.contains("@")
+                      ? "llouisp78"
+                      : loginViewModel.login,
+                  password: "loulou78",
+                  email: loginViewModel.login.contains("@")
+                      ? loginViewModel.login
+                      : "placelouis@gmail.com",
+                  listOfBadges: badgeList1,
+                  level: 32,
+                ),
+              );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: kSurfaceColor,
+                  backgroundColor: themeColor.kSurfaceColor,
                   content: Text(
-                    snackBarMissingField,
-                    style: textTheme.headline4?.copyWith(color: kPrimaryColor),
+                    kSnackBarMissingField,
+                    style: textTheme.headline4
+                        ?.copyWith(color: themeColor.kPrimaryColor),
                   ),
                 ),
               );
             }
           },
           text: "Connexion",
-          borderColor: formViewModel.isFormValid ? kPrimaryColor : kTextColor,
-          size: CustomSmallButtonSize.normal,
+          textColor: loginViewModel.isFormValid
+              ? themeColor.kPrimaryColor
+              : textTheme.headline1!.color,
+          borderColor: loginViewModel.isFormValid
+              ? themeColor.kPrimaryColor
+              : themeColor.kTextColor,
         ),
         SizedBox(
           height: size.height * 0.02,

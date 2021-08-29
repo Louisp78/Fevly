@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/models/badge.dart';
+import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,21 @@ Volutpat ornare volutpat eu ut. Dignissim sit diam donec bibendum fringilla tris
 String validatorMissed({required String source}) =>
     "Oops vous avez oublier votre $source.";
 
-const String snackBarMissingField =
+const String kSnackBarMissingField =
     "Il semble que vous ayez oublié 2 ou 3 trucs...";
+
+String kSnackBarUserRelation({required User user}) {
+  switch (user.relationState) {
+    case UserRelationState.unFriend:
+      return "Demande d'ami envoyée à ${user.pseudo}!";
+    case UserRelationState.friend:
+      return "Vous n'êtes plus ami avec ${user.pseudo}.";
+    case UserRelationState.me:
+      return "Avez vous des amis imaginaires?";
+    case UserRelationState.requestSent:
+      return "Nous avons discrètement détruit cette invitation.";
+  }
+}
 
 String needToBeFriendMessage({required String username}) =>
     "Devenez ami avec $username pour voir ses badges.";
@@ -32,6 +46,15 @@ String kBadgeSpecialName({required BadgeCategory category}) {
   switch (category) {
     case BadgeCategory.drink:
       return "d'ambroisie";
+    default:
+      throw Exception("SpecialName not define for ${category.name}");
+  }
+}
+
+String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}) {
+  switch (category) {
+    case BadgeCategory.drink:
+      return "ambroisie";
     default:
       throw Exception("SpecialName not define for ${category.name}");
   }
@@ -52,6 +75,7 @@ double kGridCrossSpacing({required Size size}) => size.width * 0.05;
 double kGridMainSpacing({required Size size}) => size.height * 0.02;
 double kBasicVerticalPadding({required Size size}) => size.height * 0.03;
 double kBasicHorizontalPadding({required Size size}) => size.width * 0.05;
+double kHeightAppBar = 110.0;
 
 AutoSizeText kBasicTitleForAppBar(
         {required String title, required TextTheme textTheme}) =>
