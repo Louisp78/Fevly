@@ -4,11 +4,11 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product_list.dart';
+import 'package:fevly/test/data_product_list.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +26,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return ChangeNotifierProvider(
       create: (context) => TextFieldModelView<ProductList>(),
       child: Consumer<TextFieldModelView<ProductList>>(
@@ -37,12 +38,12 @@ class CustomBottomSheetProductList extends StatelessWidget {
                 textFieldProvider.selection ? size.height : size.height * 0.4,
             padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.05, vertical: size.height * 0.03),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(69),
                 topRight: Radius.circular(69),
               ),
-              color: kSurfaceLightColor,
+              color: themeColor.kSurfaceLightColor,
             ),
             child: Column(
               children: [
@@ -83,7 +84,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: kSurfaceLightColor,
+                      color: themeColor.kSurfaceLightColor,
                       boxShadow: [kShadowBase]),
                   child: DropdownButton<ProductList>(
                     value: textFieldProvider.value,
@@ -123,7 +124,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
                             list != null ? list.name : "Dupliquer une liste",
                             style: list == null
                                 ? textTheme.headline5
-                                    ?.copyWith(color: kPrimaryColor)
+                                    ?.copyWith(color: themeColor.kPrimaryColor)
                                 : null),
                       );
                     }).toList(),

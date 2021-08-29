@@ -23,6 +23,7 @@ class ListTileItem extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return InkWell(
       onTap: press,
       child: Container(
@@ -30,7 +31,7 @@ class ListTileItem extends StatelessWidget {
         margin: margin != null ? margin! : null,
         width: size.width * 0.9,
         decoration: BoxDecoration(
-          color: kSurfaceLightColor,
+          color: themeColor.kSurfaceLightColor,
           boxShadow: [kShadowBase],
           borderRadius: BorderRadius.circular(20),
         ),
@@ -49,14 +50,18 @@ class ListTileItem extends StatelessWidget {
                 ),
                 Text(
                   subtitle,
-                  style: textTheme.headline5?.copyWith(color: kTextColor),
+                  style: textTheme.headline5
+                      ?.copyWith(color: themeColor.kTextColor),
                 )
               ],
             ),
             const Spacer(),
             IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.arrow_forward_rounded)),
+                icon: Icon(
+                  Icons.arrow_forward_rounded,
+                  color: themeColor.kBaseOppositeColor,
+                )),
           ],
         ),
       ),

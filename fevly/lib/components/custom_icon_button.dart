@@ -1,4 +1,5 @@
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButtonSize {
@@ -29,8 +30,12 @@ class CustomIconButton extends StatelessWidget {
     this.lightMode = true,
     this.circle = true,
     this.outline = false,
-    required this.size,
+    this.size = const CustomIconButtonSize.normal(),
     required this.icon,
+    this.backgroundColor,
+    this.iconColor,
+    this.withShadow = false,
+    this.borderColor,
   }) : super(key: key);
 
   final GestureTapCallback press;
@@ -39,19 +44,26 @@ class CustomIconButton extends StatelessWidget {
   final bool outline;
   final CustomIconButtonSize size;
   final IconData icon;
+  final Color? iconColor;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final bool withShadow;
 
   @override
   Widget build(BuildContext context) {
     final BoxDecoration boxDecoration = BoxDecoration(
-      color: outline
-          ? Colors.white
-          : (lightMode ? kPrimaryColor : kDarkPrimaryColor),
+      color: backgroundColor ??
+          (outline
+              ? Colors.white
+              : (lightMode ? kPrimaryColor : kDarkPrimaryColor)),
       border: Border.all(
         width: outline ? 2.0 : 0.0,
-        color: outline
-            ? (lightMode ? Colors.black : Colors.white)
-            : Colors.transparent,
+        color: borderColor ??
+            (outline
+                ? (lightMode ? Colors.black : Colors.white)
+                : Colors.transparent),
       ),
+      boxShadow: withShadow ? [kDarkShadowBase] : null,
     );
 
     return InkWell(
@@ -72,9 +84,10 @@ class CustomIconButton extends StatelessWidget {
         child: Icon(
           icon,
           size: size.iconSize,
-          color: outline
-              ? (lightMode ? Colors.black : Colors.white)
-              : (lightMode ? Colors.white : Colors.black),
+          color: iconColor ??
+              (outline
+                  ? (lightMode ? Colors.black : Colors.white)
+                  : (lightMode ? Colors.white : Colors.black)),
         ),
       ),
     );

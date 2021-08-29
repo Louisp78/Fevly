@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-## Architecture
+## :rocket: Architecture
 - asset
 - lib
     - components                            *🚩Dossier des Widgets qu’on retrouve dans au moins 2 écrans*
@@ -29,7 +29,7 @@ A new Flutter project.
     - routes.dart               *🚩Definition de toute les navigations entre les pages et des chemins des pages (exemple : “/home”)*
 
 
-## Dev Rules
+## :clipboard: Dev Rules
 1. Toujours utiliser un fichier appelé “components” pour séparer le code en différent fichiers.
 2. Créer une class lorsque deux variables d’un widget sont liée
 3. Utiliser le constructeur avec Action si besoin (voir exemple)
@@ -37,7 +37,7 @@ A new Flutter project.
 5. Toujours utiliser route Named pour la navigation entre les pages
 6. Utiliser les commentaire “///” avant un widget ou une fonction pour pouvoir les voirs dans la doc. (autre commentaire “//”).
 
-## Push Rules
+## :zap: Push Rules
 1. Toujours push les modifications générales sur le main puis merge depuis les branches annexes.
 
 ## Documentations & Links
@@ -51,3 +51,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+### :fire: Firebase
+https://www.youtube.com/watch?v=wUSkeTaBonA
