@@ -49,7 +49,6 @@ class DropList extends StatelessWidget {
                       textColor: kDarkerTextColor,
                     )
                   : null,
-              dropdown: null,
             ),
             SizedBox(
               height: size.height * 0.03,

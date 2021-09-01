@@ -5,7 +5,6 @@ import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/models/is_shopping.dart';
 import 'package:fevly/models/product.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:fevly/test/data_product_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -29,11 +29,12 @@ class CustomInvite extends StatelessWidget {
         Container(
           width: size.width * 0.85,
           height: 200,
-          padding: EdgeInsets.all(size.width * 0.08),
+          padding: EdgeInsets.symmetric(vertical: size.width * 0.08),
           decoration: BoxDecoration(
               color: kPrimaryColor, borderRadius: BorderRadius.circular(24)),
           child: Row(
             children: [
+              const Spacer(),
               SizedBox(
                 width: (size.width * 0.85) * 0.57 - size.width * 0.08,
                 child: Column(
@@ -80,10 +81,12 @@ class CustomInvite extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                width: size.width * 0.05,
+              ),
               Container(
-                width: (size.width * 0.85) * 0.43 - size.width * 0.08,
                 height: 200,
-                padding: EdgeInsets.only(left: size.width * 0.05),
+                alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,6 +119,7 @@ class CustomInvite extends StatelessWidget {
                   ],
                 ),
               ),
+              const Spacer(),
             ],
           ),
         ),

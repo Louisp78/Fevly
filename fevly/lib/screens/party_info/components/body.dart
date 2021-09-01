@@ -3,7 +3,6 @@ import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/screens/party_info/components/party_description.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:fevly/test/data_party.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

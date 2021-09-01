@@ -13,7 +13,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentPage = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController();
   List<Map<String, String>> splashData = [
     {
       "image": "assets/illustrations/undraw_Mobile_life_re_jtih.svg",

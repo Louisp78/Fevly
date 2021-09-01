@@ -13,7 +13,6 @@ class CustomHeaderDropList extends StatelessWidget {
     required this.button,
     required this.listLen,
     required this.myListsModelView,
-    dropdown,
   }) : super(key: key);
 
   final String title;
@@ -34,7 +33,7 @@ class CustomHeaderDropList extends StatelessWidget {
         children: [
           Expanded(
             child: AutoSizeText(
-              "$title",
+              title,
               style: textTheme.headline3?.copyWith(color: kTextColor),
               maxLines: 1,
             ),

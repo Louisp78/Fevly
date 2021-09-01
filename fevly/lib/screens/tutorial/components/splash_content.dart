@@ -21,7 +21,7 @@ class SplashContent extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(top: size.height * 0.1),
-          child: Container(
+          child: SizedBox(
             width: size.width * 0.8,
             height: size.height * 0.4,
             child: SvgPicture.asset(image ?? "test"),
