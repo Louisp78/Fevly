@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
@@ -76,52 +78,53 @@ class CustomPartyItem extends StatelessWidget {
               Container(
                 width: (size.width * 0.9) * 0.43,
                 height: 200,
-                padding: EdgeInsets.all(size.width * 0.08),
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: themeColor.kSurfaceColor,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(
-                      child: CustomTextButton(
-                        press: () {},
-                        text: "Dans ${party.numberOfDaysLeft()}j",
-                        buttonSize: const CustomTextButtonSize.verySmall(),
-                        backgroundColor: themeColor.kPrimaryColor,
-                      ),
+                    CustomTextButton(
+                      press: () {},
+                      text: "Dans ${party.numberOfDaysLeft()}j",
+                      buttonSize: const CustomTextButtonSize.verySmall(),
+                      backgroundColor: themeColor.kPrimaryColor,
                     ),
                     const SizedBox(
                       height: 25,
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InfoItem(
-                            leading: const CustomCircleAvatar(
-                              radius: 11,
-                              backgroundColor: Colors.black,
+                    SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InfoItem(
+                              leading: const CustomCircleAvatar(
+                                radius: 11,
+                                backgroundColor: Colors.black,
+                              ),
+                              text: party.listOfOrganizer[0].pseudo,
                             ),
-                            text: party.listOfOrganizer[0].pseudo,
-                          ),
-                          InfoItem(
-                            leading: Icon(
-                              Icons.event_rounded,
-                              color: themeColor.kBaseOppositeColor,
+                            InfoItem(
+                              leading: Icon(
+                                Icons.event_rounded,
+                                color: themeColor.kBaseOppositeColor,
+                              ),
+                              text: party.startDateFormat(),
                             ),
-                            text: party.startDateFormat(),
-                          ),
-                          InfoItem(
-                            leading: Icon(
-                              Icons.group_rounded,
-                              color: themeColor.kBaseOppositeColor,
+                            InfoItem(
+                              leading: Icon(
+                                Icons.group_rounded,
+                                color: themeColor.kBaseOppositeColor,
+                              ),
+                              text: "${party.guestsLength} invités",
                             ),
-                            text: "${party.guestsLength} invités",
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

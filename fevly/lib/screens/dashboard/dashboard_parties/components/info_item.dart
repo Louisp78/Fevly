@@ -19,6 +19,7 @@ class InfoItem extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         leading,
         SizedBox(
