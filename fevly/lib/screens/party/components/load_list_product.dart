@@ -15,6 +15,7 @@ class LoadListShopping extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
       child: Row(
@@ -33,7 +34,7 @@ class LoadListShopping extends StatelessWidget {
               width: size.width * 0.9,
               height: size.height * 0.08,
               decoration: BoxDecoration(
-                color: kSurfaceLightColor,
+                color: themeColor.kSurfaceLightColor,
                 boxShadow: [kShadowBase],
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -46,13 +47,13 @@ class LoadListShopping extends StatelessWidget {
                       child: Text(
                         "Charger une liste de course",
                         maxLines: 2,
-                        style: textTheme.headline5
-                            ?.copyWith(color: kDarkerTextColor),
+                        style: textTheme.headline4
+                            ?.copyWith(color: themeColor.kTextColor),
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       Icons.add,
-                      color: kPrimaryColor,
+                      color: themeColor.kPrimaryColor,
                     ),
                   ],
                 ),
