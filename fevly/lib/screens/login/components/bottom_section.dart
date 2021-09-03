@@ -24,7 +24,7 @@ class BottomSection extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

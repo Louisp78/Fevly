@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 // Primary colors ======================================
 
@@ -91,8 +92,13 @@ class ThemeColor {
   });
 }
 
-ThemeColor initThemeColor() {
-  return ThemeMode.system == ThemeMode.light
+ThemeColor initThemeColor({required BuildContext context}) {
+  return MediaQuery.of(context).platformBrightness == Brightness.light
       ? ThemeColor.lightMode()
       : ThemeColor.darkMode();
 }
+
+ThemeColor initThemeColorStatic() =>
+    SchedulerBinding.instance!.window.platformBrightness == Brightness.light
+        ? ThemeColor.lightMode()
+        : ThemeColor.darkMode();

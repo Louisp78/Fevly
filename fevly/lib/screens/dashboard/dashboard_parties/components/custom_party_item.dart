@@ -26,7 +26,7 @@ class CustomPartyItem extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -135,13 +135,14 @@ class CustomPartyItem extends StatelessWidget {
         ),
         Positioned(
             right: size.width * 0.03,
-            child: buildNotificationCounter(size, textTheme))
+            child: buildNotificationCounter(size, textTheme, context))
       ],
     );
   }
 
-  Container buildNotificationCounter(Size size, TextTheme textTheme) {
-    final ThemeColor themeColor = initThemeColor();
+  Container buildNotificationCounter(
+      Size size, TextTheme textTheme, BuildContext context) {
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Container(
       width: size.width * 0.07,
       height: size.width * 0.07,

@@ -1,7 +1,7 @@
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-final ThemeColor themeColor = initThemeColor();
+final ThemeColor themeColor = initThemeColorStatic();
 
 final ThemeData lightThemeData = ThemeData(
   textTheme: textTheme(),

@@ -20,7 +20,7 @@ class CustomGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return GestureDetector(
       onTap: () {},
       child: Container(

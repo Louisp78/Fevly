@@ -28,7 +28,7 @@ class FormSection extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final _keyForm = GlobalKey<FormState>();
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Form(
       key: _keyForm,
       child: SizedBox(

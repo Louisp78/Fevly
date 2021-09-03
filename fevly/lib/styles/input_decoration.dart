@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
+final ThemeColor _themeColor = initThemeColorStatic();
 InputDecoration basicInputDecoration(
     {required TextStyle hintStyle, required String hintText}) {
-  final ThemeColor themeColor = initThemeColor();
+  final ThemeColor themeColor = _themeColor;
   return InputDecoration(
     filled: true,
     hintText: hintText,
@@ -55,7 +56,7 @@ InputDecoration smallSearchInputDecoration(
     {required TextStyle hintStyle,
     required Size size,
     required String hintText}) {
-  final ThemeColor themeColor = initThemeColor();
+  final ThemeColor themeColor = _themeColor;
 
   return InputDecoration(
     filled: true,
@@ -110,7 +111,7 @@ InputDecoration searchInputDecoration(
     {required TextStyle hintStyle,
     required Size size,
     required String hintText}) {
-  final ThemeColor themeColor = initThemeColor();
+  final ThemeColor themeColor = _themeColor;
   return InputDecoration(
     filled: true,
     prefixIcon: Icon(

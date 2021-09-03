@@ -15,7 +15,7 @@ class CustomCircleAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return FittedBox(
       fit: BoxFit.scaleDown,
       alignment: Alignment.topLeft,
