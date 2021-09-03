@@ -37,7 +37,7 @@ class CustomUserListItem extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return InkWell(
       onTap: press,
       child: Container(
@@ -96,7 +96,10 @@ class CustomUserListItem extends StatelessWidget {
                           .any((element) => element.pseudo == user.pseudo)
                       ? Icon(Icons.how_to_reg_rounded,
                           color: themeColor.kSecondaryColor)
-                      : const Icon(Icons.person_add_rounded))
+                      : Icon(
+                          Icons.person_add_rounded,
+                          color: themeColor.kBaseOppositeColor,
+                        ))
           ],
         ),
       ),

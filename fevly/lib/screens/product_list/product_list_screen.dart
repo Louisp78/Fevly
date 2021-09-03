@@ -16,7 +16,7 @@ class ProductListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Scaffold(
       body: Body(
         productList: productList,

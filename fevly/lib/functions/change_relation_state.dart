@@ -19,6 +19,7 @@ void Function() changeRelationState(
       final UserRelationState oldRelationState = user.relationState;
       ScaffoldMessenger.of(context).showSnackBar(
         buildCustomSnackBar(
+          context: context,
           textTheme: textTheme,
           size: size,
           text: kSnackBarUserRelation(user: user),

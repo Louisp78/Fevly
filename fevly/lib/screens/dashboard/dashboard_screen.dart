@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'components/custom_dashboard_app_bar.dart';
-import 'dashboard_parties/components/dashboard_menu.dart';
+import 'components/dashboard_menu.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -32,7 +32,8 @@ class DashboardScreen extends StatelessWidget {
               return SafeArea(
                 child: Scaffold(
                   floatingActionButton: tabControllerViewModel.index == 1
-                      ? buildFloatingActionButton() //! Need to set showBottomSheet
+                      ? buildFloatingActionButton(
+                          context: context) //! Need to set showBottomSheet
                       : null,
                   body: Stack(
                     children: [
@@ -68,8 +69,8 @@ class DashboardScreen extends StatelessWidget {
 
   //$ METHOD
   //$ ===========================================
-  Padding buildFloatingActionButton() {
-    final ThemeColor themeColor = initThemeColor();
+  Padding buildFloatingActionButton({required BuildContext context}) {
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 60),
       child: FloatingActionButton(

@@ -9,8 +9,9 @@ SnackBar buildCustomSnackBar({
   required Size size,
   required String text,
   required GestureTapCallback undoPress,
+  required BuildContext context,
 }) {
-  final ThemeColor themeColor = initThemeColor();
+  final ThemeColor themeColor = initThemeColor(context: context);
   return SnackBar(
     backgroundColor: themeColor.kSurfaceColor,
     content: Row(

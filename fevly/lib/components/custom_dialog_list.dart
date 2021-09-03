@@ -17,7 +17,7 @@ class CustomDialogList extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Dialog(
       backgroundColor: themeColor.kSurfaceLightColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),

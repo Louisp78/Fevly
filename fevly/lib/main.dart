@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:fevly/routes.dart';
 import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/styles/theme.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String deviceLanguage = Platform.localeName.substring(0, 2);
+    GestureBinding.instance?.resamplingEnabled = true; // Set this flag.
     initializeDateFormatting(
       deviceLanguage,
     );

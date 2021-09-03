@@ -26,7 +26,7 @@ class CustomBottomSheetProductList extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return ChangeNotifierProvider(
       create: (context) => TextFieldModelView<ProductList>(),
       child: Consumer<TextFieldModelView<ProductList>>(

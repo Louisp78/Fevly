@@ -20,7 +20,7 @@ class FormSection extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final _keyForm = GlobalKey<FormState>();
     const String examplePassword = "loulou78";
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return ChangeNotifierProvider(
       create: (context) => LoginViewModel(),
       child: Form(

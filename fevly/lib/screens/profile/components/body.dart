@@ -37,7 +37,8 @@ class Body extends StatelessWidget {
                         profileOwner: profileOwner,
                         textTheme: textTheme,
                         size: size,
-                        searchField: searchField)),
+                        searchField: searchField,
+                        context: context)),
               if (!searchField.selection)
                 Positioned(
                     bottom: 0,
@@ -45,7 +46,8 @@ class Body extends StatelessWidget {
                         profileOwner: profileOwner,
                         textTheme: textTheme,
                         size: size,
-                        searchField: searchField)),
+                        searchField: searchField,
+                        context: context)),
               if (!searchField.selection)
                 Positioned(
                   top: size.height * 0.06,
@@ -63,8 +65,9 @@ class Body extends StatelessWidget {
       {required User profileOwner,
       required TextTheme textTheme,
       required Size size,
-      required TextFieldModelView searchField}) {
-    final ThemeColor themeColor = initThemeColor();
+      required TextFieldModelView searchField,
+      required BuildContext context}) {
+    final ThemeColor themeColor = initThemeColor(context: context);
     switch (profileOwner.relationState) {
       case UserRelationState.unFriend:
       case UserRelationState.requestSent:

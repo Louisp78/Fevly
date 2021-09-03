@@ -81,7 +81,8 @@ class ProfileCard extends StatelessWidget {
                   showDialog(
                     barrierDismissible: true,
                     context: context,
-                    builder: (context) => buildDialog(textTheme),
+                    builder: (context) =>
+                        buildDialog(textTheme: textTheme, context: context),
                   );
                 },
                 child: Container(
@@ -139,8 +140,9 @@ class ProfileCard extends StatelessWidget {
     );
   }
 
-  CustomDialogList buildDialog(TextTheme textTheme) {
-    final ThemeColor themeColor = initThemeColor();
+  CustomDialogList buildDialog(
+      {required TextTheme textTheme, required BuildContext context}) {
+    final ThemeColor themeColor = initThemeColor(context: context);
     return CustomDialogList(title: "Options", listOptions: [
       ...List.generate(
         listParties1.length,

@@ -12,7 +12,7 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Container(
       width: size.width,
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
