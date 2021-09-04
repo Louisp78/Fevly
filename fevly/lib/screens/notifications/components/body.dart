@@ -2,6 +2,7 @@ import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/custom_notification.dart';
+import 'package:fevly/styles/theme.dart';
 import 'package:flutter/material.dart';
 import 'custom_notification_item.dart';
 
@@ -30,7 +31,7 @@ class Body extends StatelessWidget {
                     subtitle: currentNotification.subtitle,
                     leadingIcon: Icon(
                       currentNotification.leadingIcon,
-                      color: Colors.white,
+                      color: themeColor.kBaseOppositeColor,
                     ),
                     date: currentNotification.date,
                   );
