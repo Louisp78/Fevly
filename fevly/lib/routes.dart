@@ -1,5 +1,6 @@
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
+import 'package:fevly/screens/badge_vote/badge_vote_screen.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
@@ -121,6 +122,12 @@ class RouterNav {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const NotificationsScreen(),
+        );
+
+      case '/badge_vote':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const BadgeVoteScreen(),
         );
       default:
         return MaterialPageRoute(
