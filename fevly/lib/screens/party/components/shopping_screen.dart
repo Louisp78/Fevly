@@ -24,7 +24,7 @@ class ShoppingScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -114,7 +114,7 @@ class ShoppingScreen extends StatelessWidget {
                   );
                 }),
             text: "Ajouter une course",
-            lightMode: false,
+            lightMode: MediaQuery.of(context).platformBrightness == Brightness.light,
           ),
           SizedBox(height: size.height * 0.1),
         ],

@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return ChangeNotifierProvider(
       create: (context) => TabControllerViewModel(index: 0),
       child: DefaultTabController(
@@ -47,7 +47,7 @@ class Body extends StatelessWidget {
                           top: 110,
                         ),
                         child: TabBarView(
-                            children: [ShoppingScreen(), ChatScreen()]),
+                            children: [ChatScreen(), ShoppingScreen()]),
                       ),
                       const Positioned(
                           top: 130, left: 0, right: 0, child: PartyMenu()),
@@ -81,18 +81,4 @@ class Body extends StatelessWidget {
           )),
     );
   }
-}
-
-//$ METHOD
-//$ ===========================================
-Padding buildFloatingActionButton() {
-  final ThemeColor themeColor = initThemeColor();
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 60),
-    child: FloatingActionButton(
-      backgroundColor: themeColor.kPrimaryColor,
-      onPressed: () {},
-      child: const Icon(Icons.add_rounded),
-    ),
-  );
 }
