@@ -25,7 +25,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor();
+    final ThemeColor themeColor = initThemeColor(context: context);
     return ChangeNotifierProvider(
       create: (context) => ModelViewParty(),
       child: Consumer<ModelViewParty>(
@@ -155,6 +155,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                         color: themeColor.kSurfaceLightColor,
                         boxShadow: [kShadowBase]),
                     child: DropdownButton<QuantityUnit>(
+                      dropdownColor: themeColor.kDarkerTextColor,
                       value: modelViewShopping.category,
                       hint: SizedBox(
                         width: size.width * 0.3 - 24,
