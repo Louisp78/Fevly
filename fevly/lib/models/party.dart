@@ -17,6 +17,7 @@ class Party extends ChangeNotifier {
   DateTime _endDate;
   //! Pour l'instant c'est un String en attendant une implémentation de Google Maps
   String _location;
+  String? _link;
 
   Party({
     required String name,
@@ -28,6 +29,7 @@ class Party extends ChangeNotifier {
     required DateTime startDate,
     required DateTime endDate,
     required String location,
+    String? link,
   })  : _listOfOrganizer = listOfOrganizer,
         _guests = guests,
         _name = name,
@@ -37,6 +39,7 @@ class Party extends ChangeNotifier {
         _startDate = startDate,
         _endDate = endDate,
         _location = location,
+        _link = link,
         assert(description.length < 1000, "Description too long."),
         assert(name.length < 21, "Name too long."),
         assert(listOfOrganizer.isNotEmpty,
@@ -55,6 +58,7 @@ class Party extends ChangeNotifier {
   DateTime get startDate => _startDate;
   DateTime get endDate => _endDate;
   String get location => _location;
+  String? get link => _link;
 
   // * SETTER
 
@@ -105,6 +109,11 @@ class Party extends ChangeNotifier {
 
   set location(String newLocation) {
     _location = newLocation;
+    notifyListeners();
+  }
+
+  set link(String? pLink) {
+    _link = pLink;
     notifyListeners();
   }
 

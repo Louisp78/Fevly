@@ -17,6 +17,7 @@ final listParties1 = [
     startDate: DateTime.now(),
     endDate: DateTime.now(),
     location: "Paris",
+    link: "www.google.fr"
   ),
   Party(
     address: "1 rue du Poteau, 75018, Paris",
@@ -28,6 +29,7 @@ final listParties1 = [
     startDate: DateTime.now(),
     endDate: DateTime.now(),
     location: "Paris",
+    link: "www.google.fr"
   ),
 ];
 
