@@ -1,17 +1,11 @@
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
-import 'package:fevly/components/custom_circle_avatar.dart';
-import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/models/is_shopping.dart';
-import 'package:fevly/models/product.dart';
 import 'package:fevly/screens/party/components/chat_screen.dart';
 import 'package:fevly/screens/party/components/shopping_screen.dart';
 import 'package:fevly/view_models/tab_controller_view_model.dart';
 import 'package:fevly/screens/party/components/party_menu.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

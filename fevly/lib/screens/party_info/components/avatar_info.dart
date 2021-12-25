@@ -1,5 +1,4 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AvatarInfo extends StatelessWidget {

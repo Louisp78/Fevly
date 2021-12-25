@@ -3,11 +3,8 @@ import 'package:fevly/screens/party_info/components/party_description.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test/data_party.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'address_information.dart';
 import 'avatar_info.dart';
 import 'date_informations.dart';
@@ -119,21 +116,21 @@ class Body extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                            child: RichText(
+                            /*child: RichText(
                               text: TextSpan(
                                 text: listParties1[0].link,
                                 style: textTheme.headline5,
                                 recognizer: TapGestureRecognizer()
                                 ..onTap = () {launch(listParties1[0].link!);},
                               ),
-                            ),
+                            ),*/
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical: size.width * 0.03),
                             child: CustomTextButton(
                               buttonSize: const CustomTextButtonSize.verySmall(),
                               text: "Lien",
-                              press: () => {launch(listParties1[0].link!)},
+                              press: () {},//() => {launch(listParties1[0].link!)},
                               prefixIcon: const Icon(
                                 Icons.link_rounded,
                                 color: Colors.white,
