@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const String specialChar = "!\"#\$%&'()*+=`./\\:;<>@[]^_|~";

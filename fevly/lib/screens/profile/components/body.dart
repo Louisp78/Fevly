@@ -1,11 +1,12 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/badge.dart';
-import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'list_of_badges.dart';
 import 'profile_card.dart';
 
