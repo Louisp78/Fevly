@@ -4,11 +4,11 @@ import 'package:fevly/components/custom_product_item.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
-import 'package:fevly/models/product_list.dart';
-import 'package:fevly/view_models/text_field_model_view.dart';
-import 'package:fevly/styles/input_decoration.dart';
-import 'package:flutter/material.dart';
 import 'package:fevly/models/product.dart';
+import 'package:fevly/models/product_list.dart';
+import 'package:fevly/styles/input_decoration.dart';
+import 'package:fevly/view_models/text_field_model_view.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 
 import 'models/user.dart';
 
-class RouterNav {
+mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/login':

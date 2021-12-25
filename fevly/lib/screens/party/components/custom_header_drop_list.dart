@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/view_models/dropdown_model_view.dart';
 import 'package:fevly/styles/colors.dart';
+import 'package:fevly/view_models/dropdown_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
