@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
