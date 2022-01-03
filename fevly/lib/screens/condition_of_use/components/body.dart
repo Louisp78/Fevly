@@ -1,9 +1,9 @@
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
+import 'package:fevly/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../constant.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

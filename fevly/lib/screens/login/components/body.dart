@@ -1,8 +1,8 @@
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
+import 'package:fevly/screens/login/components/form_section.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
-import 'form_section.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

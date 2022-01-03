@@ -1,9 +1,9 @@
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/search/components/body.dart';
 import 'package:fevly/test/data_list_of_user.dart';
 import 'package:flutter/material.dart';
 
-import 'components/body.dart';
 
 enum SearchScreenType { addToAList, changeRelationState }
 

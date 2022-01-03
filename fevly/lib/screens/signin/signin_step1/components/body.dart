@@ -1,11 +1,11 @@
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
+import 'package:fevly/screens/signin/signin_step1/components/form_section.dart';
 import 'package:fevly/screens/signin/signin_step1/view_models/signin_step1_view_model.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'form_section.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

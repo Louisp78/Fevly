@@ -57,6 +57,7 @@ const Color kDarkSurfaceColor = Color(0xff1D1D1D);
 
 class ThemeColor {
   final Color kPrimaryColor,
+      // ignore: avoid_multiple_declarations_per_line
       kPrimaryVariantColor,
       kSecondaryColor,
       kSecondaryVariantColor,

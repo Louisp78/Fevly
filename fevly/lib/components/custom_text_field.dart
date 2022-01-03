@@ -21,7 +21,8 @@ class CustomTextField extends StatefulWidget {
   final Function(String?) onSaved;
   final String? Function(String?) validator;
   final InputDecoration decoration;
-  final double? width, height;
+  final double? width;
+  final double? height;
   final EdgeInsets? padding;
   final bool withCleaning;
 

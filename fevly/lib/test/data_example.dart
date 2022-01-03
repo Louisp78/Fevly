@@ -1,7 +1,7 @@
 import 'package:fevly/models/user.dart';
-import 'data_badge.dart';
-import 'data_guest_list.dart';
-import 'data_product_list.dart';
+import 'package:fevly/test/data_badge.dart';
+import 'package:fevly/test/data_guest_list.dart';
+import 'package:fevly/test/data_product_list.dart';
 
 //! WARNING : Ne jamais utiliser plusieurs fois une variable au sein de différent Object.
 //! Exemple:

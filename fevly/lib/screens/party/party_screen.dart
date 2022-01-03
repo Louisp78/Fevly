@@ -1,6 +1,6 @@
+import 'package:fevly/screens/party/components/body.dart';
 import 'package:flutter/material.dart';
 
-import 'components/body.dart';
 
 class PartyScreen extends StatelessWidget {
   const PartyScreen({Key? key}) : super(key: key);

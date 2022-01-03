@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_small_button.dart';
 
 SnackBar buildCustomSnackBar({
   required TextTheme textTheme,

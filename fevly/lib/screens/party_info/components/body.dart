@@ -1,13 +1,13 @@
 import 'package:fevly/components/custom_text_button.dart';
+import 'package:fevly/screens/party_info/components/address_information.dart';
+import 'package:fevly/screens/party_info/components/avatar_info.dart';
+import 'package:fevly/screens/party_info/components/date_informations.dart';
 import 'package:fevly/screens/party_info/components/party_description.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'address_information.dart';
-import 'avatar_info.dart';
-import 'date_informations.dart';
 
 class Body extends StatelessWidget {
   const Body({

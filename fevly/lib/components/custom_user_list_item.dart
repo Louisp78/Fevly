@@ -1,3 +1,5 @@
+import 'package:fevly/components/custom_circle_avatar.dart';
+import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
@@ -7,8 +9,6 @@ import 'package:fevly/styles/effects.dart';
 import 'package:fevly/view_models/list_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'custom_circle_avatar.dart';
-import 'custom_text_button.dart';
 
 class CustomUserListItem extends StatelessWidget {
   const CustomUserListItem({

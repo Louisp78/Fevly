@@ -2,6 +2,7 @@ import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_drop_list.dart';
+import 'package:fevly/screens/my_lists/components/list_tile_item.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
 import 'package:fevly/models/guest_list.dart';
@@ -14,7 +15,6 @@ import 'package:fevly/test/data_list_of_user.dart';
 import 'package:fevly/test/data_product_list.dart';
 import 'package:flutter/material.dart';
 
-import 'list_tile_item.dart';
 
 class Body extends StatelessWidget {
   const Body({

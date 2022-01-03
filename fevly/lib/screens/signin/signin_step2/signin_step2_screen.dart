@@ -1,5 +1,5 @@
+import 'package:fevly/screens/signin/signin_step2/components/body.dart';
 import 'package:flutter/material.dart';
-import 'components/body.dart';
 
 class SignInStep2Screen extends StatelessWidget {
   const SignInStep2Screen({

@@ -37,17 +37,3 @@ class DashboardMenu extends StatelessWidget {
     );
   }
 }
-
-
-// Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: const [
-//             MenuItem(
-//               iconData: Icons.groups_rounded,
-//               isSelected: true,
-//             ),
-//             MenuItem(
-//               iconData: Icons.shopping_bag_rounded,
-//             ),
-//           ],
-//         ),

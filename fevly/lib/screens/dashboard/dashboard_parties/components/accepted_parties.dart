@@ -1,7 +1,7 @@
 import 'package:fevly/models/party.dart';
+import 'package:fevly/screens/dashboard/dashboard_parties/components/custom_party_item.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_party_item.dart';
 
 class AcceptedParties extends StatelessWidget {
   const AcceptedParties({

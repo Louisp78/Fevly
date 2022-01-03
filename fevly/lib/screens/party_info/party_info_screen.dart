@@ -1,7 +1,7 @@
+import 'package:fevly/screens/party_info/components/body.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'components/body.dart';
 
 
 class PartyInfoScreen extends StatelessWidget {
@@ -17,4 +17,3 @@ class PartyInfoScreen extends StatelessWidget {
     );
   }
 }
-

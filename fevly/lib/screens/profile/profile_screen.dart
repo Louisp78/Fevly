@@ -1,9 +1,9 @@
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/functions/create_new_from.dart';
 import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/profile/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'components/body.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key, required this.profileOwner}) : super(key: key);

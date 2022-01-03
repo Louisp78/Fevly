@@ -1,5 +1,5 @@
+import 'package:fevly/screens/condition_of_use/components/body.dart';
 import 'package:flutter/material.dart';
-import 'components/body.dart';
 
 class TermOfUseScreen extends StatelessWidget {
   const TermOfUseScreen({Key? key}) : super(key: key);

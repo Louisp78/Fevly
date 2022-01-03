@@ -1,10 +1,10 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
+import 'package:fevly/models/badge.dart';
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:flutter/material.dart';
 
-import 'badge.dart';
 
 //$ ENUMERATION
 //$ ============================================================

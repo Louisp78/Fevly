@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 enum NotificationType { newInvite, voteNow, newFriend, productRemindToBuy }
 
 class CustomNotification {
-  final String title, subtitle;
+  final String title;
+  final String subtitle;
   final DateTime date;
   final IconData? leadingIcon;
 
