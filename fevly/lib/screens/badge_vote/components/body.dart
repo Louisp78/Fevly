@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+//TODO: Implement new design
+//TODO: Implement new concept
+
 class Body extends StatelessWidget {
   const Body({Key? key, required this.listOfBadgeToVote}) : super(key: key);
 
