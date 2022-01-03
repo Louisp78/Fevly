@@ -1,4 +1,5 @@
-[![GitHub Actions Demo](https://github.com/Louisp78/Fevly/actions/workflows/github_actions_demo.yml/badge.svg?branch=release)](https://github.com/Louisp78/Fevly/actions/workflows/github_actions_demo.yml)
+![Github Actions Demo](https://img.shields.io/badge/Dev_stage-UI_implem-yellowgreen)  
+![Github Actions Demo](https://img.shields.io/badge/version-minimal-darkgreen)
 # Fevly
 > Ce soir, tu deviens qui tu veux.
 
