@@ -13,7 +13,8 @@ class ListTileItem extends StatelessWidget {
     required this.press,
   }) : super(key: key);
 
-  final String title, subtitle;
+  final String title;
+  final String subtitle;
   final EdgeInsets? margin;
   final Widget? leading;
   final GestureTapCallback press;

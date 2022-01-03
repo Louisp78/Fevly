@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextButtonSize {
-  final double height, borderRadius, padding;
+  final double height;
+  final double borderRadius;
+  final double padding;
 
   CustomTextButtonSize(
       {required this.padding,

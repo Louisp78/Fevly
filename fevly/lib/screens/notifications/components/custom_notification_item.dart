@@ -11,7 +11,8 @@ class CustomNotificationItem extends StatelessWidget {
     required this.leadingIcon,
   }) : super(key: key);
 
-  final String title, subtitle;
+  final String title;
+  final String subtitle;
   final DateTime date;
   final Widget leadingIcon;
 

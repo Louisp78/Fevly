@@ -1,6 +1,6 @@
+import 'package:fevly/screens/notifications/components/body.dart';
 import 'package:fevly/test/data_notification.dart';
 import 'package:flutter/material.dart';
-import 'components/body.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({Key? key}) : super(key: key);

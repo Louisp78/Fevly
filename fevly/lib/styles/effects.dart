@@ -1,6 +1,6 @@
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
 
 /// Inner shadow
 final BoxShadow kInnerShadow = BoxShadow(

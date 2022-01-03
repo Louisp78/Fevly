@@ -7,11 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Fevly(initialRoute: '/login',));
 }
 
-class MyApp extends StatelessWidget {
+class Fevly extends StatelessWidget {
   // This widget is the root of your application.
+  final String initialRoute;
+
+  Fevly({required this.initialRoute}) 
+  : assert(initialRoute.contains("/"));
+
   @override
   Widget build(BuildContext context) {
     final String deviceLanguage = Platform.localeName.substring(0, 2);
@@ -25,7 +30,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkThemeData,
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
-      initialRoute: '/login',
+      initialRoute: initialRoute,
       onGenerateRoute: RouterNav.generateRoute,
     );
   }

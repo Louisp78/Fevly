@@ -1,8 +1,8 @@
+import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_icon_button.dart';
 
 class CustomBottomBar extends StatelessWidget {
   const CustomBottomBar({

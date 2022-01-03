@@ -1,12 +1,12 @@
 import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
+import 'package:fevly/screens/product_list/components/body.dart';
+import 'package:fevly/screens/product_list/components/custom_bottom_sheet.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'components/body.dart';
-import 'components/custom_bottom_sheet.dart';
 
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({Key? key, required this.productList})

@@ -8,7 +8,8 @@ import 'package:intl/intl.dart';
 //$ ==================================
 
 class Party extends ChangeNotifier {
-  String _name, _description;
+  String _name;
+  String _description;
   final List<User> _listOfOrganizer;
   GuestList _guests;
   ProductList _products;

@@ -10,7 +10,8 @@ class SplashContent extends StatelessWidget {
     this.text,
     this.image,
   }) : super(key: key);
-  final String? text, image;
+  final String? text;
+  final String? image;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

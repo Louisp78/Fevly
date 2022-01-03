@@ -9,7 +9,9 @@ class CustomIconButtonSize {
     required this.iconSize,
   });
 
-  final double borderRadius, sizeContainer, iconSize;
+  final double borderRadius;
+  final double sizeContainer;
+  final double iconSize;
 
   const CustomIconButtonSize.small({
     this.borderRadius = 12.0,

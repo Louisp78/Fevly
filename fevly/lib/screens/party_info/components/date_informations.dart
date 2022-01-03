@@ -4,8 +4,7 @@ import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../constant.dart';
+import 'package:fevly/constant.dart';
 
 class DateInformations extends StatelessWidget {
   const DateInformations({

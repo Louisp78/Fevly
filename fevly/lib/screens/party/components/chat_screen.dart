@@ -1,7 +1,7 @@
+import 'package:fevly/screens/party/components/bottom_bar_chat.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'bottom_bar_chat.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -27,4 +27,3 @@ class ChatScreen extends StatelessWidget {
     );
   }
 }
-

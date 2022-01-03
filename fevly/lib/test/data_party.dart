@@ -2,9 +2,9 @@ import 'package:fevly/models/party.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/test/data_example.dart';
 import 'package:fevly/test/data_guest_list.dart';
+import 'package:fevly/test/data_list_of_user.dart';
 import 'package:fevly/test/data_product_list.dart';
 
-import 'data_list_of_user.dart';
 
 final listParties1 = [
   Party(

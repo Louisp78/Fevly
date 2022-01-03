@@ -4,12 +4,12 @@ import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
 import 'package:fevly/models/party.dart';
+import 'package:fevly/screens/dashboard/dashboard_parties/components/info_item.dart';
 import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'info_item.dart';
 
 class CustomInvite extends StatelessWidget {
   const CustomInvite({

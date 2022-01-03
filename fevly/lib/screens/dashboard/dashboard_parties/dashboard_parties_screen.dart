@@ -1,10 +1,10 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/party.dart';
+import 'package:fevly/screens/dashboard/dashboard_parties/components/accepted_parties.dart';
+import 'package:fevly/screens/dashboard/dashboard_parties/components/parties_invite.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'components/accepted_parties.dart';
-import 'components/parties_invite.dart';
 
 class DashboardPartiesScreen extends StatelessWidget {
   const DashboardPartiesScreen({

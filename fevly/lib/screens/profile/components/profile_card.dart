@@ -5,12 +5,12 @@ import 'package:fevly/components/level_label.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/profile/components/counter_item.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'counter_item.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({

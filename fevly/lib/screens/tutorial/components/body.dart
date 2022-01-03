@@ -1,8 +1,8 @@
 import 'package:fevly/components/custom_text_button.dart';
+import 'package:fevly/screens/tutorial/components/build_dot.dart';
 import 'package:fevly/screens/tutorial/components/splash_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'build_dot.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);

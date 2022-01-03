@@ -1,12 +1,12 @@
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/screens/login/components/bottom_section.dart';
 import 'package:fevly/screens/login/view_models/login_model_view.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'bottom_section.dart';
 
 class FormSection extends StatelessWidget {
   const FormSection({

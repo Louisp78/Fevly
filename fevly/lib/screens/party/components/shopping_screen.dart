@@ -1,18 +1,16 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/models/product.dart';
+import 'package:fevly/screens/party/components/custom_bottom_sheet_add_product.dart';
+import 'package:fevly/screens/party/components/drop_list.dart';
+import 'package:fevly/screens/party/components/list_tile_item.dart';
+import 'package:fevly/screens/party/components/list_tile_item_2.dart';
+import 'package:fevly/screens/party/components/load_list_product.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/styles/theme.dart';
 import 'package:fevly/test/data_product_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'custom_bottom_sheet_add_product.dart';
-import 'drop_list.dart';
-import 'list_tile_item.dart';
-import 'list_tile_item_2.dart';
-import 'load_list_product.dart';
 
 class ShoppingScreen extends StatelessWidget {
   const ShoppingScreen({

@@ -1,6 +1,6 @@
 import 'package:fevly/models/user.dart';
+import 'package:fevly/test/data_badge.dart';
 
-import 'data_badge.dart';
 
 final listOfUsers1 = [
   User(

@@ -1,7 +1,7 @@
 import 'package:fevly/constant.dart';
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
 
 final ThemeColor _themeColor = initThemeColorStatic();
 InputDecoration basicInputDecoration(

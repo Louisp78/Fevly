@@ -1,6 +1,5 @@
 import 'package:fevly/models/badge.dart';
 import 'package:test/test.dart';
-
 void main()
 {
   group("Badge tests", () {
