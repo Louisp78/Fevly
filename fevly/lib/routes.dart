@@ -18,6 +18,8 @@ import 'package:fevly/styles/transition.dart';
 import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 
+//TODO: Change anim + anim logic
+//TODO: Find if open lot of new screen is good
 
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
