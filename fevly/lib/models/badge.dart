@@ -78,6 +78,8 @@ class Badge extends ChangeNotifier {
 
   // *SETTER
   set quantity(int newValue) {
+    assert(newValue >= 0);
+
     _quantity = newValue;
     notifyListeners();
   }
