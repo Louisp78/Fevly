@@ -1,11 +1,6 @@
-import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/styles/input_decoration.dart';
-import 'package:fevly/styles/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../constant.dart';
 import 'bottom_bar_chat.dart';
 
 class ChatScreen extends StatelessWidget {
