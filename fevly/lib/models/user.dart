@@ -62,7 +62,6 @@ class User extends ChangeNotifier {
   UserRelationState _relationState;
   List<Badge> listOfBadges;
   List<User> listOfFriends;
-  int _level;
   int _partyCounter;
   List<GuestList> listOfGuestList;
   List<ProductList> listOfProductList;
@@ -77,14 +76,12 @@ class User extends ChangeNotifier {
       this.listOfFriends = const [],
       this.listOfGuestList = const [],
       this.listOfProductList = const [],
-      int level = 0,
       int partyCounter = 0})
       : _email = email,
         _name = name,
         _password = password,
         _pseudo = pseudo,
         _relationState = relationState,
-        _level = level,
         _partyCounter = partyCounter,
         assert(!containsInString(name, specialChar),
             "name couldn't contain specialChars."),
@@ -97,7 +94,6 @@ class User extends ChangeNotifier {
   String get pseudo => _pseudo;
   String get password => _password;
   String get email => _email;
-  int get level => _level;
   int get partyCounter => _partyCounter;
 
   //* SETTER
@@ -123,11 +119,6 @@ class User extends ChangeNotifier {
 
   set password(String newPass) {
     _password = newPass;
-    notifyListeners();
-  }
-
-  set level(int newValue) {
-    _level = newValue;
     notifyListeners();
   }
 

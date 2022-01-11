@@ -3,7 +3,7 @@ import 'package:fevly/constant.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/screens/profile/components/header_list_badge.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
-import 'package:fevly/styles/scroll_behavior.dart';
+import 'package:fevly/styles/no_glow_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 
 class ListOfBadges extends StatelessWidget {
@@ -34,7 +34,7 @@ class ListOfBadges extends StatelessWidget {
                   : size.height * 0.57,
               width: size.width,
               child: ScrollConfiguration(
-                behavior: CustomScrollBehavior(),
+                behavior: NoGlowScrollBehavior(),
                 child: GridView.count(
                     crossAxisCount: 3,
                     crossAxisSpacing: kGridCrossSpacing(size: size),

@@ -19,10 +19,10 @@ class CustomUserListItem extends StatelessWidget {
     this.type = SearchScreenType.changeRelationState,
     this.listOfUserViewModel,
   }) : assert(
-            type == SearchScreenType.changeRelationState &&
-                    listOfUserViewModel == null ||
-                type == SearchScreenType.addToAList &&
-                    listOfUserViewModel != null,
+            (type == SearchScreenType.changeRelationState &&
+                    listOfUserViewModel != null) ||
+                (type == SearchScreenType.addToAList &&
+                    listOfUserViewModel != null),
             "Need to define guestList or not.");
 
   final User user;
@@ -51,7 +51,7 @@ class CustomUserListItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const CustomCircleAvatar(),
+            CustomCircleAvatar(press: () {},),
             SizedBox(
               width: kBasicHorizontalPadding(size: size),
             ),
@@ -67,7 +67,7 @@ class CustomUserListItem extends StatelessWidget {
                 backgroundColor: themeColor.kSurfaceColor,
                 textColor: user.relationState != UserRelationState.friend
                     ? themeColor.kPrimaryColor
-                    : Colors.black,
+                    : themeColor.kBaseOppositeColor,
                 suffixIcon: Icon(user.relationState.iconData,
                     color: themeColor.kPrimaryColor, size: kSmallIconSize),
                 border: user.relationState == UserRelationState.friend
@@ -79,6 +79,7 @@ class CustomUserListItem extends StatelessWidget {
                 press: changeRelationState(
                     user: user,
                     context: context,
+                    themeColor: themeColor,
                     list: currentList,
                     index: index),
               ),

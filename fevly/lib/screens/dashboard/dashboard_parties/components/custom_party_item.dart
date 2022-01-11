@@ -101,9 +101,10 @@ class CustomPartyItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InfoItem(
-                              leading: const CustomCircleAvatar(
+                              leading: CustomCircleAvatar(
                                 radius: 11,
                                 backgroundColor: Colors.black,
+                                press: (){},
                               ),
                               text: party.listOfOrganizer[0].pseudo,
                             ),

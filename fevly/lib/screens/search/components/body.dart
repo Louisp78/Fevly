@@ -23,8 +23,7 @@ class Body extends StatelessWidget {
       this.type = SearchScreenType.changeRelationState,
       this.guestList})
       : assert(
-            type == SearchScreenType.changeRelationState && guestList == null ||
-                type == SearchScreenType.addToAList && guestList != null,
+              type == SearchScreenType.addToAList && guestList != null || type != SearchScreenType.addToAList,
             "Need to define GuestList or not.");
 
   final Widget appBar;
@@ -96,8 +95,7 @@ class Body extends StatelessWidget {
                     child: Column(
                       children: List.generate(listOfUser.length, (index) {
                         return ChangeNotifierProvider(
-                          create: (context) =>
-                              createNewUserFrom(source: listOfUser[index]),
+                          create: (context) => createNewUserFrom(source: listOfUser[index]),
                           child: Consumer2<User, ListUserViewModel>(
                             builder:
                                 (context, user, listUserViewModel, child) =>

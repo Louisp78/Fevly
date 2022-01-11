@@ -15,6 +15,8 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    const double heightAppBar = 70;
     return ChangeNotifierProvider(
       create: (context) => TabControllerViewModel(index: 0),
       child: DefaultTabController(
@@ -39,7 +41,7 @@ class DashboardScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
-                          top: 85,
+                          top: heightAppBar,
                         ),
                         child: TabBarView(children: [
                           DashboardPartiesScreen(
@@ -53,11 +55,11 @@ class DashboardScreen extends StatelessWidget {
                         ]),
                       ),
                       const Positioned(
-                          top: 100, left: 0, right: 0, child: DashboardMenu()),
+                          top: heightAppBar + 15, left: 0, right: 0, child: DashboardMenu()),
                       const Align(
                           alignment: Alignment.bottomCenter,
                           child: CustomBottomBar()),
-                      const CustomDashboardAppBar(),
+                      const CustomDashboardAppBar(height: heightAppBar,),
                     ],
                   ),
                 ),

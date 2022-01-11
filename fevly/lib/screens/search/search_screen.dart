@@ -19,9 +19,7 @@ class SearchScreen extends StatelessWidget {
   }) :
         //* TEST
         assert(
-            type == SearchScreenType.addToAList && guestList != null ||
-                type == SearchScreenType.changeRelationState &&
-                    guestList == null,
+            type == SearchScreenType.addToAList && guestList != null || type != SearchScreenType.addToAList,
             "Define a guestList when type is addToList.");
 
   final GuestList? guestList;

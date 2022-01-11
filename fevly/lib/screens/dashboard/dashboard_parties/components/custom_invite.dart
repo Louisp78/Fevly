@@ -24,6 +24,7 @@ class CustomInvite extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ThemeColor themeColor = initThemeColor(context: context);
     return Stack(
       children: [
         Container(
@@ -65,7 +66,7 @@ class CustomInvite extends StatelessWidget {
                           'suggestionList2Name': null,
                           'userSuggestionList1': partyInvited.guests.listOfUser,
                           'userSuggestionList2': null,
-                          'type': SearchScreenType.addToAList,
+                          'type': SearchScreenType.changeRelationState,
                         }),
                         textWidget: Text(
                           "Voir liste des invités",
@@ -92,8 +93,9 @@ class CustomInvite extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InfoItem(
-                      leading: const CustomCircleAvatar(
+                      leading: CustomCircleAvatar(
                         radius: 11,
+                        press: (){},
                       ),
                       text: partyInvited.listOfOrganizer[0].pseudo,
                       lightMode: false,
