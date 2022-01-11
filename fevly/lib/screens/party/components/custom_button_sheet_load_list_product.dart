@@ -4,7 +4,7 @@ import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
-import 'package:fevly/test/data_product_list.dart';
+import 'package:fevly/test_data/data_product_list.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

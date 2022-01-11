@@ -1,5 +1,5 @@
 import 'package:fevly/screens/notifications/components/body.dart';
-import 'package:fevly/test/data_notification.dart';
+import 'package:fevly/test_data/data_notification.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsScreen extends StatelessWidget {

@@ -41,9 +41,8 @@ class FormSection extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: kBasicVerticalPadding(size: size),
                 ),
-                decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
-                    hintText: "Adresse mail"),
+                    hintText: "Adresse mail",
                 isSelected: true,
                 onChanged: (value) => signInStep1ViewModel.email = value,
                 onSaved: (value) {},
@@ -60,9 +59,8 @@ class FormSection extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: kBasicVerticalPadding(size: size),
                 ),
-                decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
-                    hintText: "Créer un mot de passe"),
+                    hintText: "Créer un mot de passe",
                 isSelected: true,
                 obscureText: true,
                 onChanged: (value) => signInStep1ViewModel.password = value,
@@ -77,9 +75,8 @@ class FormSection extends StatelessWidget {
                 },
               ),
               CustomTextField(
-                decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
-                    hintText: "Confimer le mot de passe"),
+                    hintText: "Confimer le mot de passe",
                 isSelected: true,
                 obscureText: true,
                 onChanged: (value) =>

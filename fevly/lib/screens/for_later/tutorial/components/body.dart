@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/screens/tutorial/components/build_dot.dart';
-import 'package:fevly/screens/tutorial/components/splash_content.dart';
+import 'package:fevly/screens/for_later/tutorial/components/build_dot.dart';
+import 'package:fevly/screens/for_later/tutorial/components/splash_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

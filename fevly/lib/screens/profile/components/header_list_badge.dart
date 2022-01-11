@@ -49,6 +49,9 @@ class HeaderListBadge extends StatelessWidget {
               }
             },
             child: CustomTextField(
+              type: InputDecorationType.searchsmall,
+              validator: (value) {},
+              onSaved: (value) => _controller.clear(),
               withCleaning: true,
               width:
                   searchField.selection ? size.width * 0.75 : size.width * 0.45,
@@ -59,15 +62,10 @@ class HeaderListBadge extends StatelessWidget {
                     sourceList: defaultListOfBadge,
                     search: searchField.textValue);
               },
-              decoration: smallSearchInputDecoration(
                 hintStyle: kSearchHintStyle(textTheme: textTheme),
                 hintText: "Rechercher un badges",
-                size: size,
               ),
-              validator: (value) {},
-              onSaved: (value) => _controller.clear(),
             ),
-          ),
           Text(
             "${defaultListOfBadge.length}/100",
             style: textTheme.headline6?.copyWith(color: kTextColor),

@@ -1,5 +1,7 @@
+import 'package:fevly/models/dynamic_theme_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 
 // Primary colors ======================================
 
@@ -94,7 +96,7 @@ class ThemeColor {
 }
 
 ThemeColor initThemeColor({required BuildContext context}) {
-  return MediaQuery.of(context).platformBrightness == Brightness.light
+  return Provider.of<DynamicThemeMode>(context).mode == ThemeMode.light
       ? ThemeColor.lightMode()
       : ThemeColor.darkMode();
 }

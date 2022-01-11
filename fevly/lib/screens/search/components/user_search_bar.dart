@@ -34,10 +34,9 @@ class UserSearchBar extends StatelessWidget {
         },
         onSaved: (value) {},
         validator: (value) {},
-        decoration: searchInputDecoration(
-            size: size,
+        type: InputDecorationType.search,
             hintStyle: textTheme.headline4!.copyWith(color: kTextColor),
-            hintText: "Rechercher quelqu’un ..."),
+            hintText: "Rechercher quelqu’un ...",
       ),
     );
   }

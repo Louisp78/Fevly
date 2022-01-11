@@ -8,7 +8,9 @@ final ThemeData lightThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   focusColor: kPrimaryColor,
   hintColor: kPrimaryColor,
+  brightness: Brightness.light,
   floatingActionButtonTheme: fltActionBtnThemeData,
+  inputDecorationTheme: inputDecorationTheme(),
 );
 
 final ThemeData darkThemeData = ThemeData(
@@ -16,7 +18,51 @@ final ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   focusColor: kDarkPrimaryColor,
   hintColor: kDarkPrimaryColor,
+  brightness: Brightness.dark,
   floatingActionButtonTheme: fltActionBtnThemeData,
+  inputDecorationTheme: inputDecorationTheme(darkMode: true) 
+);
+
+InputDecorationTheme inputDecorationTheme({bool darkMode = false}) => InputDecorationTheme(
+  filled: true,
+  fillColor: darkMode ? kDarkSurfaceLightColor : kSurfaceLightColor,
+  contentPadding: const EdgeInsets.only(
+    bottom: 5.0,
+    left: 20.0,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(20),
+    borderSide: const BorderSide(
+      width: 1.5,
+    ),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(20),
+    borderSide: BorderSide(
+      color: darkMode ? kDarkPrimaryColor : kPrimaryColor,
+      width: 3.0,
+    ),
+  ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(
+        color: kErrorColor,
+        width: 1.5,
+      ),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(
+        color: kErrorColor,
+        width: 3.0,
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: const BorderSide(
+        color: kTextColor,
+      ),
+      borderRadius: BorderRadius.circular(20),
+    ),
 );
 
 TextTheme textTheme({bool darkMode = false}) {

@@ -1,12 +1,12 @@
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/product_list.dart';
-import 'package:fevly/screens/dashboard/dashboard_shopping/components/products_of_party_section.dart';
+import 'package:fevly/screens/dashboard/dashboard_products/components/products_of_party_section.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-class DashboardShoppingScreen extends StatelessWidget {
-  const DashboardShoppingScreen({Key? key, required this.productListList})
+class DashboardProductsScreen extends StatelessWidget {
+  const DashboardProductsScreen({Key? key, required this.productListList})
       : super(key: key);
   final List<ProductList> productListList;
 

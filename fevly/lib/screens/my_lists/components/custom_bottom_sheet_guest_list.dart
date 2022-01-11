@@ -7,7 +7,7 @@ import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
-import 'package:fevly/test/data_guest_list.dart';
+import 'package:fevly/test_data/data_guest_list.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,9 +71,8 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                     validator: (value) {},
                     width: size.width * 0.6,
                     height: 35,
-                    decoration: basicInputDecoration(
-                        hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                        hintText: "Nom de la liste"),
+                    hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
+                    hintText: "Nom de la liste",
                   ),
                 ),
                 SizedBox(

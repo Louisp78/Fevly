@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 const String specialChar = "!\"#\$%&'()*+=`./\\:;<>@[]^_|~";
 
-const String termOfUse = '''
+const String lorempText = '''
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Venenatis duis fames ut ipsum venenatis et et. Eget nibh vitae quam vitae scelerisque quis natoque. Ut purus enim cras hendrerit sed id ornare. Feugiat leo fermentum in auctor molestie sed pulvinar. Pretium cursus volutpat tortor ultricies senectus blandit scelerisque id fames.
 Nisl, urna, est nunc nisl nisl. In ut quis dui egestas ipsum in sagittis vulputate massa. Neque ut cursus quis tempor blandit ac in gravida cursus. Fermentum vel mi, imperdiet pretium. Tristique mi tortor velit non varius. Adipiscing augue tristique odio sit leo commodo cursus.
 Tempor nam nisi bibendum arcu, faucibus eget ut. Justo faucibus felis quam feugiat porttitor in nullam cras. Lacus a donec nulla amet dignissim ipsum. Quis et massa purus, sapien. Consectetur vitae neque, nisl, a. Sodales vivamus nec a, enim cum pharetra. Posuere gravida justo, elementum sodales ut est commodo.
@@ -50,7 +50,7 @@ String kBadgeSpecialName({required BadgeCategory category}) {
   }
 }
 
-String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}) {
+String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}){
   switch (category) {
     case BadgeCategory.drink:
       return "ambroisie";

@@ -7,6 +7,7 @@ import 'package:fevly/functions/sort_list.dart';
 import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/styles/input_decoration.dart';
+import 'package:fevly/styles/theme.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,6 +43,9 @@ class Body extends StatelessWidget {
                     child: Focus(
                       onFocusChange: (focus) => searchField.selection = focus,
                       child: CustomTextField(
+                          type: InputDecorationType.search,
+                        onSaved: (value) {},
+                        validator: (value) {},
                         width: searchField.selection
                             ? size.width * 0.75
                             : size.width * 0.45,
@@ -52,17 +56,12 @@ class Body extends StatelessWidget {
                               sourceList: productList.listOfProduct,
                               search: searchField.textValue);
                         },
-                        decoration: smallSearchInputDecoration(
                           hintStyle: kSearchHintStyle(textTheme: textTheme),
                           hintText: "Rechercher un produit",
-                          size: size,
                         ),
-                        onSaved: (value) {},
-                        validator: (value) {},
                       ),
                     ),
                   ),
-                ),
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 3,
