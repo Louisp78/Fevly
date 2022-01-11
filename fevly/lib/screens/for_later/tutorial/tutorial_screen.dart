@@ -1,4 +1,4 @@
-import 'package:fevly/screens/tutorial/components/body.dart';
+import 'package:fevly/screens/for_later/tutorial/components/body.dart';
 import 'package:flutter/material.dart';
 
 

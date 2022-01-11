@@ -7,7 +7,7 @@ import 'package:fevly/screens/party/components/list_tile_item.dart';
 import 'package:fevly/screens/party/components/list_tile_item_2.dart';
 import 'package:fevly/screens/party/components/load_list_product.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/test/data_product_list.dart';
+import 'package:fevly/test_data/data_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';

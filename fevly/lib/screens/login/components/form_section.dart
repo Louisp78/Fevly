@@ -42,11 +42,10 @@ class FormSection extends StatelessWidget {
                       height: size.height * 0.05,
                     ),
                     CustomTextField(
+                      hintStyle: kBasicHintStyle(textTheme: textTheme),
                       padding: EdgeInsets.only(
                           bottom: kBasicVerticalPadding(size: size)),
-                      decoration: basicInputDecoration(
-                          hintStyle: kBasicHintStyle(textTheme: textTheme),
-                          hintText: "Nom d'utilisateur ou adresse mail"),
+                      hintText: "Nom d'utilisateur ou adresse mail",
                       isSelected: true,
                       onChanged: (value) => loginViewModel.login = value,
                       onSaved: (value) {},
@@ -65,9 +64,8 @@ class FormSection extends StatelessWidget {
                   children: [
                     CustomTextField(
                       padding: EdgeInsets.only(bottom: size.height * 0.02),
-                      decoration: basicInputDecoration(
-                          hintStyle: kBasicHintStyle(textTheme: textTheme),
-                          hintText: "Mot de passe"),
+                      hintStyle: kBasicHintStyle(textTheme: textTheme),
+                      hintText: "Mot de passe",
                       obscureText: true,
                       onChanged: (value) => loginViewModel.password = value,
                       onSaved: (value) {},

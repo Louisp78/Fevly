@@ -21,9 +21,8 @@ class BottomBarChat extends StatelessWidget {
         CustomTextField(
           padding: EdgeInsets.only(
               bottom: kBasicVerticalPadding(size: size)),
-          decoration: basicInputDecoration(
-              hintStyle: kBasicHintStyle(textTheme: textTheme),
-              hintText: "Envoyer un message ..."),
+          hintStyle: kBasicHintStyle(textTheme: textTheme),
+          hintText: "Envoyer un message ...",
           isSelected: true,
           onChanged: (value) => null,
           onSaved: (value) {},

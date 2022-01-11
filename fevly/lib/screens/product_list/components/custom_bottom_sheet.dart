@@ -9,6 +9,7 @@ import 'package:fevly/models/product_list.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/styles/input_decoration.dart';
+import 'package:fevly/styles/theme.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 
@@ -100,9 +101,8 @@ class CustomBottomSheet extends StatelessWidget {
                   validator: (value) {},
                   width: size.width * 0.6,
                   height: 35,
-                  decoration: basicInputDecoration(
                       hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                      hintText: "Nom du produit"),
+                      hintText: "Nom du produit",
                 ),
               ),
             ],
@@ -117,9 +117,8 @@ class CustomBottomSheet extends StatelessWidget {
               validator: (value) {},
               width: size.width * 0.6,
               height: 35,
-              decoration: basicInputDecoration(
                   hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                  hintText: "Nom "),
+                  hintText: "Nom ",
             ),
           ),
           Row(

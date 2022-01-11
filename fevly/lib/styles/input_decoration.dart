@@ -2,11 +2,14 @@ import 'package:fevly/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
+enum InputDecorationType {
+  basic,
+  searchsmall,
+  search
+}
 
-final ThemeColor _themeColor = initThemeColorStatic();
 InputDecoration basicInputDecoration(
-    {required TextStyle hintStyle, required String hintText}) {
-  final ThemeColor themeColor = _themeColor;
+    {required TextStyle hintStyle, required String hintText, required ThemeColor themeColor}) {
   return InputDecoration(
     filled: true,
     hintText: hintText,
@@ -54,10 +57,10 @@ InputDecoration basicInputDecoration(
 
 InputDecoration smallSearchInputDecoration(
     {required TextStyle hintStyle,
-    required Size size,
-    required String hintText}) {
-  final ThemeColor themeColor = _themeColor;
-
+    required String hintText,
+    required BuildContext context}) {
+  final ThemeColor themeColor = initThemeColor(context: context);
+  final Size size = MediaQuery.of(context).size;
   return InputDecoration(
     filled: true,
     prefixIcon: Icon(
@@ -109,9 +112,10 @@ InputDecoration smallSearchInputDecoration(
 
 InputDecoration searchInputDecoration(
     {required TextStyle hintStyle,
-    required Size size,
-    required String hintText}) {
-  final ThemeColor themeColor = _themeColor;
+    required String hintText,
+    required BuildContext context}) {
+  final ThemeColor themeColor = initThemeColor(context: context);
+  final Size size = MediaQuery.of(context).size;
   return InputDecoration(
     filled: true,
     prefixIcon: Icon(

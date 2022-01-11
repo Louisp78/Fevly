@@ -8,7 +8,7 @@ import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/profile/components/counter_item.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
-import 'package:fevly/test/data_party.dart';
+import 'package:fevly/test_data/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

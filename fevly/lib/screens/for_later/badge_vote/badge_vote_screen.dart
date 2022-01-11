@@ -1,5 +1,5 @@
-import 'package:fevly/screens/badge_vote/components/body.dart';
-import 'package:fevly/test/data_badge.dart';
+import 'package:fevly/screens/for_later/badge_vote/components/body.dart';
+import 'package:fevly/test_data/data_badge.dart';
 import 'package:flutter/material.dart';
 
 class BadgeVoteScreen extends StatelessWidget {

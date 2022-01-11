@@ -2,10 +2,10 @@ import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/screens/dashboard/components/custom_dashboard_app_bar.dart';
 import 'package:fevly/screens/dashboard/components/dashboard_menu.dart';
 import 'package:fevly/screens/dashboard/dashboard_parties/dashboard_parties_screen.dart';
-import 'package:fevly/screens/dashboard/dashboard_shopping/dashboard_shopping_screen.dart';
+import 'package:fevly/screens/dashboard/dashboard_products/dashboard_products_screen.dart';
 import 'package:fevly/screens/dashboard/view_models/tab_controller_view_model.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/test/data_party.dart';
+import 'package:fevly/test_data/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
                             partiesInvite: partiesInvite,
                             partiesAccepted: partiesAccepted,
                           ),
-                          DashboardShoppingScreen(
+                          DashboardProductsScreen(
                             productListList:
                                 partiesAccepted.map((e) => e.products).toList(),
                           ),

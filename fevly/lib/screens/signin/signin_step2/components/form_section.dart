@@ -66,9 +66,8 @@ class FormSection extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: kBasicVerticalPadding(size: size),
                 ),
-                decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
-                    hintText: "Prénom"),
+                    hintText: "Prénom",
                 isSelected: true,
                 onChanged: (value) => signInStep2ViewModel.name = value,
                 onSaved: (value) {
@@ -86,9 +85,8 @@ class FormSection extends StatelessWidget {
                 },
               ),
               CustomTextField(
-                decoration: basicInputDecoration(
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
-                    hintText: "Nom d'utilisateur"),
+                    hintText: "Nom d'utilisateur",
                 isSelected: true,
                 onChanged: (value) => signInStep2ViewModel.pseudo = value,
                 onSaved: (value) {

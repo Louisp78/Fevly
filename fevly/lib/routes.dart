@@ -1,7 +1,6 @@
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
-import 'package:fevly/screens/badge_vote/badge_vote_screen.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
@@ -15,7 +14,6 @@ import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
 import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
 import 'package:fevly/styles/transition.dart';
-import 'package:fevly/test/data_example.dart';
 import 'package:flutter/material.dart';
 
 
@@ -60,6 +58,8 @@ mixin RouterNav {
           transitionDuration: const Duration(milliseconds: 500),
         );
 
+      /*
+      ! Not for minimal version
       case '/profile/my_lists':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
@@ -83,7 +83,7 @@ mixin RouterNav {
               ProductListScreen(
             productList: settings.arguments! as ProductList,
           ),
-        );
+        );*/
       case '/search':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
@@ -124,11 +124,6 @@ mixin RouterNav {
               const NotificationsScreen(),
         );
 
-      case '/badge_vote':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const BadgeVoteScreen(),
-        );
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

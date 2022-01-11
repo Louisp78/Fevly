@@ -1,5 +1,5 @@
 import 'package:fevly/models/guest_list.dart';
-import 'package:fevly/test/data_list_of_user.dart';
+import 'package:fevly/test_data/data_list_of_user.dart';
 
 final GuestList partyGuestList1 =
     GuestList(name: "Party GuestList1", listOfUser: listOfUsers3);

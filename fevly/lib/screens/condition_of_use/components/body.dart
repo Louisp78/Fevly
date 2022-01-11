@@ -35,7 +35,7 @@ class Body extends StatelessWidget {
                   right: size.width * 0.05,
                   bottom: size.height * 0.05),
               child: Text(
-                termOfUse,
+                lorempText,
                 style: textTheme.bodyText2,
               ),
             ),
