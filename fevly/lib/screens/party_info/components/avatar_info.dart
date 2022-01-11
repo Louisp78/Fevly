@@ -18,7 +18,7 @@ class AvatarInfo extends StatelessWidget {
       padding: EdgeInsets.all(size.width * 0.05),
       child: Column(
         children: [
-          const CustomCircleAvatar(),
+          CustomCircleAvatar(press: (){},),
           const SizedBox(height: 5),
           Text(
             text,

@@ -14,7 +14,6 @@ final User kCurrentUser = User(
   password: "loulou78",
   email: "placelouis@gmail.com",
   listOfBadges: badgeList1,
-  level: 32,
   listOfGuestList: guestListListForDropdown,
   listOfProductList: productListListForDropdown,
 );

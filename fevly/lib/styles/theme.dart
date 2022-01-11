@@ -6,6 +6,7 @@ final ThemeColor themeColor = initThemeColorStatic();
 final ThemeData lightThemeData = ThemeData(
   textTheme: textTheme(),
   scaffoldBackgroundColor: Colors.white,
+  accentColor: kPrimaryColor,
   focusColor: kPrimaryColor,
   hintColor: kPrimaryColor,
   brightness: Brightness.light,
@@ -15,6 +16,7 @@ final ThemeData lightThemeData = ThemeData(
 
 final ThemeData darkThemeData = ThemeData(
   textTheme: textTheme(darkMode: true),
+  accentColor: kDarkPrimaryColor,
   scaffoldBackgroundColor: Colors.black,
   focusColor: kDarkPrimaryColor,
   hintColor: kDarkPrimaryColor,

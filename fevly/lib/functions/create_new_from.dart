@@ -5,7 +5,6 @@ User createNewUserFrom({required User source}) => User(
       pseudo: source.pseudo,
       password: source.password,
       email: source.email,
-      level: source.level,
       listOfBadges: source.listOfBadges,
       listOfFriends: source.listOfFriends,
       partyCounter: source.partyCounter,

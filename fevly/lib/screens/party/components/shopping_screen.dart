@@ -53,6 +53,7 @@ class ShoppingScreen extends StatelessWidget {
                       ? EdgeInsets.only(bottom: size.height * 0.035)
                       : null,
                   leading: CustomCircleAvatar(
+                      press: (){},
                       radius: 20,
                       icon: SizedBox(
                           height: 20 * (32 / 25),
@@ -84,11 +85,13 @@ class ShoppingScreen extends StatelessWidget {
                       : null,
                   leading: CustomCircleAvatar(
                       radius: 20,
+                      press: (){},
                       icon: SizedBox(
                           height: 20 * (32 / 25),
                           width: 20 * (32 / 25),
                           child: SvgPicture.asset("assets/drink/mojito.svg"))),
-                  suffix: const CustomCircleAvatar(
+                  suffix: CustomCircleAvatar(
+                    press: (){},
                     radius: 20,
                   ),
                   press: () {});
@@ -112,7 +115,6 @@ class ShoppingScreen extends StatelessWidget {
                   );
                 }),
             text: "Ajouter une course",
-            lightMode: MediaQuery.of(context).platformBrightness == Brightness.light,
           ),
           SizedBox(height: size.height * 0.1),
         ],

@@ -3,11 +3,13 @@ import 'package:fevly/components/level_label.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
+import 'package:fevly/test_data/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomDashboardAppBar extends StatelessWidget {
-  const CustomDashboardAppBar({Key? key}) : super(key: key);
+  final double height;
+  const CustomDashboardAppBar({Key? key, required this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CustomDashboardAppBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),
-      height: 85,
+      height: height,
       width: size.width,
       decoration: BoxDecoration(
         color: themeColor.kSurfaceColor,
@@ -26,11 +28,13 @@ class CustomDashboardAppBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const CustomCircleAvatar(
+          CustomCircleAvatar(
+            press: () => Navigator.pushNamed(context, '/profile', arguments: kCurrentUser),
             icon: Icon(
               Icons.person_rounded,
-              color: kSecondaryColor,
-            ),
+              color: themeColor.kSecondaryColor,
+            ), 
+            backgroundColor: themeColor.kSurfaceLightColor,
           ),
           SizedBox(width: kBasicHorizontalPadding(size: size)),
           Column(
@@ -46,13 +50,11 @@ class CustomDashboardAppBar extends StatelessWidget {
                   SizedBox(
                     width: size.width * 0.03,
                   ),
-                  const LevelLabel(level: 13),
+                  /*const LevelLabel(level: 13),*/
                 ],
               ),
-              SizedBox(
-                height: size.height * 0.018,
-              ),
-              Stack(
+              Text('Louis Place', style: textTheme.bodyText2?.copyWith(color:themeColor.kTextColor)),
+              /*Stack(
                 alignment: Alignment.centerLeft,
                 children: [
                   Container(
@@ -70,7 +72,7 @@ class CustomDashboardAppBar extends StatelessWidget {
                         color: kSecondaryColor),
                   ),
                 ],
-              )
+              )*/
             ],
           ),
           Expanded(
@@ -80,16 +82,17 @@ class CustomDashboardAppBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
+                  /*InkWell(
                     onTap: () =>
                         Navigator.pushNamed(context, '/profile/my_lists'),
                     child: Icon(
                       Icons.format_list_bulleted_rounded,
                       color: themeColor.kBaseOppositeColor,
                     ),
-                  ),
+                  ),*/
+                  const Spacer(),
                   InkWell(
-                    onTap: () {},
+                    onTap: () => Navigator.pushNamed(context, '/notifications'),
                     child: Icon(Icons.notifications_rounded,
                         color: themeColor.kBaseOppositeColor),
                   ),

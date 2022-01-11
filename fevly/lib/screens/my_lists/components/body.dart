@@ -77,7 +77,8 @@ class Body extends StatelessWidget {
               : null,
           title: productList.name,
           subtitle: "${productList.numberOfProducts} produits",
-          leading: const CustomCircleAvatar(
+          leading: CustomCircleAvatar(
+            press: () {},
             radius: 20,
           ),
           press: () => Navigator.pushNamed(
@@ -108,7 +109,8 @@ class Body extends StatelessWidget {
               ? EdgeInsets.only(bottom: size.height * 0.035)
               : null,
           subtitle: "${guestList.numberOfGuests} invités",
-          leading: const CustomCircleAvatar(
+          leading: CustomCircleAvatar(
+            press: (){},
             radius: 20,
           ),
           press: () => Navigator.pushNamed(context, "/search", arguments: {

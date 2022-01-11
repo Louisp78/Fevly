@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 /// a class to switch between light and dark mode
 /// Using provider
-class DynamicThemeMode with ChangeNotifier 
+class DynamicThemeMode extends ChangeNotifier 
 {
-  ThemeMode _mode = ThemeMode.light;
+  ThemeMode _mode = ThemeMode.dark;
   
   ThemeMode get mode => _mode;
 

@@ -1,15 +1,17 @@
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/models/dynamic_theme_mode.dart';
 import 'package:fevly/models/user.dart';
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void Function() changeRelationState(
-        {required User user,
-        required BuildContext context,
-        List<User>? list,
-        int? index}) =>
-    () {
+void Function() changeRelationState({
+  required User user,
+  required BuildContext context,
+  required ThemeColor themeColor, 
+  List<User>? list,
+  int? index}) =>() {
       assert(list == null && index == null || !(list == null && index == null),
           "list and index must be set together");
       final Size size = MediaQuery.of(context).size;
@@ -19,7 +21,7 @@ void Function() changeRelationState(
       final UserRelationState oldRelationState = user.relationState;
       ScaffoldMessenger.of(context).showSnackBar(
         buildCustomSnackBar(
-          context: context,
+          themeColor: themeColor,
           textTheme: textTheme,
           size: size,
           text: kSnackBarUserRelation(user: user),

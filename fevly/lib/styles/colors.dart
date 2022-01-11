@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
+// TODO: use widget colorscheme to use colors inside themes
+
 // Primary colors ======================================
 
 /// Primary purple
@@ -105,3 +107,15 @@ ThemeColor initThemeColorStatic() =>
     SchedulerBinding.instance!.window.platformBrightness == Brightness.light
         ? ThemeColor.lightMode()
         : ThemeColor.darkMode();
+
+
+Map<int, Color> kColorSwatch ={
+  50:const Color.fromRGBO(224,64,251, .1),
+  100:const Color.fromRGBO(224,64,251, .2),
+  200:const Color.fromRGBO(224,64,251, .3),
+  300:const Color.fromRGBO(224,64,251, .4),
+  400:const Color.fromRGBO(224,64,251, .5),
+  500:const Color.fromRGBO(224,64,251, .6),
+  600:const Color.fromRGBO(224,64,251, .7),
+  700:const Color.fromRGBO(224,64,251, .8),
+  800:const Color.fromRGBO(224,64,251, .9),};

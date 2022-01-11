@@ -25,7 +25,6 @@ class CustomTextButton extends StatelessWidget {
     Key? key,
     this.prefixIcon,
     this.suffixIcon,
-    this.lightMode = true,
     this.secondary = false,
     required this.press,
     this.text = "",
@@ -39,7 +38,6 @@ class CustomTextButton extends StatelessWidget {
 
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final bool lightMode;
   final bool secondary;
   final GestureTapCallback press;
   final String text;
@@ -69,7 +67,7 @@ class CustomTextButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor ??
               (isActive
-                  ? (lightMode ? kPrimaryColor : kDarkPrimaryColor)
+                  ? themeColor.kPrimaryColor
                   : kTextColor),
           borderRadius: BorderRadius.circular(buttonSize.borderRadius),
           border: border,
@@ -84,7 +82,7 @@ class CustomTextButton extends StatelessWidget {
                   text,
                   style: textStyle.copyWith(
                       color: textColor ??
-                          (lightMode ? Colors.white : Colors.black)),
+                          themeColor.kBaseColor),
                 ),
             if (suffixIcon != null) const SizedBox(width: 10),
             if (suffixIcon != null) suffixIcon!,

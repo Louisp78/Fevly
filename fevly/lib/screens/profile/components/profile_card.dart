@@ -8,6 +8,7 @@ import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/profile/components/counter_item.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
+import 'package:fevly/styles/theme.dart';
 import 'package:fevly/test_data/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,7 +47,7 @@ class ProfileCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomCircleAvatar(),
+              CustomCircleAvatar(press: (){},),
               const SizedBox(
                 width: 15.0,
               ),
@@ -63,9 +64,9 @@ class ProfileCard extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      LevelLabel(
+                      /*LevelLabel(
                         level: profileOwner.level,
-                      ),
+                      ),*/
                     ],
                   ),
                   Text(
@@ -98,13 +99,13 @@ class ProfileCard extends StatelessWidget {
           const Spacer(
             flex: 3,
           ),
-          CustomSmallButton(
+
+          if(profileOwner.relationState != UserRelationState.me) 
+            CustomSmallButton(
             buttonSize: CustomSmallButtonSize.small,
             text: profileOwner.relationState.name,
-            lightMode: false,
-            press: profileOwner.relationState == UserRelationState.me
-                ? () => Navigator.pushNamed(context, "/profile/my_lists")
-                : changeRelationState(
+            press: changeRelationState(
+                    themeColor: themeColor,
                     user: profileOwner,
                     context: context,
                   ),
@@ -113,7 +114,7 @@ class ProfileCard extends StatelessWidget {
               color: Colors.white,
               size: kSmallIconSize,
             ),
-          ),
+            ),
           const Spacer(
             flex: 2,
           ),

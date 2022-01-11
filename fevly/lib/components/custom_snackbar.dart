@@ -9,9 +9,8 @@ SnackBar buildCustomSnackBar({
   required Size size,
   required String text,
   required GestureTapCallback undoPress,
-  required BuildContext context,
+  required ThemeColor themeColor
 }) {
-  final ThemeColor themeColor = initThemeColor(context: context);
   return SnackBar(
     backgroundColor: themeColor.kSurfaceColor,
     content: Row(
@@ -31,6 +30,7 @@ SnackBar buildCustomSnackBar({
           text: "Annuler",
           press: undoPress,
           buttonSize: CustomSmallButtonSize.small,
+          textColor: themeColor.kBaseOppositeColor,
         )
       ],
     ),

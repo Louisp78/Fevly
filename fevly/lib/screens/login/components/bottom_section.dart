@@ -1,10 +1,9 @@
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/login/view_models/login_model_view.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:fevly/test_data/data_badge.dart';
+import 'package:fevly/test_data/data_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,18 +46,7 @@ class BottomSection extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 '/profile',
-                arguments: User(
-                  name: "Louis Place",
-                  pseudo: loginViewModel.login.contains("@")
-                      ? "llouisp78"
-                      : loginViewModel.login,
-                  password: "loulou78",
-                  email: loginViewModel.login.contains("@")
-                      ? loginViewModel.login
-                      : "placelouis@gmail.com",
-                  listOfBadges: badgeList1,
-                  level: 32,
-                ),
+                arguments: kCurrentUser,
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -105,7 +93,7 @@ class BottomSection extends StatelessWidget {
           text: "Connexion avec Google",
           prefixIcon: SvgPicture.asset(
             "assets/base/google.svg",
-            color: Colors.white,
+            color: themeColor.kBaseColor,
           ),
         ),
       ],
