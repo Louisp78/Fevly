@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// Using provider
 class DynamicThemeMode extends ChangeNotifier 
 {
-  ThemeMode _mode = ThemeMode.dark;
+  ThemeMode _mode = ThemeMode.light;
   
   ThemeMode get mode => _mode;
 

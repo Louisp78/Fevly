@@ -1,7 +1,10 @@
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
+import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
 import 'package:fevly/screens/party/components/chat_screen.dart';
 import 'package:fevly/screens/party/components/shopping_screen.dart';
+import 'package:fevly/screens/search/search_screen.dart';
+import 'package:fevly/test_data/data_guest_list.dart';
 import 'package:fevly/view_models/tab_controller_view_model.dart';
 import 'package:fevly/screens/party/components/party_menu.dart';
 import 'package:fevly/styles/colors.dart';
@@ -48,23 +51,32 @@ class Body extends StatelessWidget {
                       const Positioned(bottom: 0, child: CustomBottomBar()),
                       CustomBasicAppBar(
                         iconData: Icons.arrow_back_ios_rounded,
-                        press: () {},
+                        press: () => Navigator.pop(context),
                         title: "Soirée exemple",
                         subtitleText: "10 participants",
                         prefixIcon: IconButton(
                           icon: const Icon(Icons.info_rounded),
                           color: themeColor.kBaseOppositeColor,
-                          onPressed: () {},
+                          onPressed: () => Navigator.pushNamed(context, '/party/party_info'),
                         ),
-                        firstSuffixIcon: IconButton(
+                        /*firstSuffixIcon: IconButton(
                           icon: const Icon(Icons.notifications),
                           color: themeColor.kSecondaryColor,
                           onPressed: () {},
-                        ),
+                        ),*/
                         secondSuffixIcon: IconButton(
                           icon: const Icon(Icons.group_rounded),
                           color: themeColor.kBaseOppositeColor,
-                          onPressed: () {},
+                          onPressed: () =>
+                            Navigator.pushNamed(context, '/search', arguments: {
+                          'guestList': guestListList[0],
+                          'appBar': buildAppBarForSearchScreen(
+                              guestListList[0], context),
+                          'type': SearchScreenType.addToAList,
+                          'suggestionList1Name': 'Invités',
+                          'userSuggestionList1': guestListList[0].listOfUser
+                        }),
+
                         ),
                       ),
                     ],

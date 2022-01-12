@@ -1,14 +1,11 @@
 import 'package:fevly/models/guest_list.dart';
-import 'package:fevly/models/product_list.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
-import 'package:fevly/screens/my_lists/my_lists_screen.dart';
 import 'package:fevly/screens/notifications/notifications_screen.dart';
 import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
-import 'package:fevly/screens/product_list/product_list_screen.dart';
 import 'package:fevly/screens/profile/profile_screen.dart';
 import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
