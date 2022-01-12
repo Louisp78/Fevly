@@ -3,7 +3,7 @@ import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/custom_notification.dart';
 import 'package:fevly/screens/notifications/components/custom_notification_item.dart';
-import 'package:fevly/styles/theme.dart';
+import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatelessWidget {
@@ -14,6 +14,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final ThemeColor themeColor = initThemeColor(context: context);
     return SizedBox(
       height: size.height,
       child: Stack(
