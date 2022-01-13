@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,14 +34,14 @@ class CustomBasicAppBar extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       width: size.width,
       height: 110,
       padding: const EdgeInsets.only(bottom: 20),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: themeColor.kSurfaceLightColor, boxShadow: [kShadowBase]),
+          color: themeColor.onSurface, boxShadow: [kShadowBase]),
       child: Stack(
         alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none,
@@ -79,7 +78,7 @@ class CustomBasicAppBar extends StatelessWidget {
               left: 0,
               child: IconButton(
                 onPressed: press,
-                icon: Icon(iconData, color: themeColor.kBaseOppositeColor),
+                icon: Icon(iconData, color: themeColor.onBackground),
               ),
             ),
           if (prefixIcon != null)

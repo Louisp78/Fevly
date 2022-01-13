@@ -21,7 +21,7 @@ class CustomNotificationItem extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return SizedBox(
       width: size.width * 0.9,
       child: Container(
@@ -30,7 +30,7 @@ class CustomNotificationItem extends StatelessWidget {
           title: Text(title, style: textTheme.headline4),
           subtitle: Text(subtitle,
               style:
-                  textTheme.headline5?.copyWith(color: themeColor.kTextColor)),
+                  textTheme.headline5?.copyWith(color: kTextColor)),
           contentPadding: EdgeInsets.zero,
           leading: SizedBox(
             height: double.infinity,
@@ -39,7 +39,7 @@ class CustomNotificationItem extends StatelessWidget {
           trailing: Text(
               "depuis 3 j", //! add date & need to calculate time properly
               style:
-                  textTheme.headline5?.copyWith(color: themeColor.kTextColor)),
+                  textTheme.headline5?.copyWith(color: kTextColor)),
         ),
       ),
     );

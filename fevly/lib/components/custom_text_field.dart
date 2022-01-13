@@ -42,7 +42,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       width: widget.width ?? size.width * 0.8,
       height: widget.height,
@@ -63,7 +63,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onChanged: widget.onChanged,
           validator: widget.validator,
           onSaved: widget.onSaved,
-          cursorColor: themeColor.kPrimaryColor,
+          cursorColor: themeColor.primary,
           obscureText: widget.obscureText,
           decoration: get_input_decoration(type: widget.type, context: context)
         ),
@@ -96,7 +96,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     filled: true,
     prefixIcon: Icon(
       Icons.search_rounded,
-      color: themeColor.kTextColor,
+      color: kTextColor,
       size: kSmallIconSize,
     ),
     hintText: hintText,
@@ -134,7 +134,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: themeColor.kTextColor,
+        color: kTextColor,
       ),
       borderRadius: BorderRadius.circular(30),
     ),

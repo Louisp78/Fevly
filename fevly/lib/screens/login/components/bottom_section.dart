@@ -23,7 +23,7 @@ class BottomSection extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -35,11 +35,11 @@ class BottomSection extends StatelessWidget {
             if (validate) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: themeColor.kSurfaceColor,
+                  backgroundColor: themeColor.surface,
                   content: Text(
                     'Félicitation connexion réussie!',
                     style: textTheme.headline4
-                        ?.copyWith(color: themeColor.kDoneColor),
+                        ?.copyWith(color: kDoneColor),
                   ),
                 ),
               );
@@ -51,11 +51,11 @@ class BottomSection extends StatelessWidget {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: themeColor.kSurfaceColor,
+                  backgroundColor: themeColor.surface,
                   content: Text(
                     kSnackBarMissingField,
                     style: textTheme.headline4
-                        ?.copyWith(color: themeColor.kPrimaryColor),
+                        ?.copyWith(color: themeColor.primary),
                   ),
                 ),
               );
@@ -63,11 +63,11 @@ class BottomSection extends StatelessWidget {
           },
           text: "Connexion",
           textColor: loginViewModel.isFormValid
-              ? themeColor.kPrimaryColor
+              ? themeColor.primary
               : textTheme.headline1!.color,
           borderColor: loginViewModel.isFormValid
-              ? themeColor.kPrimaryColor
-              : themeColor.kTextColor,
+              ? themeColor.primary
+              : kTextColor,
         ),
         SizedBox(
           height: size.height * 0.02,
@@ -93,7 +93,7 @@ class BottomSection extends StatelessWidget {
           text: "Connexion avec Google",
           prefixIcon: SvgPicture.asset(
             "assets/base/google.svg",
-            color: themeColor.kBaseColor,
+            color: themeColor.background,
           ),
         ),
       ],

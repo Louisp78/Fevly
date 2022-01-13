@@ -13,7 +13,7 @@ class CustomCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: press,
       child: Stack(
@@ -23,7 +23,7 @@ class CustomCheckBox extends StatelessWidget {
             height: 25,
             width: 25,
             decoration: BoxDecoration(
-                color: themeColor.kSurfaceColor,
+                color: themeColor.surface,
                 borderRadius: BorderRadius.circular(4)),
           ),
           if (isCheck)
@@ -31,7 +31,7 @@ class CustomCheckBox extends StatelessWidget {
               width: 15,
               height: 15,
               decoration: BoxDecoration(
-                color: themeColor.kPrimaryColor,
+                color: themeColor.primary,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),

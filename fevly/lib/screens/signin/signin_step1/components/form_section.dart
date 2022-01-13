@@ -18,7 +18,7 @@ class FormSection extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     final _keyForm = GlobalKey<FormState>();
 
     return Form(
@@ -108,11 +108,11 @@ class FormSection extends StatelessWidget {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          backgroundColor: themeColor.kSurfaceColor,
+                          backgroundColor: themeColor.surface,
                           content: Text(
                             kSnackBarMissingField,
                             style: textTheme.headline4
-                                ?.copyWith(color: themeColor.kPrimaryColor),
+                                ?.copyWith(color: themeColor.primary),
                           ),
                         ),
                       );

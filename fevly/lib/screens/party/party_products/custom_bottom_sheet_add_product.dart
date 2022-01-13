@@ -4,6 +4,7 @@ import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/product.dart';
+import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/party/model_views/model_view_party.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
@@ -12,9 +13,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CustomBottomSheetAddProduct extends StatelessWidget {
+  final ProductList productList;
   const CustomBottomSheetAddProduct({
     Key? key,
     required this.title,
+    required this.productList,
   }) : super(key: key);
 
   final String title;
@@ -24,7 +27,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return ChangeNotifierProvider(
       create: (context) => ModelViewParty(),
       child: Consumer<ModelViewParty>(
@@ -41,7 +44,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                 topLeft: Radius.circular(69),
                 topRight: Radius.circular(69),
               ),
-              color: themeColor.kSurfaceLightColor,
+              color: themeColor.onSurface,
             ),
             child: Column(
               children: [
@@ -71,7 +74,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                           height: size.width * 0.20,
                           width: size.width * 0.20,
                           decoration: BoxDecoration(
-                            color: themeColor.kSurfaceLightColor,
+                            color: themeColor.onSurface,
                             boxShadow: [kShadowBase],
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -89,7 +92,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                                 Text(
                                   "Catégorie",
                                   style: textTheme.headline5?.copyWith(
-                                      color: themeColor.kDarkerTextColor),
+                                      color: kDarkerTextColor),
                                 ),
                               ],
                             ),
@@ -121,14 +124,14 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                   Text(
                     modelViewShopping.count.toString(),
                     style: textTheme.headline2
-                        ?.copyWith(color: themeColor.kTextColor),
+                        ?.copyWith(color: kTextColor),
                   ),
                   SizedBox(width: size.width * 0.02),
                   CustomIconButton(
                     press: () => modelViewShopping.count += 1,
                     icon: Icons.add_rounded,
-                    backgroundColor: themeColor.kPrimaryColor,
-                    iconColor: themeColor.kBaseOppositeColor,
+                    backgroundColor: themeColor.primary,
+                    iconColor: themeColor.onBackground,
                     size: const CustomIconButtonSize.small(),
                     circle: false,
                     lightMode: false,
@@ -139,8 +142,8 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                         ? {}
                         : modelViewShopping.count -= 1,
                     icon: Icons.remove_rounded,
-                    iconColor: themeColor.kBaseOppositeColor,
-                    backgroundColor: themeColor.kPrimaryColor,
+                    iconColor: themeColor.onBackground,
+                    backgroundColor: themeColor.primary,
                     size: const CustomIconButtonSize.small(),
                     circle: false,
                   ),
@@ -150,10 +153,10 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: themeColor.kSurfaceLightColor,
+                        color: themeColor.onSurface,
                         boxShadow: [kShadowBase]),
                     child: DropdownButton<QuantityUnit>(
-                      dropdownColor: themeColor.kDarkerTextColor,
+                      dropdownColor: kDarkerTextColor,
                       value: modelViewShopping.category,
                       hint: SizedBox(
                         width: size.width * 0.3 - 24,
@@ -168,7 +171,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                               style: modelViewShopping.category != null
                                   ? textTheme.headline5
                                   : textTheme.headline5?.copyWith(
-                                      color: themeColor.kPrimaryColor),
+                                      color: themeColor.primary),
                             ),
                             const Spacer(),
                           ],

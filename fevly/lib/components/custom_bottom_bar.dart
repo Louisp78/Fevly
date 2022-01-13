@@ -18,14 +18,14 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       width: size.width,
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          color: themeColor.kSurfaceColor,
+          color: themeColor.surface,
           boxShadow: [kShadowBottomBar]),
       height: 60,
       child: Row(
@@ -37,7 +37,7 @@ class CustomBottomBar extends StatelessWidget {
             onPressed: () => Navigator.pushNamed(context, '/dashboard'),
             icon: Icon(
               Icons.home_rounded,
-              color: themeColor.kBaseOppositeColor,
+              color: themeColor.onBackground,
             ),
           ),
           IconButton(
@@ -55,13 +55,13 @@ class CustomBottomBar extends StatelessWidget {
                           'type': SearchScreenType.changeRelationState,
                         }),
               icon: Icon(Icons.search_rounded,
-                  color: themeColor.kBaseOppositeColor)),
+                  color: themeColor.onBackground)),
           CustomIconButton(
             press: () {},
             icon: Icons.add_rounded,
             circle: false,
-            iconColor: themeColor.kBaseColor,
-            backgroundColor: themeColor.kPrimaryColor,
+            iconColor: themeColor.background,
+            backgroundColor: themeColor.primary,
           ),
           IconButton(
               onPressed: () => Navigator.pushNamed(context, '/notifications'),
@@ -69,7 +69,7 @@ class CustomBottomBar extends StatelessWidget {
               splashColor: Colors.transparent,
               icon: Icon(
                 Icons.notifications_rounded,
-                color: themeColor.kBaseOppositeColor,
+                color: themeColor.onBackground,
               ),
               ),
           IconButton(
@@ -78,7 +78,7 @@ class CustomBottomBar extends StatelessWidget {
               splashColor: Colors.transparent,
               icon: Icon(
                 Icons.person_rounded,
-                color: themeColor.kBaseOppositeColor,
+                color: themeColor.onBackground,
               )),
         ],
       ),

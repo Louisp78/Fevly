@@ -13,21 +13,21 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {},
       child: Column(
         children: [
           Icon(
             iconData,
-            color: isSelected ? themeColor.kPrimaryColor : null,
+            color: isSelected ? themeColor.primary : null,
             size: 31,
           ),
           if (isSelected)
             Container(
               height: 3,
               width: 31,
-              decoration: BoxDecoration(color: themeColor.kPrimaryColor),
+              decoration: BoxDecoration(color: themeColor.primary),
             ),
         ],
       ),

@@ -4,7 +4,6 @@ import 'package:fevly/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/search/search_screen.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/view_models/list_user_view_model.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,7 @@ class CustomUserListItem extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: press,
       child: Container(
@@ -45,7 +44,7 @@ class CustomUserListItem extends StatelessWidget {
         margin: EdgeInsets.only(bottom: kBasicVerticalPadding(size: size)),
         width: size.width * 0.9,
         decoration: BoxDecoration(
-          color: themeColor.kSurfaceLightColor,
+          color: themeColor.onSurface,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [kShadowBase],
         ),
@@ -64,16 +63,16 @@ class CustomUserListItem extends StatelessWidget {
               CustomTextButton(
                 buttonSize: const CustomTextButtonSize.small(),
                 text: user.relationState.name,
-                backgroundColor: themeColor.kSurfaceColor,
+                backgroundColor: themeColor.surface,
                 textColor: user.relationState != UserRelationState.friend
-                    ? themeColor.kPrimaryColor
-                    : themeColor.kBaseOppositeColor,
+                    ? themeColor.primary
+                    : themeColor.onBackground,
                 suffixIcon: Icon(user.relationState.iconData,
-                    color: themeColor.kPrimaryColor, size: kSmallIconSize),
+                    color: themeColor.primary, size: kSmallIconSize),
                 border: user.relationState == UserRelationState.friend
                     ? Border.all(
                         width: 4,
-                        color: themeColor.kPrimaryColor,
+                        color: themeColor.primary,
                       )
                     : null,
                 press: changeRelationState(
@@ -96,10 +95,10 @@ class CustomUserListItem extends StatelessWidget {
                   icon: listOfUserViewModel!.list
                           .any((element) => element.pseudo == user.pseudo)
                       ? Icon(Icons.how_to_reg_rounded,
-                          color: themeColor.kSecondaryColor)
+                          color: themeColor.secondary)
                       : Icon(
                           Icons.person_add_rounded,
-                          color: themeColor.kBaseOppositeColor,
+                          color: themeColor.onBackground,
                         ))
           ],
         ),

@@ -14,7 +14,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return SizedBox(
       height: size.height,
       child: Stack(
@@ -32,7 +32,7 @@ class Body extends StatelessWidget {
                     subtitle: currentNotification.subtitle,
                     leadingIcon: Icon(
                       currentNotification.leadingIcon,
-                      color: themeColor.kBaseOppositeColor,
+                      color: themeColor.onBackground,
                     ),
                     date: currentNotification.date,
                   );

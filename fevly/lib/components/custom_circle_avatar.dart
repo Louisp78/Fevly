@@ -17,7 +17,7 @@ class CustomCircleAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: press,
       child: FittedBox(
@@ -25,12 +25,12 @@ class CustomCircleAvatar extends StatelessWidget {
         alignment: Alignment.topLeft,
         child: CircleAvatar(
             radius: radius,
-            backgroundColor: backgroundColor ?? themeColor.kSurfaceColor,
+            backgroundColor: backgroundColor ?? themeColor.surface,
             child: icon ??
                 Icon(
                   Icons.person,
                   size: radius * (32 / 25),
-                  color: themeColor.kPrimaryColor,
+                  color: themeColor.primary,
                 )),
       ),
     );

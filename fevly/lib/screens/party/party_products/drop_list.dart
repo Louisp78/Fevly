@@ -1,5 +1,5 @@
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/screens/party/components/custom_header_drop_list.dart';
+import 'package:fevly/screens/party/party_products/custom_header_drop_list.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/view_models/dropdown_model_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class DropList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return ChangeNotifierProvider(
       create: (context) => DropDownModelView(),
       child: Consumer<DropDownModelView>(
@@ -44,11 +44,11 @@ class DropList extends StatelessWidget {
                       buttonSize: const CustomTextButtonSize.small(),
                       suffixIcon: Icon(
                         iconData,
-                        color: themeColor.kDarkerTextColor,
+                        color: kDarkerTextColor,
                         size: 14,
                       ),
-                      backgroundColor: themeColor.kSurfaceColor,
-                      textColor: themeColor.kDarkerTextColor,
+                      backgroundColor: themeColor.surface,
+                      textColor: kDarkerTextColor,
                     )
                   : null,
             ),

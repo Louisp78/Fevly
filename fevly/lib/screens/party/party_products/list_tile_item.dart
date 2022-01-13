@@ -3,14 +3,13 @@ import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListTileItem2 extends StatelessWidget {
-  const ListTileItem2({
+class ListTileItem extends StatelessWidget {
+  const ListTileItem({
     Key? key,
     required this.title,
     this.leading,
     this.margin,
     required this.press,
-    this.suffix,
     required this.subtitle,
   }) : super(key: key);
 
@@ -18,7 +17,6 @@ class ListTileItem2 extends StatelessWidget {
   final String subtitle;
   final EdgeInsets? margin;
   final Widget? leading;
-  final Widget? suffix;
   final GestureTapCallback press;
 
   @override
@@ -26,7 +24,7 @@ class ListTileItem2 extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: press,
       child: Container(
@@ -34,7 +32,7 @@ class ListTileItem2 extends StatelessWidget {
         margin: margin != null ? margin! : null,
         width: size.width * 0.9,
         decoration: BoxDecoration(
-          color: themeColor.kSurfaceLightColor,
+          color: themeColor.onSurface,
           boxShadow: [kShadowBase],
           borderRadius: BorderRadius.circular(20),
         ),
@@ -54,12 +52,27 @@ class ListTileItem2 extends StatelessWidget {
                 Text(
                   subtitle,
                   style: textTheme.headline5
-                      ?.copyWith(color: themeColor.kTextColor),
+                      ?.copyWith(color: kTextColor),
                 )
               ],
             ),
             const Spacer(),
-            suffix ?? suffix!,
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.check_circle_outline_rounded,
+                      color: themeColor.primary,
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.delete_forever_rounded,
+                      color: themeColor.secondary,
+                    )),
+              ],
+            ),
           ],
         ),
       ),

@@ -17,9 +17,9 @@ class CustomDialogList extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Dialog(
-      backgroundColor: themeColor.kSurfaceLightColor,
+      backgroundColor: themeColor.onSurface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Container(
         padding: EdgeInsets.all(size.width * 0.08),
@@ -40,7 +40,7 @@ class CustomDialogList extends StatelessWidget {
                         onPressed: () => Navigator.pop(context),
                         icon: Icon(
                           Icons.close_rounded,
-                          color: themeColor.kBaseOppositeColor,
+                          color: themeColor.onBackground,
                         )),
                   ),
                   Row(

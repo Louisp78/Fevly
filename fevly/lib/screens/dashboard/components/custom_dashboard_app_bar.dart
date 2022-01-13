@@ -1,5 +1,4 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
-import 'package:fevly/components/level_label.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
@@ -16,14 +15,14 @@ class CustomDashboardAppBar extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),
       height: height,
       width: size.width,
       decoration: BoxDecoration(
-        color: themeColor.kSurfaceColor,
+        color: themeColor.surface,
         boxShadow: [kShadowBase],
       ),
       child: Row(
@@ -32,9 +31,9 @@ class CustomDashboardAppBar extends StatelessWidget {
             press: () => Navigator.pushNamed(context, '/profile', arguments: kCurrentUser),
             icon: Icon(
               Icons.person_rounded,
-              color: themeColor.kSecondaryColor,
+              color: themeColor.primary,
             ), 
-            backgroundColor: themeColor.kSurfaceLightColor,
+            backgroundColor: themeColor.onSurface,
           ),
           SizedBox(width: kBasicHorizontalPadding(size: size)),
           Column(
@@ -53,7 +52,7 @@ class CustomDashboardAppBar extends StatelessWidget {
                   /*const LevelLabel(level: 13),*/
                 ],
               ),
-              Text('Louis Place', style: textTheme.bodyText2?.copyWith(color:themeColor.kTextColor)),
+              Text('Louis Place', style: textTheme.bodyText2?.copyWith(color:kTextColor)),
               /*Stack(
                 alignment: Alignment.centerLeft,
                 children: [
@@ -94,7 +93,7 @@ class CustomDashboardAppBar extends StatelessWidget {
                   InkWell(
                     onTap: () => Navigator.pushNamed(context, '/notifications'),
                     child: Icon(Icons.notifications_rounded,
-                        color: themeColor.kBaseOppositeColor),
+                        color: themeColor.onBackground),
                   ),
                 ],
               ),

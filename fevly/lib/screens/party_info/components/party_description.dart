@@ -1,5 +1,4 @@
 import 'package:fevly/models/party.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,11 +12,12 @@ class PartyDescription extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       height: 150,
       width: size.width * 0.9,
       decoration: BoxDecoration(
-        color: kSurfaceLightColor, boxShadow: [kShadowBase],
+        color: themeColor.onSurface, boxShadow: [kShadowBase],
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

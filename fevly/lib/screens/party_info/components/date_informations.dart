@@ -5,10 +5,15 @@ import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fevly/constant.dart';
+import 'package:intl/intl.dart';
 
 class DateInformations extends StatelessWidget {
+  final DateTime begin;
+  final DateTime end;
   const DateInformations({
-    Key? key,
+    Key? key, 
+    required this.begin,
+    required this.end,
   }) : super(key: key);
 
   @override
@@ -16,11 +21,16 @@ class DateInformations extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
+    final beginDateStr = DateFormat('dd/MM/yyyy').format(begin);
+    final beginHoursStr = DateFormat('kk:mm').format(begin);
+    final endDateStr = DateFormat('dd/MM/yyyy').format(end);
+    final endHoursStr = DateFormat('kk:mm').format(end);
     return Container(
       height: 150,
       width: size.width * 0.9,
       decoration: BoxDecoration(
-        color: kSurfaceLightColor,
+        color: themeColor.onSurface,
         boxShadow: [kShadowBase],
         borderRadius: BorderRadius.circular(20),
       ),
@@ -51,14 +61,14 @@ class DateInformations extends StatelessWidget {
                     SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
                       buttonSize: CustomSmallButtonSize.verySmall,
-                      text: "26/08/2021 à 18h00",
+                      text: "$beginDateStr à $beginHoursStr",
                       press: () {},
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.calendar_today,
-                        color: Colors.black,
+                        color: themeColor.onBackground,
                         size: kSmallIconSize,
                       ),
-                      borderColor: kPrimaryColor,
+                      borderColor: themeColor.primary,
                     ),
                   ],
                 ),
@@ -72,14 +82,14 @@ class DateInformations extends StatelessWidget {
                     SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
                       buttonSize: CustomSmallButtonSize.verySmall,
-                      text: "26/08/2021 à 18h00",
+                      text:"$endDateStr à $endHoursStr",
                       press: () {},
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.calendar_today,
-                        color: Colors.black,
+                        color: themeColor.onBackground,
                         size: kSmallIconSize,
                       ),
-                      borderColor: kPrimaryColor,
+                      borderColor: themeColor.primary,
                     ),
                   ],
                 ),
@@ -96,7 +106,7 @@ class DateInformations extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Dans 60 jours",
+                      "Dans ${DateTime.now().difference(begin).inDays} jours",
                       style: textTheme.headline6,
                     ),
                     SizedBox(height: size.height * 0.008),

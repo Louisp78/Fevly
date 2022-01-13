@@ -1,15 +1,13 @@
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/models/dynamic_theme_mode.dart';
 import 'package:fevly/models/user.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void Function() changeRelationState({
   required User user,
   required BuildContext context,
-  required ThemeColor themeColor, 
+  required ColorScheme themeColor, 
   List<User>? list,
   int? index}) =>() {
       assert(list == null && index == null || !(list == null && index == null),

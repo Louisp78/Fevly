@@ -1,12 +1,12 @@
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-final ThemeColor themeColor = initThemeColorStatic();
+//final ColorScheme themeColor = initThemeColorStatic();
 
 final ThemeData lightThemeData = ThemeData(
   textTheme: textTheme(),
   scaffoldBackgroundColor: Colors.white,
-  accentColor: kPrimaryColor,
+  colorScheme: themeColorLight,
   focusColor: kPrimaryColor,
   hintColor: kPrimaryColor,
   brightness: Brightness.light,
@@ -16,7 +16,7 @@ final ThemeData lightThemeData = ThemeData(
 
 final ThemeData darkThemeData = ThemeData(
   textTheme: textTheme(darkMode: true),
-  accentColor: kDarkPrimaryColor,
+  colorScheme: themeColorDark,
   scaffoldBackgroundColor: Colors.black,
   focusColor: kDarkPrimaryColor,
   hintColor: kDarkPrimaryColor,
@@ -143,4 +143,4 @@ TextTheme textTheme({bool darkMode = false}) {
 }
 
 FloatingActionButtonThemeData fltActionBtnThemeData =
-    FloatingActionButtonThemeData(backgroundColor: themeColor.kPrimaryColor);
+    const FloatingActionButtonThemeData(backgroundColor: kPrimaryColor);
