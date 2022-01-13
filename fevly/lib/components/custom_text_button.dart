@@ -56,9 +56,9 @@ class CustomTextButton extends StatelessWidget {
         buttonSize.height == const CustomTextButtonSize.normal().height
             ? textTheme.headline4!
             : textTheme.headline5!;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
-      highlightColor: themeColor.kPrimaryColor,
+      highlightColor: themeColor.primary,
       borderRadius: BorderRadius.circular(buttonSize.borderRadius),
       onTap: press,
       child: Container(
@@ -67,7 +67,7 @@ class CustomTextButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor ??
               (isActive
-                  ? themeColor.kPrimaryColor
+                  ? themeColor.primary
                   : kTextColor),
           borderRadius: BorderRadius.circular(buttonSize.borderRadius),
           border: border,
@@ -82,7 +82,7 @@ class CustomTextButton extends StatelessWidget {
                   text,
                   style: textStyle.copyWith(
                       color: textColor ??
-                          themeColor.kBaseColor),
+                          themeColor.background),
                 ),
             if (suffixIcon != null) const SizedBox(width: 10),
             if (suffixIcon != null) suffixIcon!,

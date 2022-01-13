@@ -33,9 +33,9 @@ class CustomSmallButton extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final bool isSmall = buttonSize == CustomSmallButtonSize.small;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     final Color chooseTextColor =
-        textColor ?? themeColor.kBaseOppositeColor;
+        textColor ?? themeColor.onBackground;
     return InkWell(
       onTap: press,
       child: Container(
@@ -47,11 +47,11 @@ class CustomSmallButton extends StatelessWidget {
               ? Border.all(
                   width: borderWidth ?? 4,
                   color: borderColor
-                      ?? themeColor.kPrimaryVariantColor)
+                      ?? themeColor.primaryVariant)
               : null,
           color: withBorder
               ? null
-              : themeColor.kSurfaceColor,
+              : themeColor.surface,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

@@ -23,13 +23,13 @@ class CustomProductItem extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       margin: EdgeInsets.only(left: kBasicHorizontalPadding(size: size)),
       height: containerSize ?? size.height * 0.17,
       width: containerSize ?? size.height * 0.17,
       decoration: BoxDecoration(
-        color: themeColor.kSurfaceLightColor,
+        color: themeColor.onSurface,
         boxShadow: [kShadowBase],
         borderRadius: BorderRadius.circular(size.height * 0.025),
       ),
@@ -53,7 +53,7 @@ class CustomProductItem extends StatelessWidget {
           ),
           Text(
             product.getQuantity(),
-            style: textTheme.headline6?.copyWith(color: themeColor.kTextColor),
+            style: textTheme.headline6?.copyWith(color: kTextColor),
           ),
         ],
       ),

@@ -1,19 +1,23 @@
+import 'package:fevly/models/party.dart';
 import 'package:fevly/screens/party_info/components/body.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 
 
 class PartyInfoScreen extends StatelessWidget {
-  const PartyInfoScreen({ Key? key }) : super(key: key);
+
+  final Party party;
+
+  const PartyInfoScreen({
+    required this.party
+  });
 
   @override
   Widget build(BuildContext context) {
-
-    // ignore: prefer_const_constructors
+    final ColorScheme themeColor = Theme.of(context).colorScheme; 
     return Scaffold(
-      backgroundColor: kPrimaryVariantColor,
-      body: const Body(),
+      backgroundColor: themeColor.primaryVariant,
+      body: Body(party: party,),
     );
   }
 }

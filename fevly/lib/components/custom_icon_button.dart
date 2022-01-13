@@ -53,7 +53,7 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     final BoxDecoration boxDecoration = BoxDecoration(
       color: backgroundColor ??
           (outline

@@ -1,9 +1,4 @@
-import 'package:fevly/models/dynamic_theme_mode.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
-
-// TODO: use widget colorscheme to use colors inside themes
 
 // Primary colors ======================================
 
@@ -31,21 +26,10 @@ const Color kDarkSecondaryColor = Color(0xffFF7C71);
 /// [only for dark theme] Variant secondary red
 const Color kDarkSecondaryVariantColor = Color(0xffFFAEA0);
 
-// Text colors =======================================
-
-/// Basic text color
-const Color kTextColor = Color(0xffAAAAAA);
-
-/// Darker text color
-const Color kDarkerTextColor = Color(0xff767676);
-
-// Other colors ======================================
+//* Other colors ======================================
 
 /// Error
 const Color kErrorColor = Color(0xffFF0000);
-
-/// Done
-const Color kDoneColor = Color(0xff0ADA05);
 
 /// Surface Light
 const Color kSurfaceLightColor = Color(0xffFBFBFB);
@@ -59,63 +43,96 @@ const Color kDarkSurfaceLightColor = Color(0xff424242);
 /// [only for dark theme] Surface
 const Color kDarkSurfaceColor = Color(0xff1D1D1D);
 
-class ThemeColor {
-  final Color kPrimaryColor,
+const ColorScheme themeColorLight = ColorScheme(
+  primary: kPrimaryColor,
+  primaryVariant: kPrimaryVariantColor,
+  secondary: kSecondaryColor,
+  secondaryVariant: kSecondaryVariantColor,
+  surface: kSurfaceColor,
+  background: Colors.white, 
+  error: kErrorColor,
+  onPrimary: kPrimaryColor,
+  onSecondary: kSecondaryColor,
+  onSurface: kSurfaceLightColor, 
+  onBackground: Colors.black, 
+  onError: Colors.red, 
+  brightness: Brightness.light);
+
+const ColorScheme themeColorDark = ColorScheme(
+  primary: kDarkPrimaryColor,
+  primaryVariant: kDarkPrimaryVariantColor,
+  secondary: kDarkSecondaryColor,
+  secondaryVariant: kDarkSecondaryVariantColor,
+  surface: kDarkSurfaceColor,
+  background: Colors.black, 
+  error: kErrorColor,
+  onPrimary: kDarkPrimaryColor,
+  onSecondary: kDarkSecondaryColor,
+  onSurface: kDarkSurfaceLightColor, 
+  onBackground: Colors.white,
+  onError: Colors.red, 
+  brightness: Brightness.dark);
+
+//$ Constant colors =======================================
+/// Done
+const Color kDoneColor = Color(0xff0ada04);
+
+//* Text colors =======================================
+
+/// Basic text color
+const Color kTextColor = Color(0xffAAAAAA);
+
+/// Darker text color
+const Color kDarkerTextColor = Color(0xff767676);
+
+//$ Ancien Color system =======================================
+/*
+class ColorScheme {
+  final Color primary,
       // ignore: avoid_multiple_declarations_per_line
-      kPrimaryVariantColor,
-      kSecondaryColor,
-      kSecondaryVariantColor,
-      kBaseColor,
-      kBaseOppositeColor,
+      primaryVariant,
+      secondary,
+      secondaryVariant,
+      background,
+      onBackground,
       kTextColor = const Color(0xffAAAAAA),
       kDarkerTextColor = const Color(0xff767676),
-      kErrorColor = const Color(0xffFF0000),
+      error = const Color(0xffFF0000),
       kDoneColor = const Color(0xff0ADA05),
-      kSurfaceLightColor,
-      kSurfaceColor;
+      onSurface,
+      surface;
 
-  ThemeColor.lightMode({
-    this.kPrimaryColor = const Color(0xffE040FB),
-    this.kPrimaryVariantColor = const Color(0xffFFC7FF),
-    this.kSecondaryColor = const Color(0xffFF4545),
-    this.kSecondaryVariantColor = const Color(0xffFF7C71),
-    this.kSurfaceLightColor = const Color(0xffFBFBFB),
-    this.kSurfaceColor = const Color(0xffEEEEEE),
-    this.kBaseColor = const Color(0xffffffff),
-    this.kBaseOppositeColor = const Color(0xff000000),
+  ColorScheme.lightMode({
+    this.primary = const Color(0xffE040FB),
+    this.primaryVariant = const Color(0xffFFC7FF),
+    this.secondary = const Color(0xffFF4545),
+    this.secondaryVariant = const Color(0xffFF7C71),
+    this.onSurface = const Color(0xffFBFBFB),
+    this.surface = const Color(0xffEEEEEE),
+    this.background = const Color(0xffffffff),
+    this.onBackground = const Color(0xff000000),
   });
 
-  ThemeColor.darkMode({
-    this.kPrimaryColor = const Color(0xffEA80FC),
-    this.kPrimaryVariantColor = const Color(0xffFFD6FF),
-    this.kSecondaryColor = const Color(0xffFF7C71),
-    this.kSecondaryVariantColor = const Color(0xffFFAEA0),
-    this.kSurfaceLightColor = const Color(0xff424242),
-    this.kSurfaceColor = const Color(0xff1D1D1D),
-    this.kBaseColor = const Color(0xff000000),
-    this.kBaseOppositeColor = const Color(0xffffffff),
+  ColorScheme.darkMode({
+    this.primary = const Color(0xffEA80FC),
+    this.primaryVariant = const Color(0xffFFD6FF),
+    this.secondary = const Color(0xffFF7C71),
+    this.secondaryVariant = const Color(0xffFFAEA0),
+    this.onSurface = const Color(0xff424242),
+    this.surface = const Color(0xff1D1D1D),
+    this.background = const Color(0xff000000),
+    this.onBackground = const Color(0xffffffff),
   });
-}
-
-ThemeColor initThemeColor({required BuildContext context}) {
+}*/
+/*
+ColorScheme initThemeColor({required BuildContext context}) {
   return Provider.of<DynamicThemeMode>(context).mode == ThemeMode.light
-      ? ThemeColor.lightMode()
-      : ThemeColor.darkMode();
+      ? ColorScheme.lightMode()
+      : ColorScheme.darkMode();
 }
 
-ThemeColor initThemeColorStatic() =>
+ColorScheme initThemeColorStatic() =>
     SchedulerBinding.instance!.window.platformBrightness == Brightness.light
-        ? ThemeColor.lightMode()
-        : ThemeColor.darkMode();
-
-
-Map<int, Color> kColorSwatch ={
-  50:const Color.fromRGBO(224,64,251, .1),
-  100:const Color.fromRGBO(224,64,251, .2),
-  200:const Color.fromRGBO(224,64,251, .3),
-  300:const Color.fromRGBO(224,64,251, .4),
-  400:const Color.fromRGBO(224,64,251, .5),
-  500:const Color.fromRGBO(224,64,251, .6),
-  600:const Color.fromRGBO(224,64,251, .7),
-  700:const Color.fromRGBO(224,64,251, .8),
-  800:const Color.fromRGBO(224,64,251, .9),};
+        ? ColorScheme.lightMode()
+        : ColorScheme.darkMode();
+*/

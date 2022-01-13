@@ -1,26 +1,27 @@
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
-import 'package:fevly/screens/party/components/chat_screen.dart';
-import 'package:fevly/screens/party/components/shopping_screen.dart';
+import 'package:fevly/models/party.dart';
+import 'package:fevly/screens/party/party_chat/chat_screen.dart';
+import 'package:fevly/screens/party/party_products/products_screen.dart';
 import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/test_data/data_guest_list.dart';
+import 'package:fevly/test_data/data_list_of_user.dart';
 import 'package:fevly/view_models/tab_controller_view_model.dart';
 import 'package:fevly/screens/party/components/party_menu.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  final Party party;
+  const Body({Key? key, 
+  required this.party
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return ChangeNotifierProvider(
       create: (context) => TabControllerViewModel(index: 0),
       child: DefaultTabController(
@@ -39,12 +40,12 @@ class Body extends StatelessWidget {
                 child: Scaffold(
                   body: Stack(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(
+                      Padding(
+                        padding: const EdgeInsets.only(
                           top: 110,
                         ),
                         child: TabBarView(
-                            children: [ChatScreen(), ShoppingScreen()]),
+                            children: [const PartyChatScreen(), PartyProductsScreen(productList: party.products,)]),
                       ),
                       const Positioned(
                           top: 130, left: 0, right: 0, child: PartyMenu()),
@@ -52,12 +53,12 @@ class Body extends StatelessWidget {
                       CustomBasicAppBar(
                         iconData: Icons.arrow_back_ios_rounded,
                         press: () => Navigator.pop(context),
-                        title: "Soirée exemple",
-                        subtitleText: "10 participants",
+                        title: party.name,
+                        subtitleText: "${party.guestsLength} participants",
                         prefixIcon: IconButton(
                           icon: const Icon(Icons.info_rounded),
-                          color: themeColor.kBaseOppositeColor,
-                          onPressed: () => Navigator.pushNamed(context, '/party/party_info'),
+                          color: themeColor.onBackground,
+                          onPressed: () => Navigator.pushNamed(context, '/party/party_info', arguments: party),
                         ),
                         /*firstSuffixIcon: IconButton(
                           icon: const Icon(Icons.notifications),
@@ -66,15 +67,17 @@ class Body extends StatelessWidget {
                         ),*/
                         secondSuffixIcon: IconButton(
                           icon: const Icon(Icons.group_rounded),
-                          color: themeColor.kBaseOppositeColor,
+                          color: themeColor.onBackground,
                           onPressed: () =>
                             Navigator.pushNamed(context, '/search', arguments: {
-                          'guestList': guestListList[0],
+                          'guestList': party.guests,
                           'appBar': buildAppBarForSearchScreen(
-                              guestListList[0], context),
+                              party.guests, context),
                           'type': SearchScreenType.addToAList,
                           'suggestionList1Name': 'Invités',
-                          'userSuggestionList1': guestListList[0].listOfUser
+                          'userSuggestionList1': party.guests.listOfUser,
+                          'suggestionList2Name': 'Mes amis',
+                          'userSuggestionList2': listOfFriends1.where((element) => party.guests.listOfUser.contains(element)).toList()
                         }),
 
                         ),

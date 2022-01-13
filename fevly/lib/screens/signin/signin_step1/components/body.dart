@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return SingleChildScrollView(
       child: SizedBox(
         width: size.width,
@@ -30,9 +30,9 @@ class Body extends StatelessWidget {
                   outline: true,
                   circle: false,
                   icon: Icons.arrow_back_ios_rounded,
-                  iconColor: themeColor.kBaseOppositeColor,
-                  backgroundColor: themeColor.kBaseColor,
-                  borderColor: themeColor.kBaseOppositeColor,
+                  iconColor: themeColor.onBackground,
+                  backgroundColor: themeColor.background,
+                  borderColor: themeColor.onBackground,
                 ),
               ),
               const FormSection(),

@@ -1,17 +1,12 @@
-import 'package:fevly/screens/party/components/bottom_bar_chat.dart';
-import 'package:fevly/styles/colors.dart';
+import 'package:fevly/screens/party/party_chat/bottom_bar_chat.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+class PartyChatScreen extends StatelessWidget {
+  const PartyChatScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
     return Stack(
       alignment: Alignment.center,
       children: [

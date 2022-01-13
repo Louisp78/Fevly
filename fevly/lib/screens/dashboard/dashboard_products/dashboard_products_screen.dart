@@ -2,7 +2,6 @@ import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/dashboard/dashboard_products/components/products_of_party_section.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class DashboardProductsScreen extends StatelessWidget {
@@ -13,7 +12,7 @@ class DashboardProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return SizedBox(
       height: size.height,
       child: SingleChildScrollView(
@@ -25,10 +24,10 @@ class DashboardProductsScreen extends StatelessWidget {
             CustomSmallButton(
               press: () {},
               text: "10 produits",
-              textColor: themeColor.kBaseOppositeColor,
+              textColor: themeColor.onBackground,
               buttonSize: CustomSmallButtonSize.small,
               borderWidth: 3,
-              borderColor: themeColor.kPrimaryColor,
+              borderColor: themeColor.primary,
             ),
             SizedBox(
               height: kBasicVerticalPadding(size: size) * 1.5,

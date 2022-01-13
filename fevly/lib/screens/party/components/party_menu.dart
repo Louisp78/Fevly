@@ -1,4 +1,3 @@
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class PartyMenu extends StatelessWidget {
@@ -9,20 +8,20 @@ class PartyMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Center(
       child: Container(
         width: size.width * 0.4,
         height: 45,
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-            color: themeColor.kSurfaceColor,
+            color: themeColor.surface,
             borderRadius: BorderRadius.circular(24)),
         child: TabBar(
-          labelColor: themeColor.kPrimaryColor,
-          indicatorColor: themeColor.kPrimaryColor,
+          labelColor: themeColor.primary,
+          indicatorColor: themeColor.primary,
           indicatorSize: TabBarIndicatorSize.label,
-          unselectedLabelColor: themeColor.kBaseOppositeColor,
+          unselectedLabelColor: themeColor.onBackground,
           indicatorWeight: 3,
           tabs: const [
             Tab(

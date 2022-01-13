@@ -1,7 +1,5 @@
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
-import 'package:fevly/styles/colors.dart';
-import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,7 +11,7 @@ class BottomBarChat extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -43,7 +41,7 @@ class BottomBarChat extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: Icon(
                 Icons.send_rounded,
-                color: themeColor.kPrimaryColor,
+                color: themeColor.primary,
                 size: size.width * 0.08,
               ),
             ),

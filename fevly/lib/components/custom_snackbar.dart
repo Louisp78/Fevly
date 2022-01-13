@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_small_button.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,10 +8,10 @@ SnackBar buildCustomSnackBar({
   required Size size,
   required String text,
   required GestureTapCallback undoPress,
-  required ThemeColor themeColor
+  required ColorScheme themeColor
 }) {
   return SnackBar(
-    backgroundColor: themeColor.kSurfaceColor,
+    backgroundColor: themeColor.surface,
     content: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -21,7 +20,7 @@ SnackBar buildCustomSnackBar({
           child: AutoSizeText(
             text,
             style:
-                textTheme.headline5?.copyWith(color: themeColor.kPrimaryColor),
+                textTheme.headline5?.copyWith(color: themeColor.primary),
             minFontSize: 10,
             maxLines: 2,
           ),
@@ -30,7 +29,7 @@ SnackBar buildCustomSnackBar({
           text: "Annuler",
           press: undoPress,
           buttonSize: CustomSmallButtonSize.small,
-          textColor: themeColor.kBaseOppositeColor,
+          textColor: themeColor.onBackground,
         )
       ],
     ),

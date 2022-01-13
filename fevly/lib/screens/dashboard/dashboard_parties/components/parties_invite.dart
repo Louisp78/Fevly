@@ -16,7 +16,7 @@ class PartiesInvite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Stack(
       alignment: Alignment.bottomCenter,
       clipBehavior: Clip.none,
@@ -43,8 +43,8 @@ class PartiesInvite extends StatelessWidget {
               CustomIconButton(
                 press: () {},
                 icon: Icons.done_rounded,
-                backgroundColor: themeColor.kSurfaceColor,
-                iconColor: themeColor.kPrimaryColor,
+                backgroundColor: themeColor.surface,
+                iconColor: themeColor.primary,
                 withShadow: true,
               ),
               SizedBox(
@@ -53,8 +53,8 @@ class PartiesInvite extends StatelessWidget {
               CustomIconButton(
                 press: () {},
                 icon: Icons.close_rounded,
-                backgroundColor: themeColor.kSurfaceColor,
-                iconColor: themeColor.kPrimaryColor,
+                backgroundColor: themeColor.surface,
+                iconColor: themeColor.primary,
                 withShadow: true,
               ),
             ],

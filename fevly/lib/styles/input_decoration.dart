@@ -9,11 +9,11 @@ enum InputDecorationType {
 }
 
 InputDecoration basicInputDecoration(
-    {required TextStyle hintStyle, required String hintText, required ThemeColor themeColor}) {
+    {required TextStyle hintStyle, required String hintText, required ColorScheme themeColor}) {
   return InputDecoration(
     filled: true,
     hintText: hintText,
-    fillColor: themeColor.kSurfaceLightColor,
+    fillColor: themeColor.onSurface,
     hintStyle: hintStyle,
     contentPadding: const EdgeInsets.only(
       bottom: 5.0,
@@ -28,27 +28,27 @@ InputDecoration basicInputDecoration(
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(
-        color: themeColor.kPrimaryColor,
+        color: themeColor.primary,
         width: 3.0,
       ),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(
-        color: themeColor.kErrorColor,
+        color: themeColor.error,
         width: 1.5,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(
-        color: themeColor.kErrorColor,
+        color: themeColor.error,
         width: 3.0,
       ),
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: themeColor.kTextColor,
+        color: kTextColor,
       ),
       borderRadius: BorderRadius.circular(20),
     ),
@@ -59,17 +59,17 @@ InputDecoration smallSearchInputDecoration(
     {required TextStyle hintStyle,
     required String hintText,
     required BuildContext context}) {
-  final ThemeColor themeColor = initThemeColor(context: context);
+  final ColorScheme themeColor = Theme.of(context).colorScheme;
   final Size size = MediaQuery.of(context).size;
   return InputDecoration(
     filled: true,
     prefixIcon: Icon(
       Icons.search_rounded,
-      color: themeColor.kTextColor,
+      color: kTextColor,
       size: kSmallIconSize,
     ),
     hintText: hintText,
-    fillColor: themeColor.kSurfaceColor,
+    fillColor: themeColor.surface,
     hintStyle: hintStyle,
     contentPadding: EdgeInsets.only(
       left: size.width * 0.045,
@@ -83,27 +83,27 @@ InputDecoration smallSearchInputDecoration(
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
       borderSide: BorderSide(
-        color: themeColor.kPrimaryColor,
+        color: themeColor.primary,
         width: 3.0,
       ),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
       borderSide: BorderSide(
-        color: themeColor.kErrorColor,
+        color: themeColor.error,
         width: 1.5,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
       borderSide: BorderSide(
-        color: themeColor.kErrorColor,
+        color: themeColor.error,
         width: 3.0,
       ),
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: themeColor.kTextColor,
+        color: kTextColor,
       ),
       borderRadius: BorderRadius.circular(30),
     ),
@@ -114,17 +114,17 @@ InputDecoration searchInputDecoration(
     {required TextStyle hintStyle,
     required String hintText,
     required BuildContext context}) {
-  final ThemeColor themeColor = initThemeColor(context: context);
+  final ColorScheme themeColor = Theme.of(context).colorScheme;
   final Size size = MediaQuery.of(context).size;
   return InputDecoration(
     filled: true,
     prefixIcon: Icon(
       Icons.search_rounded,
-      color: themeColor.kTextColor,
+      color: kTextColor,
       size: kSmallIconSize,
     ),
     hintText: hintText,
-    fillColor: themeColor.kSurfaceColor,
+    fillColor: themeColor.surface,
     hintStyle: hintStyle,
     contentPadding: EdgeInsets.only(
       left: size.width * 0.045,
@@ -136,21 +136,21 @@ InputDecoration searchInputDecoration(
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
       borderSide: BorderSide(
-        color: themeColor.kPrimaryColor,
+        color: themeColor.primary,
         width: 3.0,
       ),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
       borderSide: BorderSide(
-        color: themeColor.kErrorColor,
+        color: themeColor.error,
         width: 1.5,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
       borderSide: BorderSide(
-        color: themeColor.kErrorColor,
+        color: themeColor.error,
         width: 3.0,
       ),
     ),

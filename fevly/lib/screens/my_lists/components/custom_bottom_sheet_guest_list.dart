@@ -26,7 +26,7 @@ class CustomBottomSheetGuestList extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return ChangeNotifierProvider(
       create: (context) => TextFieldModelView<GuestList>(),
       child: Consumer<TextFieldModelView<GuestList>>(
@@ -43,7 +43,7 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                 topLeft: Radius.circular(69),
                 topRight: Radius.circular(69),
               ),
-              color: themeColor.kSurfaceLightColor,
+              color: themeColor.onSurface,
             ),
             child: Column(
               children: [
@@ -83,7 +83,7 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: themeColor.kSurfaceLightColor,
+                      color: themeColor.onSurface,
                       boxShadow: [kShadowBase]),
                   child: DropdownButton<GuestList>(
                     value: textFieldProvider.value,
@@ -120,7 +120,7 @@ class CustomBottomSheetGuestList extends StatelessWidget {
                             list != null ? list.name : "Dupliquer une liste",
                             style: list == null
                                 ? textTheme.headline5
-                                    ?.copyWith(color: themeColor.kPrimaryColor)
+                                    ?.copyWith(color: themeColor.primary)
                                 : null),
                       );
                     }).toList(),

@@ -31,7 +31,7 @@ class CustomDropList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return ChangeNotifierProvider(
       create: (context) => DropDownModelView(),
       child: Consumer<DropDownModelView>(
@@ -50,11 +50,11 @@ class CustomDropList extends StatelessWidget {
                       buttonSize: const CustomTextButtonSize.small(),
                       suffixIcon: Icon(
                         iconData,
-                        color: themeColor.kDarkerTextColor,
+                        color: kDarkerTextColor,
                         size: 14,
                       ),
-                      backgroundColor: themeColor.kSurfaceColor,
-                      textColor: themeColor.kDarkerTextColor,
+                      backgroundColor: themeColor.surface,
+                      textColor: kDarkerTextColor,
                     )
                   : null,
             ),

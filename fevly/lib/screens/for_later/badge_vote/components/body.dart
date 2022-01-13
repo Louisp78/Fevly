@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -27,7 +27,7 @@ class Body extends StatelessWidget {
             height: size.height * 0.75,
             width: size.width * 0.85,
             decoration: BoxDecoration(
-              color: themeColor.kSurfaceLightColor,
+              color: themeColor.onSurface,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [kShadowBase],
             ),
@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
                             text: "Cuisine",
                             press: () {},
                             buttonSize: CustomSmallButtonSize.small,
-                            borderColor: themeColor.kPrimaryColor,
+                            borderColor: themeColor.primary,
                           ),
                           Container(
                             height: 24,
@@ -69,7 +69,7 @@ class Body extends StatelessWidget {
                             margin: EdgeInsets.only(
                                 right: kBasicHorizontalPadding(size: size) * 2),
                             decoration: BoxDecoration(
-                                color: themeColor.kBaseColor,
+                                color: themeColor.background,
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [kShadowBase]),
                             child: Row(
@@ -77,19 +77,19 @@ class Body extends StatelessWidget {
                               children: [
                                 SvgPicture.asset(
                                   "assets/icons/star_checked.svg",
-                                  color: themeColor.kPrimaryColor,
+                                  color: themeColor.primary,
                                 ),
                                 SvgPicture.asset(
                                   "assets/icons/star_checked.svg",
-                                  color: themeColor.kPrimaryColor,
+                                  color: themeColor.primary,
                                 ),
                                 SvgPicture.asset(
                                   "assets/icons/star_checked.svg",
-                                  color: themeColor.kPrimaryColor,
+                                  color: themeColor.primary,
                                 ),
                                 SvgPicture.asset(
                                   "assets/icons/star_not_checked.svg",
-                                  color: themeColor.kBaseOppositeColor,
+                                  color: themeColor.onBackground,
                                 )
                               ],
                             ),
@@ -117,12 +117,12 @@ class Body extends StatelessWidget {
             left: size.width * 0.07,
             top: kBasicVerticalPadding(size: size),
             child: Icon(Icons.logout_rounded,
-                color: themeColor.kBaseOppositeColor)),
+                color: themeColor.onBackground)),
         Positioned(
           top: kBasicVerticalPadding(size: size),
           child: Text("Vote dans 10:52",
               style:
-                  textTheme.headline4?.copyWith(color: themeColor.kTextColor)),
+                  textTheme.headline4?.copyWith(color: kTextColor)),
         ),
       ],
     );

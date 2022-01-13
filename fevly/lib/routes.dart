@@ -13,6 +13,8 @@ import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
 import 'package:fevly/styles/transition.dart';
 import 'package:flutter/material.dart';
 
+import 'models/party.dart';
+
 
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -108,12 +110,12 @@ mixin RouterNav {
       case '/party/party_info':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const PartyInfoScreen(),
+              PartyInfoScreen(party: settings.arguments! as Party,),
         );
       case '/party':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const PartyScreen(),
+              PartyScreen(party: settings.arguments! as Party,),
         );
       case '/notifications':
         return PageRouteBuilder(

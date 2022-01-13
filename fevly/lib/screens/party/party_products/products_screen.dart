@@ -1,28 +1,29 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/models/product.dart';
-import 'package:fevly/screens/party/components/custom_bottom_sheet_add_product.dart';
-import 'package:fevly/screens/party/components/drop_list.dart';
-import 'package:fevly/screens/party/components/list_tile_item.dart';
-import 'package:fevly/screens/party/components/list_tile_item_2.dart';
-import 'package:fevly/screens/party/components/load_list_product.dart';
+import 'package:fevly/models/product_list.dart';
+import 'package:fevly/screens/party/party_products/custom_bottom_sheet_add_product.dart';
+import 'package:fevly/screens/party/party_products/drop_list.dart';
+import 'package:fevly/screens/party/party_products/list_tile_item.dart';
+import 'package:fevly/screens/party/party_products/list_tile_item_2.dart';
+import 'package:fevly/screens/party/party_products/load_list_product.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/test_data/data_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ShoppingScreen extends StatelessWidget {
-  const ShoppingScreen({
-    Key? key,
-  }) : super(key: key);
+class PartyProductsScreen extends StatelessWidget {
+  final ProductList productList;
+  const PartyProductsScreen({
+    required this.productList,
+  });
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ThemeColor themeColor = initThemeColor(context: context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -34,7 +35,7 @@ class ShoppingScreen extends StatelessWidget {
                 Text(
                   "Courses",
                   style: textTheme.headline2
-                      ?.copyWith(color: themeColor.kDarkerTextColor),
+                      ?.copyWith(color: kDarkerTextColor),
                 )
               ],
             ),
@@ -65,8 +66,9 @@ class ShoppingScreen extends StatelessWidget {
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (BuildContext context) {
-                  return const CustomBottomSheetAddProduct(
+                  return CustomBottomSheetAddProduct(
                     title: "Ajouter un produit",
+                    productList: productList,
                   );
                 }),
           ),
@@ -100,8 +102,9 @@ class ShoppingScreen extends StatelessWidget {
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (BuildContext context) {
-                  return const CustomBottomSheetAddProduct(
+                  return  CustomBottomSheetAddProduct(
                     title: "Ajouter une liste de courses",
+                    productList: productList,
                   );
                 }),
           ),
@@ -110,8 +113,9 @@ class ShoppingScreen extends StatelessWidget {
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (BuildContext context) {
-                  return const CustomBottomSheetAddProduct(
+                  return CustomBottomSheetAddProduct(
                     title: "Ajouter un produit",
+                    productList: productList,
                   );
                 }),
             text: "Ajouter une course",

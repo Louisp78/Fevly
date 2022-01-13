@@ -68,7 +68,7 @@ class Body extends StatelessWidget {
       required Size size,
       required TextFieldModelView searchField,
       required BuildContext context}) {
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     switch (profileOwner.relationState) {
       case UserRelationState.unFriend:
       case UserRelationState.requestSent:
@@ -81,7 +81,7 @@ class Body extends StatelessWidget {
                 username: profileOwner.pseudo,
               ),
               style:
-                  textTheme.headline5?.copyWith(color: themeColor.kTextColor)),
+                  textTheme.headline5?.copyWith(color: kTextColor)),
         );
       default:
         return ListOfBadges(

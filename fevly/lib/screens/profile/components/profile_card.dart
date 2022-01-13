@@ -26,6 +26,7 @@ class ProfileCard extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.05, vertical: size.height * 0.02),
@@ -142,7 +143,7 @@ class ProfileCard extends StatelessWidget {
 
   CustomDialogList buildDialog(
       {required TextTheme textTheme, required BuildContext context}) {
-    final ThemeColor themeColor = initThemeColor(context: context);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     return CustomDialogList(title: "Options", listOptions: [
       ...List.generate(
         listParties1.length,
@@ -153,12 +154,12 @@ class ProfileCard extends StatelessWidget {
             TextSpan(
               text: "Inviter à ",
               style: textTheme.headline5
-                  ?.copyWith(color: themeColor.kBaseOppositeColor),
+                  ?.copyWith(color: themeColor.onBackground),
             ),
             TextSpan(
               text: "${listParties1[index].name}.",
               style: textTheme.headline5
-                  ?.copyWith(color: themeColor.kPrimaryColor),
+                  ?.copyWith(color: themeColor.primary),
             ),
           ])),
         ),
