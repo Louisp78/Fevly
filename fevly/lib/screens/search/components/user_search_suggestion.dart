@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class UserSearchSuggestion extends StatelessWidget {
   const UserSearchSuggestion({
-    this.typeOfListItem = SearchScreenType.changeRelationState,
+    this.typeOfListItem = SearchScreenType.all,
     required this.userSuggestionList1,
     required this.userSuggestionList2,
     required this.suggestionList1Name,

@@ -7,6 +7,5 @@ User createNewUserFrom({required User source}) => User(
       email: source.email,
       listOfBadges: source.listOfBadges,
       listOfFriends: source.listOfFriends,
-      partyCounter: source.partyCounter,
       relationState: source.relationState,
     );

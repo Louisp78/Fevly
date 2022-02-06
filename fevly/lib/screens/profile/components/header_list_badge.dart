@@ -48,30 +48,57 @@ class HeaderListBadge extends StatelessWidget {
                 searchField.textValue = "";
               }
             },
-            child: CustomTextField(
-              type: InputDecorationType.searchsmall,
-              validator: (value) {},
-              onSaved: (value) => _controller.clear(),
-              withCleaning: true,
-              width:
-                  searchField.selection ? size.width * 0.75 : size.width * 0.45,
-              height: 37,
-              onChanged: (value) {
-                searchField.textValue = value;
-                searchField.listOfObjects = sortListBadgeBySearch(
-                    sourceList: defaultListOfBadge,
-                    search: searchField.textValue);
-              },
-                hintStyle: kSearchHintStyle(textTheme: textTheme),
-                hintText: "Rechercher un badges",
-              ),
-            ),
+            child: CustomSearchBar(
+                controller: _controller,
+                searchField: searchField,
+                defaultListOfBadge: defaultListOfBadge,
+                hintText: "Rechercher un badge",
+                ),
+          ),
           Text(
             "${defaultListOfBadge.length}/100",
             style: textTheme.headline6?.copyWith(color: kTextColor),
           )
         ],
       ),
+    );
+  }
+}
+
+class CustomSearchBar extends StatelessWidget {
+  const CustomSearchBar({
+    Key? key,
+    required TextEditingController controller,
+    required this.searchField,
+    required this.defaultListOfBadge,
+    required this.hintText,
+  })  : _controller = controller,
+        super(key: key);
+
+  final TextEditingController _controller;
+  final TextFieldModelView searchField;
+  final List<Badge> defaultListOfBadge;
+  final String hintText;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final Size size = MediaQuery.of(context).size;
+    return CustomTextField(
+      type: InputDecorationType.search,
+      validator: (value) {},
+      onSaved: (value) => _controller.clear(),
+      withCleaning: true,
+      width: searchField.selection ? size.width * 0.75 : size.width * 0.45,
+      height: 37,
+      onChanged: (value) {
+        searchField.textValue = value;
+        searchField.listOfObjects = sortListBadgeBySearch(
+            sourceList: defaultListOfBadge, search: searchField.textValue);
+      },
+      hintStyle: kSearchHintStyle(textTheme: textTheme),
+      hintText: hintText,
     );
   }
 }

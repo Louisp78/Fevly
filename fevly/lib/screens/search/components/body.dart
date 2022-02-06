@@ -1,8 +1,8 @@
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/components/custom_user_list_item.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
 import 'package:fevly/functions/create_new_from.dart';
-import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/search/components/user_search_bar.dart';
 import 'package:fevly/screens/search/components/user_search_suggestion.dart';
@@ -14,32 +14,27 @@ import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   const Body(
-      {required this.appBar,
-      required this.userSearchList,
-      required this.userSuggestionList1,
+      {required this.userSuggestionList1,
       required this.userSuggestionList2,
       required this.suggestionList1Name,
       required this.suggestionList2Name,
-      this.type = SearchScreenType.changeRelationState,
-      this.guestList})
-      : assert(
-              type == SearchScreenType.addToAList && guestList != null || type != SearchScreenType.addToAList,
-            "Need to define GuestList or not.");
+      this.type = SearchScreenType.all,
+      required this.mainList});
 
-  final Widget appBar;
-  final List<User> userSearchList;
-  final List<User> userSuggestionList1;
-  final List<User>? userSuggestionList2;
-  final String suggestionList1Name;
-  final String? suggestionList2Name;
+  final List<User> mainList;
   final SearchScreenType type;
-  final GuestList? guestList;
+  final List<User> userSuggestionList1;
+  final String suggestionList1Name;
+
+  final List<User>? userSuggestionList2;
+  final String? suggestionList2Name;
 
   @override
   Widget build(BuildContext context) {
+    const double heightAppBar = 110;
     final Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
-      create: (context) => TextFieldModelView(listOfObjects: userSearchList),
+      create: (context) => TextFieldModelView(listOfObjects: mainList),
       child: Consumer<TextFieldModelView>(
           builder: (context, textFieldModelView, child) {
         final List<User> listOfUser =
@@ -48,26 +43,24 @@ class Body extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 110),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: kBasicVerticalPadding(size: size),
-                  ),
-                  UserSearchBar(
+              padding: const EdgeInsets.only(top: heightAppBar),
+              child: TabBarView(children: [
+                Container(),
+                buildListOfUser(
+                    size: size,
                     textFieldModelView: textFieldModelView,
-                    sourceList: userSearchList,
-                  ),
-                  buildListOfUser(
-                      size: size,
-                      context: context,
-                      textFieldModelView: textFieldModelView,
-                      listOfUser: listOfUser),
-                ],
-              ),
+                    listOfUser: listOfUser),
+              ]),
             ),
             const Positioned(bottom: 0, child: CustomBottomBar()),
-            appBar,
+            buildAppBarForSearchScreen(
+              heightAppBar: heightAppBar,
+              searchBar: UserSearchBar(
+                hintText: getHintText(type: type),
+                textFieldModelView: textFieldModelView,
+                sourceList: mainList,
+              ),
+            )
           ],
         );
       }),
@@ -76,14 +69,27 @@ class Body extends StatelessWidget {
 
   //$ METHOD
   //$ ================================================================
-  Expanded buildListOfUser(
+
+  String getHintText({required SearchScreenType type}) {
+    switch (type) {
+      case SearchScreenType.guests:
+        return "Rechercher des invités...";
+      case SearchScreenType.organizers:
+        return "Rechercher des organisateurs...";
+      case SearchScreenType.all:
+        return "Rechercher des personnes ou des soirées...";
+      default:
+        return "Rechercher des personnes ou des soirées...";
+    }
+  }
+
+  Widget buildListOfUser(
       {required Size size,
-      required BuildContext context,
       required TextFieldModelView<dynamic> textFieldModelView,
       required List<User> listOfUser}) {
-    return Expanded(
-      child: ListenableProvider<ListUserViewModel>(
-        create: (context) => ListUserViewModel(list: guestList!.listOfUser),
+    return Builder(builder: (context) {
+      return ListenableProvider<ListUserViewModel>(
+        create: (context) => ListUserViewModel(list: mainList),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
@@ -95,7 +101,8 @@ class Body extends StatelessWidget {
                     child: Column(
                       children: List.generate(listOfUser.length, (index) {
                         return ChangeNotifierProvider(
-                          create: (context) => createNewUserFrom(source: listOfUser[index]),
+                          create: (context) =>
+                              createNewUserFrom(source: listOfUser[index]),
                           child: Consumer2<User, ListUserViewModel>(
                             builder:
                                 (context, user, listUserViewModel, child) =>
@@ -126,7 +133,7 @@ class Body extends StatelessWidget {
                   ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

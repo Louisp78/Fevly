@@ -1,24 +1,8 @@
 import 'package:fevly/constant.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 
-
 class CustomTextField extends StatefulWidget {
-  const CustomTextField({
-    this.obscureText = false,
-    this.isSelected = false,
-    required this.onChanged,
-    required this.onSaved,
-    required this.validator,
-    this.width,
-    this.height,
-    this.padding,
-    this.withCleaning = false,
-    required this.hintStyle,
-    required this.hintText, 
-    this.type = InputDecorationType.basic
-  });
 
   final bool isSelected;
   final bool obscureText;
@@ -32,6 +16,21 @@ class CustomTextField extends StatefulWidget {
   final TextStyle hintStyle;
   final String hintText;
   final InputDecorationType type;
+
+
+  const CustomTextField(
+      {this.obscureText = false,
+      this.isSelected = false,
+      required this.onChanged,
+      required this.onSaved,
+      required this.validator,
+      this.width,
+      this.height,
+      this.padding,
+      this.withCleaning = false,
+      required this.hintStyle,
+      required this.hintText,
+      this.type = InputDecorationType.basic});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -65,25 +64,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onSaved: widget.onSaved,
           cursorColor: themeColor.primary,
           obscureText: widget.obscureText,
-          decoration: get_input_decoration(type: widget.type, context: context)
-        ),
+          decoration: getInputDecoration(type: widget.type, context: context)),
     );
   }
 
-  InputDecoration get_input_decoration({required InputDecorationType type, required BuildContext context})
-  {
-    final InputDecorationTheme themeInput = Theme.of(context).inputDecorationTheme;
-    switch (type)
-    {
-      case InputDecorationType.basic:
-        return InputDecoration(
-            hintText: widget.hintText,
+  InputDecoration getInputDecoration(
+      {required InputDecorationType type, required BuildContext context}) {
+    final InputDecorationTheme themeInput =
+        Theme.of(context).inputDecorationTheme;
+    switch (type) {
+      case InputDecorationType.searchsmall:
+        return smallSearchInputDecoration(
             hintStyle: widget.hintStyle,
-            ).applyDefaults(themeInput);
+            hintText: widget.hintText,
+            context: context);
+
+      case InputDecorationType.search:
+        return searchInputDecoration(
+            hintStyle: widget.hintStyle,
+            hintText: widget.hintText,
+            context: context);
+
       default:
-        return smallSearchInputDecoration(hintStyle: widget.hintStyle,
+        return InputDecoration(
           hintText: widget.hintText,
-           context: context);
+          hintStyle: widget.hintStyle,
+        ).applyDefaults(themeInput);
     }
   }
 

@@ -1,14 +1,12 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_dialog_list.dart';
 import 'package:fevly/components/custom_small_button.dart';
-import 'package:fevly/components/level_label.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/profile/components/counter_item.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
-import 'package:fevly/styles/theme.dart';
 import 'package:fevly/test_data/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -124,7 +122,7 @@ class ProfileCard extends StatelessWidget {
             children: [
               CounterItem(
                 title: "Soirées",
-                count: profileOwner.partyCounter,
+                count: profileOwner.listOfParties.length,
               ),
               CounterItem(
                 title: "Amis",

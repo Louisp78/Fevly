@@ -88,8 +88,7 @@ mixin RouterNav {
           pageBuilder: (context, animation, secondaryAnimation) {
             final Map args = settings.arguments! as Map;
             return SearchScreen(
-              guestList: args['guestList'] as GuestList,
-              appBar: args['appBar'] as Widget,
+              mainList: args['mainList'] as List<User>,
               suggestionList1Name: args['suggestionList1Name'] as String,
               suggestionList2Name: args['suggestionList2Name'] as String?,
               userSuggestionList1: args['userSuggestionList1'] as List<User>,

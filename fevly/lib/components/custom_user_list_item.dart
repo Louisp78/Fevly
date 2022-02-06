@@ -15,12 +15,12 @@ class CustomUserListItem extends StatelessWidget {
     required this.index,
     required this.press,
     required this.user,
-    this.type = SearchScreenType.changeRelationState,
+    this.type = SearchScreenType.all,
     this.listOfUserViewModel,
   }) : assert(
-            (type == SearchScreenType.changeRelationState &&
+            (type == SearchScreenType.all &&
                     listOfUserViewModel != null) ||
-                (type == SearchScreenType.addToAList &&
+                (type == SearchScreenType.guests &&
                     listOfUserViewModel != null),
             "Need to define guestList or not.");
 
@@ -43,11 +43,6 @@ class CustomUserListItem extends StatelessWidget {
         padding: EdgeInsets.all(size.width * 0.03),
         margin: EdgeInsets.only(bottom: kBasicVerticalPadding(size: size)),
         width: size.width * 0.9,
-        decoration: BoxDecoration(
-          color: themeColor.onSurface,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [kShadowBase],
-        ),
         child: Row(
           children: [
             CustomCircleAvatar(press: () {},),
@@ -59,7 +54,7 @@ class CustomUserListItem extends StatelessWidget {
               style: textTheme.headline3,
             ),
             const Spacer(),
-            if (type == SearchScreenType.changeRelationState)
+            if (type == SearchScreenType.all)
               CustomTextButton(
                 buttonSize: const CustomTextButtonSize.small(),
                 text: user.relationState.name,
@@ -82,7 +77,7 @@ class CustomUserListItem extends StatelessWidget {
                     list: currentList,
                     index: index),
               ),
-            if (type == SearchScreenType.addToAList)
+            if (type == SearchScreenType.guests)
               IconButton(
                   onPressed: () {
                     if (listOfUserViewModel!.list
