@@ -115,12 +115,11 @@ class Body extends StatelessWidget {
           ),
           press: () => Navigator.pushNamed(context, "/search", arguments: {
             'guestList': guestList,
-            'appBar': buildAppBarForSearchScreen(guestList, context),
             'suggestionList1Name': "Dans la liste",
             'suggestionList2Name': "Récent",
             'userSuggestionList1': guestList.listOfUser,
             'userSuggestionList2': listOfUsers1,
-            'type': SearchScreenType.addToAList,
+            'type': SearchScreenType.guests,
           }),
         );
       }),

@@ -5,11 +5,9 @@ import 'package:fevly/models/party.dart';
 import 'package:fevly/screens/party/party_chat/chat_screen.dart';
 import 'package:fevly/screens/party/party_products/products_screen.dart';
 import 'package:fevly/screens/search/search_screen.dart';
-import 'package:fevly/test_data/data_guest_list.dart';
 import 'package:fevly/test_data/data_list_of_user.dart';
 import 'package:fevly/view_models/tab_controller_view_model.dart';
 import 'package:fevly/screens/party/components/party_menu.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,9 +69,7 @@ class Body extends StatelessWidget {
                           onPressed: () =>
                             Navigator.pushNamed(context, '/search', arguments: {
                           'guestList': party.guests,
-                          'appBar': buildAppBarForSearchScreen(
-                              party.guests, context),
-                          'type': SearchScreenType.addToAList,
+                          'type': SearchScreenType.guests,
                           'suggestionList1Name': 'Invités',
                           'userSuggestionList1': party.guests.listOfUser,
                           'suggestionList2Name': 'Mes amis',

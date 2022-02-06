@@ -1,5 +1,4 @@
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/styles/colors.dart';
@@ -13,10 +12,12 @@ class UserSearchBar extends StatelessWidget {
     Key? key,
     required this.textFieldModelView,
     required this.sourceList,
+    required this.hintText,
   }) : super(key: key);
 
   final TextFieldModelView textFieldModelView;
   final List<User> sourceList;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,6 @@ class UserSearchBar extends StatelessWidget {
     return Focus(
       onFocusChange: (focus) => textFieldModelView.selection = focus,
       child: CustomTextField(
-        padding: EdgeInsets.only(bottom: kBasicVerticalPadding(size: size)),
         onChanged: (value) {
           textFieldModelView.textValue = value;
           textFieldModelView.listOfObjects = sortListUserBySearch(
@@ -34,9 +34,9 @@ class UserSearchBar extends StatelessWidget {
         },
         onSaved: (value) {},
         validator: (value) {},
-        type: InputDecorationType.search,
-            hintStyle: textTheme.headline4!.copyWith(color: kTextColor),
-            hintText: "Rechercher quelqu’un ...",
+        type: InputDecorationType.searchsmall,
+        hintStyle: textTheme.headline4!.copyWith(color: kTextColor),
+        hintText: hintText,
       ),
     );
   }

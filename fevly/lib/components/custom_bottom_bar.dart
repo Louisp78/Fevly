@@ -45,14 +45,12 @@ class CustomBottomBar extends StatelessWidget {
               splashColor: Colors.transparent,
               onPressed: () =>
                             Navigator.pushNamed(context, '/search', arguments: {
-                          'guestList': guestListList[0],
-                          'appBar': buildAppBarForSearchScreen(
-                              guestListList[0], context),
+                          'mainList': guestListList[0].listOfUser,
                           'suggestionList1Name': "Récent",
                           'suggestionList2Name': "Mes amis",
                           'userSuggestionList1': listOfUsers1,
                           'userSuggestionList2': listOfFriends1,
-                          'type': SearchScreenType.changeRelationState,
+                          'type': SearchScreenType.all,
                         }),
               icon: Icon(Icons.search_rounded,
                   color: themeColor.onBackground)),

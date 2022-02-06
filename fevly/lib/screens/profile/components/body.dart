@@ -68,7 +68,6 @@ class Body extends StatelessWidget {
       required Size size,
       required TextFieldModelView searchField,
       required BuildContext context}) {
-    final ColorScheme themeColor = Theme.of(context).colorScheme;
     switch (profileOwner.relationState) {
       case UserRelationState.unFriend:
       case UserRelationState.requestSent:

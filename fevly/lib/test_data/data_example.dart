@@ -1,7 +1,6 @@
 import 'package:fevly/models/user.dart';
 import 'package:fevly/test_data/data_badge.dart';
-import 'package:fevly/test_data/data_guest_list.dart';
-import 'package:fevly/test_data/data_product_list.dart';
+import 'package:fevly/test_data/data_list_of_user.dart';
 
 //! WARNING : Ne jamais utiliser plusieurs fois une variable au sein de différent Object.
 //! Exemple:
@@ -14,8 +13,8 @@ final User kCurrentUser = User(
   password: "loulou78",
   email: "placelouis@gmail.com",
   listOfBadges: badgeList1,
-  listOfGuestList: guestListListForDropdown,
-  listOfProductList: productListListForDropdown,
+  listOfFriends: listOfFriends1,
+  listOfParties: [],
 );
 
 final List<String> avatarsList = [

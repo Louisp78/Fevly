@@ -47,7 +47,7 @@ InputDecoration basicInputDecoration(
       ),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         color: kTextColor,
       ),
       borderRadius: BorderRadius.circular(20),
@@ -63,7 +63,7 @@ InputDecoration smallSearchInputDecoration(
   final Size size = MediaQuery.of(context).size;
   return InputDecoration(
     filled: true,
-    prefixIcon: Icon(
+    prefixIcon: const Icon(
       Icons.search_rounded,
       color: kTextColor,
       size: kSmallIconSize,
@@ -102,7 +102,7 @@ InputDecoration smallSearchInputDecoration(
       ),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         color: kTextColor,
       ),
       borderRadius: BorderRadius.circular(30),
@@ -118,7 +118,7 @@ InputDecoration searchInputDecoration(
   final Size size = MediaQuery.of(context).size;
   return InputDecoration(
     filled: true,
-    prefixIcon: Icon(
+    prefixIcon: const Icon(
       Icons.search_rounded,
       color: kTextColor,
       size: kSmallIconSize,

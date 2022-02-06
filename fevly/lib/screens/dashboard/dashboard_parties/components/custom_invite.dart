@@ -60,13 +60,11 @@ class CustomInvite extends StatelessWidget {
                         press: () =>
                             Navigator.pushNamed(context, '/search', arguments: {
                           'guestList': partyInvited.guests,
-                          'appBar': buildAppBarForSearchScreen(
-                              partyInvited.guests, context),
                           'suggestionList1Name': "Dans la liste",
                           'suggestionList2Name': null,
                           'userSuggestionList1': partyInvited.guests.listOfUser,
                           'userSuggestionList2': null,
-                          'type': SearchScreenType.changeRelationState,
+                          'type': SearchScreenType.all,
                         }),
                         textWidget: Text(
                           "Voir liste des invités",

@@ -41,9 +41,9 @@ class DashboardPartiesScreen extends StatelessWidget {
             SizedBox(
               height: kBasicVerticalPadding(size: size),
             ),
-            PartiesInvite(
+            /*PartiesInvite(
               parties: partiesInvite,
-            ),
+            ),*/
             AcceptedParties(
               parties: partiesAccepted,
             ),
