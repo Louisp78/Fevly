@@ -1,8 +1,6 @@
-import 'dart:html';
-
 import 'package:fevly/model/chat.dart';
 import 'package:fevly/model/guest.dart';
-import 'package:fevly/model/timecapsule.dart';
+import 'package:fevly/model/location.dart';
 import 'package:fevly/model/user.dart';
 import 'package:fevly/models/product.dart';
 
@@ -15,37 +13,30 @@ class Party {
   final List<Guest> _guests = List.empty();
   final List<Product> _products = List.empty();
   final Chat chat;
-  final TimeCapsule timeCapsule; 
 
-  Party({
-    required this.name,
-    required this.organizer,
-    required this.startDate,
-    required this.endDate,
-    required this.location,
-    required this.chat,
-    required this.timeCapsule
-  });
-
+  Party(
+      {required this.name,
+      required this.organizer,
+      required this.startDate,
+      required this.endDate,
+      required this.location,
+      required this.chat});
 
   //* Getters
   /// Return an unmodifiable list of guests
   /// Look at addGuest for mutation
-  List<Guest> guests()
-  {
+  List<Guest> guests() {
     return List.unmodifiable(_guests);
   }
 
   /// Return an unmodifiable list of products
   /// Look at addProduct for mutation
-  List<Product> products()
-  {
+  List<Product> products() {
     return List.unmodifiable(_products);
   }
 
   //* Methods
-  bool addGuest(Guest guest)
-  {
+  bool addGuest(Guest guest) {
     if (_guests.contains(guest)) {
       return false;
     }
@@ -53,21 +44,16 @@ class Party {
     return true;
   }
 
-  bool addProduct(Product product)
-  {
+  bool addProduct(Product product) {
     _products.add(product);
     return true;
   }
 
-
-  Duration getDuration()
-  {
+  Duration getDuration() {
     return endDate.difference(startDate);
   }
 
-  int getNumberOfDayLeft()
-  {
+  int getNumberOfDayLeft() {
     return startDate.difference(DateTime.now()).inDays;
   }
-
 }
