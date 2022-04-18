@@ -14,8 +14,6 @@ Un réseau social de partage de soirée. Construit ton profil qui reflète qui t
  * [x] Création des Wireframes
  * [x] Création du Design
  * [x] Prototypage
- * [ ] Implémentation de l’UI
- * [ ] Implémentation Firebase
- * [ ] Résolution des bugs et tests
+ * [ ] Implémentation
  * [ ] Communication
  * [ ] Release
