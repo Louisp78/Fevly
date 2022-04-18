@@ -1,9 +1,7 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/models/party.dart';
 import 'package:fevly/screens/dashboard/dashboard_parties/components/custom_invite.dart';
 import 'package:flutter/material.dart';
-
 
 class PartiesInvite extends StatelessWidget {
   const PartiesInvite({
