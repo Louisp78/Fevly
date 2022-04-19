@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
   final InputDecorationType type;
   final TextEditingController? controller;
+  final String? error_msg;
 
   const CustomTextField(
       {this.obscureText = false,
@@ -30,7 +31,8 @@ class CustomTextField extends StatefulWidget {
       required this.hintStyle,
       required this.hintText,
       this.type = InputDecorationType.basic,
-      this.controller});
+      this.controller,
+      this.error_msg = null});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -90,6 +92,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         return InputDecoration(
           hintText: widget.hintText,
           hintStyle: widget.hintStyle,
+          errorText: widget.error_msg,
         ).applyDefaults(themeInput);
     }
   }

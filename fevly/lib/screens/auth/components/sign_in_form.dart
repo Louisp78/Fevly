@@ -1,15 +1,18 @@
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
+import 'package:fevly/service/application_state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 /// Form for sign in
 class SignInForm extends StatefulWidget {
-  const SignInForm({required this.callback, required this.email});
+  const SignInForm({
+    required this.email,
+  });
 
-  final void Function({required String email, required String password})
-      callback;
   final String email;
 
   @override
@@ -20,12 +23,15 @@ class _SignInForm extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_SignInFormState');
   final _passwordController = TextEditingController();
 
+  String? password_error_msg;
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
     final ColorScheme themeColor = Theme.of(context).colorScheme;
+    final ApplicationState appState = Provider.of<ApplicationState>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -50,6 +56,7 @@ class _SignInForm extends State<SignInForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CustomTextField(
+                    error_msg: password_error_msg,
                     controller: _passwordController,
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: 'Mot de passe',
@@ -60,9 +67,19 @@ class _SignInForm extends State<SignInForm> {
                   child: CustomTextButton(
                     press: () async {
                       if (_formKey.currentState!.validate()) {
-                        widget.callback(
-                            email: widget.email,
-                            password: _passwordController.text);
+                        try {
+                          await appState
+                              .signInWithEmailAndPassword(
+                                  emailAddress: widget.email,
+                                  password: _passwordController.text)
+                              .then((value) => setState(() {
+                                    password_error_msg = null;
+                                  }));
+                        } on FirebaseAuthException catch (e) {
+                          setState(() {
+                            password_error_msg = e.message;
+                          });
+                        }
                       }
                     },
                     text: 'Suivant',
