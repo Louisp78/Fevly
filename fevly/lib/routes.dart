@@ -1,5 +1,5 @@
-import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/auth/auth_screen.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/login/login_screen.dart';
@@ -8,17 +8,28 @@ import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
 import 'package:fevly/screens/profile/profile_screen.dart';
 import 'package:fevly/screens/search/search_screen.dart';
-import 'package:fevly/screens/signin/signin_step1/signin_step1_screen.dart';
-import 'package:fevly/screens/signin/signin_step2/signin_step2_screen.dart';
+import 'package:fevly/screens/settings/settings_screen.dart';
+import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/transition.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'models/party.dart';
-
 
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case '/':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              Consumer<ApplicationState>(builder: (context, appState, _) {
+            if (appState.loginState == ApplicationLoginState.loggedIn)
+              return const DashboardScreen();
+            else {
+              return const AuthScreen();
+            }
+          }),
+        );
       case '/login':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
@@ -29,24 +40,11 @@ mixin RouterNav {
       case '/signin_step1':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const SignInStep1Screen(),
+              const AuthScreen(),
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-
-      case '/signin_step1/signin_step2':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            final Map args = settings.arguments! as Map;
-            return SignInStep2Screen(
-              email: args['email'] as String,
-              password: args['password'] as String,
-            );
-          },
-          transitionsBuilder: slideLeftTransition(),
-          transitionDuration: const Duration(milliseconds: 500),
-        );
-      case '/signin_step1/signin_step2/term_of_use':
+      case '/terms_of_use':
         return MaterialPageRoute(builder: (_) => const TermOfUseScreen());
 
       case '/profile':
@@ -109,18 +107,25 @@ mixin RouterNav {
       case '/party/party_info':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              PartyInfoScreen(party: settings.arguments! as Party,),
+              PartyInfoScreen(
+            party: settings.arguments! as Party,
+          ),
         );
       case '/party':
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              PartyScreen(party: settings.arguments! as Party,),
+          pageBuilder: (context, animation, secondaryAnimation) => PartyScreen(
+            party: settings.arguments! as Party,
+          ),
         );
       case '/notifications':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const NotificationsScreen(),
         );
+      case '/settings':
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const SettingsScreen());
 
       default:
         return MaterialPageRoute(

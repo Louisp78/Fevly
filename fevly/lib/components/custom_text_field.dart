@@ -3,12 +3,11 @@ import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
-
   final bool isSelected;
   final bool obscureText;
-  final Function(String) onChanged;
-  final Function(String?) onSaved;
-  final String? Function(String?) validator;
+  final Function(String)? onChanged;
+  final Function(String?)? onSaved;
+  final String? Function(String?)? validator;
   final double? width;
   final double? height;
   final EdgeInsets? padding;
@@ -16,30 +15,32 @@ class CustomTextField extends StatefulWidget {
   final TextStyle hintStyle;
   final String hintText;
   final InputDecorationType type;
-
+  final TextEditingController? controller;
 
   const CustomTextField(
       {this.obscureText = false,
       this.isSelected = false,
-      required this.onChanged,
-      required this.onSaved,
-      required this.validator,
+      this.onChanged,
+      this.onSaved,
+      this.validator,
       this.width,
       this.height,
       this.padding,
       this.withCleaning = false,
       required this.hintStyle,
       required this.hintText,
-      this.type = InputDecorationType.basic});
+      this.type = InputDecorationType.basic,
+      this.controller});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _controller =
+        widget.controller ?? TextEditingController();
     final Size size = MediaQuery.of(context).size;
     final ColorScheme themeColor = Theme.of(context).colorScheme;
     return Container(
