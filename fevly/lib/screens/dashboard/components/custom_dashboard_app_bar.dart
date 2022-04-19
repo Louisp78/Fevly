@@ -8,7 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomDashboardAppBar extends StatelessWidget {
   final double height;
-  const CustomDashboardAppBar({Key? key, required this.height}) : super(key: key);
+  const CustomDashboardAppBar({Key? key, required this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,12 @@ class CustomDashboardAppBar extends StatelessWidget {
       child: Row(
         children: [
           CustomCircleAvatar(
-            press: () => Navigator.pushNamed(context, '/profile', arguments: kCurrentUser),
+            press: () => Navigator.pushNamed(context, '/profile',
+                arguments: kCurrentUser),
             icon: Icon(
               Icons.person_rounded,
               color: themeColor.primary,
-            ), 
+            ),
             backgroundColor: themeColor.onSurface,
           ),
           SizedBox(width: kBasicHorizontalPadding(size: size)),
@@ -52,7 +54,8 @@ class CustomDashboardAppBar extends StatelessWidget {
                   /*const LevelLabel(level: 13),*/
                 ],
               ),
-              Text('Louis Place', style: textTheme.bodyText2?.copyWith(color:kTextColor)),
+              Text('Louis Place',
+                  style: textTheme.bodyText2?.copyWith(color: kTextColor)),
               /*Stack(
                 alignment: Alignment.centerLeft,
                 children: [
@@ -95,6 +98,16 @@ class CustomDashboardAppBar extends StatelessWidget {
                     child: Icon(Icons.notifications_rounded,
                         color: themeColor.onBackground),
                   ),
+                  SizedBox(
+                    width: kBasicHorizontalPadding(size: size),
+                  ),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/settings'),
+                    child: Icon(
+                      Icons.settings_rounded,
+                      color: themeColor.onBackground,
+                    ),
+                  )
                 ],
               ),
             ),

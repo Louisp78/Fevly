@@ -46,7 +46,7 @@ class CustomTextButton extends StatelessWidget {
   final CustomTextButtonSize buttonSize;
   final Color? backgroundColor;
   final Border? border;
-  final Text? textWidget;
+  final Widget? textWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +65,8 @@ class CustomTextButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: buttonSize.padding),
         height: buttonSize.height,
         decoration: BoxDecoration(
-          color: backgroundColor ??
-              (isActive
-                  ? themeColor.primary
-                  : kTextColor),
+          color:
+              backgroundColor ?? (isActive ? themeColor.primary : kTextColor),
           borderRadius: BorderRadius.circular(buttonSize.borderRadius),
           border: border,
         ),
@@ -81,8 +79,7 @@ class CustomTextButton extends StatelessWidget {
                 Text(
                   text,
                   style: textStyle.copyWith(
-                      color: textColor ??
-                          themeColor.background),
+                      color: textColor ?? themeColor.background),
                 ),
             if (suffixIcon != null) const SizedBox(width: 10),
             if (suffixIcon != null) suffixIcon!,
