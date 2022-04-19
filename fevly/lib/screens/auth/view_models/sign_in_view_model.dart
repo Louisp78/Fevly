@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 
 //$ CLASS
 //$ ================================================
-class SignInStep1ViewModel extends ChangeNotifier {
+class AuthViewModel extends ChangeNotifier {
   String _email;
   String _password;
   String _confirmPassword;
 
-  SignInStep1ViewModel(
+  AuthViewModel(
       {String email = "", String password = "", String confirmPassword = ""})
       : _confirmPassword = confirmPassword,
         _email = email,
