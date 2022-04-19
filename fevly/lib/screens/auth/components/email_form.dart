@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
@@ -7,6 +5,7 @@ import 'package:fevly/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Form to enter email
 class EmailForm extends StatefulWidget {
   const EmailForm({
     required this.callback,

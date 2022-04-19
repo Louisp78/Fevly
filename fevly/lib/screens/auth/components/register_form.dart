@@ -5,6 +5,7 @@ import 'package:fevly/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Form to register
 class RegisterForm extends StatefulWidget {
   const RegisterForm({
     required this.callback,

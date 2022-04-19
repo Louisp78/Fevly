@@ -4,6 +4,7 @@ import 'package:fevly/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Form for sign in
 class SignInForm extends StatefulWidget {
   const SignInForm({required this.callback, required this.email});
 

@@ -7,6 +7,7 @@ import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Form multiusage depending of application state
 class FormSection extends StatelessWidget {
   const FormSection({
     Key? key,
