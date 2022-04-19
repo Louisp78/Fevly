@@ -9,10 +9,7 @@ import 'package:provider/provider.dart';
 
 /// Form multiusage depending of application state
 class FormSection extends StatelessWidget {
-  const FormSection({
-    Key? key,
-  }) : super(key: key);
-
+  const FormSection();
   @override
   Widget build(BuildContext context) {
     final ApplicationState appState = Provider.of<ApplicationState>(context);
@@ -33,29 +30,14 @@ class FormSection extends StatelessWidget {
           ],
         );
       case ApplicationLoginState.emailAddress:
-        return EmailForm(
-          callback: (email) => appState.verifyEmailAddress(
-              emailAddress: email, errorCallback: (e) => print(e)),
-        );
+        return EmailForm();
       case ApplicationLoginState.password:
         return SignInForm(
           email: appState.emailAddress!,
-          callback: ({required email, required password}) =>
-              appState.signInWithEmailAndPassword(
-                  emailAddress: email,
-                  password: password,
-                  errorCallback: (e) => print(e)),
         );
 
       case ApplicationLoginState.register:
         return RegisterForm(
-          callback: ({required email, required login, required password}) {
-            appState.registerAccount(
-                emailAddress: email,
-                login: login,
-                password: password,
-                errorCallback: (e) => print(e));
-          },
           email: appState.emailAddress!,
         );
       default:

@@ -67,7 +67,7 @@ class ApplicationState extends ChangeNotifier {
   /// Call errorCallback if email address is not valid
   Future<void> verifyEmailAddress({
     required String emailAddress,
-    required void Function(FirebaseAuthException e) errorCallback,
+    //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
       var methodsOfConnexion =
@@ -80,19 +80,18 @@ class ApplicationState extends ChangeNotifier {
         _loginState = ApplicationLoginState.register;
       }
       _emailAddress = emailAddress;
+
       notifyListeners();
     } on FirebaseAuthException catch (e) {
-      // the format of the email address is not valid.
-      errorCallback(e);
+      throw e;
     }
-    notifyListeners();
   }
 
   /// Sign in with email and password
   Future<void> signInWithEmailAndPassword({
     required String emailAddress,
     required String password,
-    required void Function(FirebaseAuthException e) errorCallback,
+    //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -100,7 +99,8 @@ class ApplicationState extends ChangeNotifier {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      errorCallback(e);
+      //errorCallback(e);
+      throw e;
     }
   }
 
@@ -113,17 +113,16 @@ class ApplicationState extends ChangeNotifier {
   /// Register new user
   Future<void> registerAccount({
     required String emailAddress,
-    required String login,
+    required String login, // TODO: add login support with firebase
     required String password,
-    required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
-      var credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailAddress, password: password);
-      await credential.user!.updateDisplayName(login);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailAddress, password: password);
+      //await credential.user!.updateDisplayName(name);
+
     } on FirebaseAuthException catch (e) {
-      errorCallback(e);
+      throw e;
     }
   }
 
