@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +35,7 @@ class CustomTextButton extends StatelessWidget {
     this.textColor,
     this.border,
     this.textWidget,
+    this.maxWidth = double.infinity,
   }) : super(key: key);
 
   final Widget? prefixIcon;
@@ -44,6 +46,7 @@ class CustomTextButton extends StatelessWidget {
   final Color? textColor;
   final bool isActive;
   final CustomTextButtonSize buttonSize;
+  final double maxWidth;
   final Color? backgroundColor;
   final Border? border;
   final Widget? textWidget;
@@ -70,18 +73,26 @@ class CustomTextButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(buttonSize.borderRadius),
           border: border,
         ),
+        constraints: BoxConstraints(maxWidth: maxWidth),
         child: Row(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (prefixIcon != null) prefixIcon!,
-            if (prefixIcon != null) const SizedBox(width: 10),
-            textWidget ??
-                Text(
-                  text,
-                  style: textStyle.copyWith(
-                      color: textColor ?? themeColor.background),
-                ),
-            if (suffixIcon != null) const SizedBox(width: 10),
+            if (prefixIcon != null) SizedBox(width: 10),
+            Flexible(
+              child: textWidget ??
+                  AutoSizeText(
+                    text,
+                    maxLines: 1,
+                    minFontSize: 5,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: textStyle.copyWith(
+                        color: textColor ?? themeColor.background),
+                  ),
+            ),
+            if (suffixIcon != null) SizedBox(width: 10),
             if (suffixIcon != null) suffixIcon!,
           ],
         ),

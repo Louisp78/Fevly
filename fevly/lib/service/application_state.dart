@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fevly/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -67,6 +69,8 @@ class ApplicationState extends ChangeNotifier {
   /// Call errorCallback if email address is not valid
   Future<void> verifyEmailAddress({
     required String emailAddress,
+    required void Function() functionBeforeRebuild,
+    required int delayBeforeRebuild,
     //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
@@ -80,8 +84,10 @@ class ApplicationState extends ChangeNotifier {
         _loginState = ApplicationLoginState.register;
       }
       _emailAddress = emailAddress;
-
-      notifyListeners();
+      functionBeforeRebuild();
+      await Future.delayed(Duration(seconds: delayBeforeRebuild), () {
+        notifyListeners();
+      });
     } on FirebaseAuthException catch (e) {
       throw e;
     }
@@ -105,9 +111,13 @@ class ApplicationState extends ChangeNotifier {
   }
 
   /// Cancel registration during login flow
-  void cancelRegistration() {
+  void cancelRegistration({
+    required int delayBeforeRebuild,
+  }) async {
     _loginState = ApplicationLoginState.loggedOut;
-    notifyListeners();
+    await Future.delayed(Duration(seconds: delayBeforeRebuild), () {
+      notifyListeners();
+    });
   }
 
   /// Register new user
