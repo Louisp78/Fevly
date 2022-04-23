@@ -4,12 +4,13 @@ import 'package:fevly/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void Function() changeRelationState({
-  required User user,
-  required BuildContext context,
-  required ColorScheme themeColor, 
-  List<User>? list,
-  int? index}) =>() {
+void Function() changeRelationState(
+        {required User user,
+        required BuildContext context,
+        required ColorScheme themeColor,
+        List<User>? list,
+        int? index}) =>
+    () {
       assert(list == null && index == null || !(list == null && index == null),
           "list and index must be set together");
       final Size size = MediaQuery.of(context).size;

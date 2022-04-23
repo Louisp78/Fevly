@@ -1,8 +1,9 @@
+import 'package:fevly/components/custom_snackbar.dart';
+import 'package:fevly/constant.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/auth/auth_screen.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
-import 'package:fevly/screens/login/login_screen.dart';
 import 'package:fevly/screens/notifications/notifications_screen.dart';
 import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
@@ -19,25 +20,27 @@ import 'models/party.dart';
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+
+      // FIXME : find a better way to rebuild and keep the good route
       case '/':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               Consumer<ApplicationState>(builder: (context, appState, _) {
-            if (appState.loginState == ApplicationLoginState.loggedIn)
+            final ApplicationState appState =
+                Provider.of<ApplicationState>(context);
+            if (appState.loginState == ApplicationLoginState.loggedIn) {
+              //return Navigator.pushNamed(context, '/dashboard');
               return const DashboardScreen();
-            else {
+            } else {
               return const AuthScreen();
+              //Navigator.pushNamed(context, '/auth');
             }
           }),
+          transitionsBuilder: slideUpTransition(),
+          transitionDuration: const Duration(milliseconds: 1000),
         );
-      case '/login':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const LoginScreen(),
-          transitionsBuilder: slideLeftTransition(),
-          transitionDuration: const Duration(milliseconds: 500),
-        );
-      case '/signin_step1':
+
+      case '/auth':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const AuthScreen(),
@@ -55,32 +58,6 @@ mixin RouterNav {
           transitionDuration: const Duration(milliseconds: 500),
         );
 
-      /*
-      ! Not for minimal version
-      case '/profile/my_lists':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              MyListsScreen(
-            listOfGuestList: kCurrentUser.listOfGuestList,
-            listOfProductList: kCurrentUser.listOfProductList,
-          ),
-        );
-
-      case '/profile/my_lists/product_list':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              ProductListScreen(
-            productList: settings.arguments! as ProductList,
-          ),
-        );
-
-      case '/profile/my_lists/guest_list':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              ProductListScreen(
-            productList: settings.arguments! as ProductList,
-          ),
-        );*/
       case '/search':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
@@ -94,13 +71,13 @@ mixin RouterNav {
               type: args['type'] as SearchScreenType,
             );
           },
+          transitionsBuilder: slideLeftTransition(),
         );
 
       case '/dashboard':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const DashboardScreen(),
-          transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
 
@@ -136,3 +113,30 @@ mixin RouterNav {
     }
   }
 }
+
+      /*
+      ! Not for minimal version
+      case '/profile/my_lists':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              MyListsScreen(
+            listOfGuestList: kCurrentUser.listOfGuestList,
+            listOfProductList: kCurrentUser.listOfProductList,
+          ),
+        );
+
+      case '/profile/my_lists/product_list':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ProductListScreen(
+            productList: settings.arguments! as ProductList,
+          ),
+        );
+
+      case '/profile/my_lists/guest_list':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ProductListScreen(
+            productList: settings.arguments! as ProductList,
+          ),
+        );*/
