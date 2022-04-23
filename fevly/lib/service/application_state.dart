@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 /// Login state enum
 enum ApplicationLoginState {
@@ -12,7 +13,8 @@ enum ApplicationLoginState {
   loggedIn,
   emailAddress,
   password,
-  register
+  register,
+  verifyEmail,
 }
 
 class ApplicationState extends ChangeNotifier {
@@ -44,10 +46,13 @@ class ApplicationState extends ChangeNotifier {
     );
 
     // Firebase auth
-    FirebaseAuth.instance.userChanges().listen((user) {
+    FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
         // User is connected
-        _loginState = ApplicationLoginState.loggedIn;
+        if (!user.emailVerified) {
+          _loginState = ApplicationLoginState.verifyEmail;
+        } else
+          _loginState = ApplicationLoginState.loggedIn;
       } else {
         // User is disconnected
         _loginState = ApplicationLoginState.loggedOut;
@@ -94,18 +99,40 @@ class ApplicationState extends ChangeNotifier {
   }
 
   /// Sign in with email and password
-  Future<void> signInWithEmailAndPassword({
+  Future<UserCredential> signInWithEmailAndPassword({
     required String emailAddress,
     required String password,
     //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      return await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
     } on FirebaseAuthException catch (e) {
       //errorCallback(e);
+      throw e;
+    }
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
       throw e;
     }
   }
@@ -121,14 +148,19 @@ class ApplicationState extends ChangeNotifier {
   }
 
   /// Register new user
-  Future<void> registerAccount({
+  Future<UserCredential> registerAccount({
     required String emailAddress,
     required String login, // TODO: add login support with firebase
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailAddress, password: password);
+      return await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailAddress, password: password)
+          .then((userCred) async {
+        await userCred.user!.sendEmailVerification();
+        return userCred;
+      });
       //await credential.user!.updateDisplayName(name);
 
     } on FirebaseAuthException catch (e) {

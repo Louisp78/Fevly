@@ -61,6 +61,7 @@ class _EmailFormState extends State<EmailForm>
                 SizedBox(
                   width: size.width * 0.7,
                   child: CustomTextField(
+                    textInputType: TextInputType.emailAddress,
                     error_msg: email_error_msg,
                     controller: _controller,
                     hintStyle: kBasicHintStyle(textTheme: textTheme),
