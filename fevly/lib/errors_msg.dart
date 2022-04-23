@@ -1,5 +1,6 @@
 const Kemail_error_msg = 'Entrer une adresse email';
-const Kpassword_error_msg = 'Entrer un mot de passe';
+const Kpassword_error_msg =
+    'Entrer un mot de passe valide (8 caractères, chiffres, lettres)';
 const Kpassword_error_long_msg = """
 Le mot de passe doit respecter les criteres suivant:
 - 8 caractères ou +

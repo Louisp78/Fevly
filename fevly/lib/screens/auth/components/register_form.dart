@@ -91,10 +91,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       hintText: 'Mot de passe',
                       obscureText: true,
                       validator: (value) {
-                        /*if (!Kpassword_pattern.hasMatch(value!)) {
-                          return Kpassword_error_msg;
-                        }*/
-                        if (value!.isEmpty) {
+                        if (passwordValidate(value)) {
                           return Kpassword_error_msg;
                         }
                         return null;
@@ -141,8 +138,6 @@ class _RegisterFormState extends State<RegisterForm> {
                                     login: _loginController.text,
                                     password: _passwordController.text,
                                   )
-                                  .then((value) =>
-                                      setState(() => password_error_msg = null))
                                   .then((value) => authVM.isLoading = false);
                             } on FirebaseAuthException catch (e) {
                               setState(() {
@@ -160,11 +155,6 @@ class _RegisterFormState extends State<RegisterForm> {
                         background_color_is_loading: themeColor.onSurface,
                         background_color_not_loading: null,
                         is_loading: authVM.isLoading,
-                        /*textWidget: AutoSizeText(
-                          'Accepter les conditions d\'utilisations',
-                          style: textTheme.headline5!
-                              .copyWith(color: themeColor.background),
-                        ),*/
                       ),
                     ),
                   ),
@@ -175,5 +165,12 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    password_error_msg = null;
   }
 }

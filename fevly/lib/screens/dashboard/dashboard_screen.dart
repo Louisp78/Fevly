@@ -8,12 +8,12 @@ import 'package:fevly/test_data/data_party.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)!.settings.name);
 
     const double heightAppBar = 70;
     return ChangeNotifierProvider(
@@ -54,11 +54,16 @@ class DashboardScreen extends StatelessWidget {
                         ]),
                       ),
                       const Positioned(
-                          top: heightAppBar + 15, left: 0, right: 0, child: DashboardMenu()),
+                          top: heightAppBar + 15,
+                          left: 0,
+                          right: 0,
+                          child: DashboardMenu()),
                       const Align(
                           alignment: Alignment.bottomCenter,
                           child: CustomBottomBar()),
-                      const CustomDashboardAppBar(height: heightAppBar,),
+                      const CustomDashboardAppBar(
+                        height: heightAppBar,
+                      ),
                     ],
                   ),
                 ),
@@ -77,7 +82,10 @@ class DashboardScreen extends StatelessWidget {
       child: FloatingActionButton(
         backgroundColor: themeColor.secondary,
         onPressed: () {},
-        child: Icon(Icons.add_rounded, color: themeColor.background,),
+        child: Icon(
+          Icons.add_rounded,
+          color: themeColor.background,
+        ),
       ),
     );
   }
