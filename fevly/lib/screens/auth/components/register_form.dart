@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
-import 'package:fevly/components/custom_text_button.dart';
+import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/errors_msg.dart';
@@ -12,16 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-/// Form to register
+/// Form for new user to register
 class RegisterForm extends StatefulWidget {
   const RegisterForm({
     required this.email,
   });
-
-  /*final void Function(
-      {required String email,
-      required String login,
-      required String password}) callback;*/
   final String email;
 
   @override
@@ -31,9 +26,18 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_RegisterFormState');
   final _passwordController = TextEditingController();
-  final _loginController = TextEditingController();
+  final _pseudoController = TextEditingController();
+  final _nameController = TextEditingController();
 
   String? password_error_msg;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pseudoController.text = '@';
+  }
+
   @override
   Widget build(BuildContext context) {
     final ApplicationState appState = Provider.of<ApplicationState>(context);
@@ -72,9 +76,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomTextField(
-                    controller: _loginController,
-                    hintStyle: kBasicHintStyle(textTheme: textTheme),
+                    controller: _pseudoController,
+                    hintStyle: textTheme.bodyText1!
+                        .copyWith(color: themeColor.surface),
                     hintText: 'Entrer un pseudo',
+                    label_text: 'Pseudo',
+                    textInputType: TextInputType.name,
+                    prefix_text: '@',
                     validator: (value) {
                       // TODO : check if pseudo exist in db
                       if (value!.isEmpty) {
@@ -85,10 +93,25 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   SizedBox(height: kBasicVerticalPadding(size: size)),
                   CustomTextField(
+                    controller: _nameController,
+                    hintText: 'Entrer un prénom et un nom',
+                    label_text: 'Prénom et nom',
+                    textInputType: TextInputType.name,
+                    validator: (value) {
+                      // TODO : check if pseudo exist in db
+                      if (value!.isEmpty) {
+                        return Kname_error_msg;
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: kBasicVerticalPadding(size: size)),
+                  CustomTextField(
                       error_msg: password_error_msg,
                       controller: _passwordController,
-                      hintStyle: kBasicHintStyle(textTheme: textTheme),
-                      hintText: 'Mot de passe',
+                      hintText: 'Entrer un mot de passe',
+                      label_text: 'Mot de passe',
+                      textInputType: TextInputType.text,
                       obscureText: true,
                       validator: (value) {
                         if (passwordValidate(value)) {
@@ -98,8 +121,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       }),
                   SizedBox(height: kBasicVerticalPadding(size: size)),
                   CustomTextField(
-                    hintStyle: kBasicHintStyle(textTheme: textTheme),
                     hintText: 'Confirmer le mot de passe',
+                    label_text: 'Confirmer',
                     obscureText: true,
                     validator: (value) {
                       if (value != _passwordController.text) {
@@ -135,7 +158,8 @@ class _RegisterFormState extends State<RegisterForm> {
                               await appState
                                   .registerAccount(
                                     emailAddress: widget.email,
-                                    login: _loginController.text,
+                                    name: _nameController.text,
+                                    login: _pseudoController.text,
                                     password: _passwordController.text,
                                   )
                                   .then((value) => authVM.isLoading = false);
@@ -143,6 +167,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               setState(() {
                                 password_error_msg = e.message;
                               });
+                              authVM.isLoading = false;
                             }
                           }
                         },
@@ -169,7 +194,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     password_error_msg = null;
   }

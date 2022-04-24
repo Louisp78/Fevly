@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
+import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
@@ -64,7 +65,7 @@ class _EmailFormState extends State<EmailForm>
                     textInputType: TextInputType.emailAddress,
                     error_msg: email_error_msg,
                     controller: _controller,
-                    hintStyle: kBasicHintStyle(textTheme: textTheme),
+                    label_text: 'Email',
                     hintText: 'Entrer une adresse email',
                     validator: (value) {
                       /// Regex of email validation
@@ -93,29 +94,39 @@ class _EmailFormState extends State<EmailForm>
                 CustomLoadingButton(
                   onPressed: () async {
                     authVM.setwidthAndHeightAndColor(
-                        size.height, size.width, themeColor.primary);
+                        size.height, size.width, themeColor.onSurface);
 
                     if (_formKey.currentState!.validate()) {
                       authVM.isLoading = true;
                       try {
                         await appState
                             .verifyEmailAddress(
-                              functionBeforeRebuild: () {
-                                MartiniAnim.exitAnim();
-                                authVM.setwidthAndHeightAndColor(
-                                    0, 0, Colors.transparent);
-                              },
-                              delayBeforeRebuild: 1,
-                              emailAddress: _controller.text,
-                            )
-                            .then((value) => setState(
-                                  () => email_error_msg = null,
-                                ))
-                            .then((value) => authVM.isLoading = false);
+                          functionBeforeRebuild: () {
+                            MartiniAnim.exitAnim();
+                            authVM.setwidthAndHeightAndColor(
+                                0, 0, Colors.transparent);
+                          },
+                          delayBeforeRebuild: 1,
+                          emailAddress: _controller.text,
+                        )
+                            .then((value) {
+                          if (value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              buildCustomSnackBar(
+                                themeColor: themeColor,
+                                textTheme: textTheme,
+                                size: size,
+                                text:
+                                    'Cette email est déjà utilisé par un compte Google ⛔',
+                              ),
+                            );
+                          }
+                        }).then((value) => authVM.isLoading = false);
                       } on FirebaseAuthException catch (e) {
                         setState(() {
                           email_error_msg = e.message;
                         });
+                        authVM.isLoading = false;
                       }
                     }
                   },
@@ -134,5 +145,11 @@ class _EmailFormState extends State<EmailForm>
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    email_error_msg = null;
   }
 }

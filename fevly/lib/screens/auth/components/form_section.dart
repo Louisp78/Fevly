@@ -4,6 +4,7 @@ import 'package:fevly/screens/auth/components/register_form.dart';
 import 'package:fevly/screens/auth/components/sign_in_form.dart';
 import 'package:fevly/screens/auth/components/verify_email_screen.dart';
 import 'package:fevly/service/application_state.dart';
+import 'package:fevly/service/custom_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,12 @@ class FormSection extends StatelessWidget {
       case ApplicationLoginState.emailAddress:
         return EmailForm();
       case ApplicationLoginState.password:
-        return SignInForm(
-          email: appState.emailAddress!,
+        return ChangeNotifierProvider<CustomTimer>(
+          create: (context) =>
+              CustomTimer(number_of_seconds: 30, reload_user: false),
+          child: SignInForm(
+            email: appState.emailAddress!,
+          ),
         );
 
       case ApplicationLoginState.register:
@@ -29,7 +34,10 @@ class FormSection extends StatelessWidget {
           email: appState.emailAddress!,
         );
       case ApplicationLoginState.verifyEmail:
-        return VerifyEmailScreen();
+        return ChangeNotifierProvider<CustomTimer>(
+            create: (context) =>
+                CustomTimer(number_of_seconds: 60, reload_user: true),
+            child: VerifyEmailScreen());
 
       default:
         return Center(
