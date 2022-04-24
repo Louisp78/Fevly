@@ -9,5 +9,6 @@ Le mot de passe doit respecter les criteres suivant:
 - 2 nombres ou +
 - 3 lettres en minuscules ou +
 """;
+const Kname_error_msg = 'Vous avez oubliez de renseigner votre nom et prénom';
 const Kpseudo_error_msg = 'Vous avez oubliez de renseigner votre pseudo';
 const Kpassword_unmatch = 'Les mot de passes ne sont pas les même';
