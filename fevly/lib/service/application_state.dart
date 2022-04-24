@@ -72,29 +72,45 @@ class ApplicationState extends ChangeNotifier {
   /// Veryfing email address is already used
   /// and update loginstate.
   /// Call errorCallback if email address is not valid
-  Future<void> verifyEmailAddress({
+  Future<bool> verifyEmailAddress({
     required String emailAddress,
     required void Function() functionBeforeRebuild,
     required int delayBeforeRebuild,
     //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
+      var is_already_used_by_google = false;
       var methodsOfConnexion =
           await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
-      if (methodsOfConnexion.contains('password')) {
-        // Email address is already used
-        _loginState = ApplicationLoginState.password;
-      } else {
+      if (methodsOfConnexion.isEmpty) {
         // Email address is not used
         _loginState = ApplicationLoginState.register;
+      } else if (methodsOfConnexion.first == 'password') {
+        // Email address is already used
+        _loginState = ApplicationLoginState.password;
+      } else if (methodsOfConnexion.first == 'google.com') {
+        // Email address is already used by google account
+        _loginState = ApplicationLoginState.loggedOut;
+        is_already_used_by_google = true;
       }
       _emailAddress = emailAddress;
       functionBeforeRebuild();
       await Future.delayed(Duration(seconds: delayBeforeRebuild), () {
         notifyListeners();
       });
+      return is_already_used_by_google;
     } on FirebaseAuthException catch (e) {
       throw e;
+    }
+  }
+
+  /// Reset email address
+  Future<void> resetEmailAddress({required String email}) async {
+    try {
+      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      print('Error while send password reset email: ' + e.message!);
+      print(e);
     }
   }
 
@@ -150,19 +166,22 @@ class ApplicationState extends ChangeNotifier {
   /// Register new user
   Future<UserCredential> registerAccount({
     required String emailAddress,
+    required String name,
     required String login, // TODO: add login support with firebase
     required String password,
   }) async {
     try {
-      return await FirebaseAuth.instance
+      final user_credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailAddress, password: password)
           .then((userCred) async {
         await userCred.user!.sendEmailVerification();
         return userCred;
       });
-      //await credential.user!.updateDisplayName(name);
 
+      await user_credential.user!.updateDisplayName(name);
+
+      return user_credential;
     } on FirebaseAuthException catch (e) {
       throw e;
     }

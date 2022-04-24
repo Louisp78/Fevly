@@ -50,7 +50,7 @@ String kBadgeSpecialName({required BadgeCategory category}) {
   }
 }
 
-String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}){
+String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}) {
   switch (category) {
     case BadgeCategory.drink:
       return "ambroisie";
@@ -61,8 +61,9 @@ String kBadgeSpecialNameNotForDisplay({required BadgeCategory category}){
 
 const double kSmallIconSize = 14;
 
-TextStyle kBasicHintStyle({required TextTheme textTheme}) =>
-    textTheme.headline4!.copyWith(color: kTextColor);
+TextStyle kBasicHintStyle(
+        {required TextTheme textTheme, required ColorScheme themeColor}) =>
+    textTheme.headline4!.copyWith(color: themeColor.onSurface);
 
 TextStyle kSearchHintStyle({required TextTheme textTheme}) =>
     textTheme.headline6!.copyWith(color: kTextColor);

@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+/// Display list of buttons with connexion methods
 class PickConnexionMethod extends StatelessWidget {
   const PickConnexionMethod();
 
@@ -18,7 +19,7 @@ class PickConnexionMethod extends StatelessWidget {
     final ApplicationState appState = Provider.of<ApplicationState>(context);
     final Size size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width * 0.7,
+      width: size.width * 0.8,
       child: Column(
         children: [
           SizedBox(height: kBasicVerticalPadding(size: size)),
@@ -27,7 +28,7 @@ class PickConnexionMethod extends StatelessWidget {
               TextSpan(
                 text: 'evly',
                 style: textTheme.headline1!.copyWith(
-                  fontSize: 65,
+                  fontSize: 75,
                   letterSpacing: 3,
                   color: themeColor.onBackground,
                   fontWeight: FontWeight.bold,
@@ -35,7 +36,7 @@ class PickConnexionMethod extends StatelessWidget {
               ),
             ]),
             style: textTheme.headline1!
-                .copyWith(color: themeColor.primary, fontSize: 75),
+                .copyWith(color: themeColor.primary, fontSize: 85),
           ),
           Spacer(),
           CustomTextButton(

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BottomBarChat extends StatelessWidget {
-  const BottomBarChat({Key? key,}) : super(key: key);
+  const BottomBarChat({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,7 @@ class BottomBarChat extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         CustomTextField(
-          padding: EdgeInsets.only(
-              bottom: kBasicVerticalPadding(size: size)),
-          hintStyle: kBasicHintStyle(textTheme: textTheme),
+          padding: EdgeInsets.only(bottom: kBasicVerticalPadding(size: size)),
           hintText: "Envoyer un message ...",
           isSelected: true,
           onChanged: (value) => null,

@@ -1,6 +1,8 @@
 import 'package:fevly/constant.dart';
+import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatefulWidget {
   final bool isSelected;
@@ -12,11 +14,13 @@ class CustomTextField extends StatefulWidget {
   final double? height;
   final EdgeInsets? padding;
   final bool withCleaning;
-  final TextStyle hintStyle;
+  final TextStyle? hintStyle;
   final String hintText;
   final InputDecorationType type;
   final TextEditingController? controller;
   final String? error_msg;
+  final String? label_text;
+  final String? prefix_text;
   final TextInputType? textInputType;
 
   const CustomTextField(
@@ -29,12 +33,14 @@ class CustomTextField extends StatefulWidget {
       this.height,
       this.padding,
       this.withCleaning = false,
-      required this.hintStyle,
+      this.hintStyle,
       required this.hintText,
       this.type = InputDecorationType.basic,
       this.controller,
       this.error_msg,
-      this.textInputType});
+      this.textInputType,
+      this.label_text,
+      this.prefix_text});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -76,26 +82,35 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   InputDecoration getInputDecoration(
       {required InputDecorationType type, required BuildContext context}) {
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
     final InputDecorationTheme themeInput =
         Theme.of(context).inputDecorationTheme;
     switch (type) {
       case InputDecorationType.searchsmall:
         return smallSearchInputDecoration(
-            hintStyle: widget.hintStyle,
+            hintStyle: widget.hintStyle ??
+                kBasicHintStyle(textTheme: textTheme, themeColor: themeColor),
             hintText: widget.hintText,
             context: context);
 
       case InputDecorationType.search:
         return searchInputDecoration(
-            hintStyle: widget.hintStyle,
+            hintStyle: widget.hintStyle ??
+                kBasicHintStyle(textTheme: textTheme, themeColor: themeColor),
             hintText: widget.hintText,
             context: context);
 
       default:
         return InputDecoration(
           hintText: widget.hintText,
-          hintStyle: widget.hintStyle,
+          hintStyle: widget.hintStyle ??
+              kBasicHintStyle(textTheme: textTheme, themeColor: themeColor),
           errorText: widget.error_msg,
+          labelText: widget.label_text,
+          labelStyle: textTheme.headline3!.copyWith(color: kTextColor),
+          prefixText: widget.prefix_text,
           errorMaxLines: 2,
         ).applyDefaults(themeInput);
     }
