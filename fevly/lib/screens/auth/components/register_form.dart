@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
-import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/errors_msg.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/validator.dart';
@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:fevly/errors_msg.dart';
 
 /// Form for new user to register
 class RegisterForm extends StatefulWidget {
@@ -29,8 +30,8 @@ class _RegisterFormState extends State<RegisterForm> {
   final _pseudoController = TextEditingController();
   final _nameController = TextEditingController();
 
-  String? password_error_msg;
-
+  String? passwordErrorMsg;
+  String? pseudoErrorMsg;
   @override
   void initState() {
     // TODO: implement initState
@@ -47,144 +48,132 @@ class _RegisterFormState extends State<RegisterForm> {
     final ColorScheme themeColor = Theme.of(context).colorScheme;
     final AuthViewModel authVM = Provider.of<AuthViewModel>(context);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          width: size.width * 0.7,
-          child: AutoSizeText(
-            'Nouveau compte',
-            maxLines: 1,
-            style: textTheme.displayLarge,
-          ),
-        ),
-        Text(
-          widget.email,
-          style: textTheme.displayMedium!.apply(color: themeColor.onPrimary),
-        ),
-        SizedBox(
-          height: kBasicVerticalPadding(size: size),
-        ),
-        SizedBox(
-          height: size.height * 0.1,
-        ),
         Form(
           key: _formKey,
           child: Expanded(
-            child: SizedBox(
-              width: size.width * 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomTextField(
-                    controller: _pseudoController,
-                    hintStyle: textTheme.bodyText1!
-                        .copyWith(color: themeColor.surface),
-                    hintText: 'Entrer un pseudo',
-                    label_text: 'Pseudo',
-                    textInputType: TextInputType.name,
-                    prefix_text: '@',
-                    validator: (value) {
-                      // TODO : check if pseudo exist in db
-                      if (value!.isEmpty) {
-                        return Kpseudo_error_msg;
-                      }
-                      return null;
-                    },
+            child: Column(
+              children: [
+                SizedBox(
+                  width: size.width * 0.7,
+                  child: AutoSizeText(
+                    'Nouveau compte',
+                    maxLines: 1,
+                    style: textTheme.displayLarge,
                   ),
-                  SizedBox(height: kBasicVerticalPadding(size: size)),
-                  CustomTextField(
-                    controller: _nameController,
-                    hintText: 'Entrer un prénom et un nom',
-                    label_text: 'Prénom et nom',
-                    textInputType: TextInputType.name,
-                    validator: (value) {
-                      // TODO : check if pseudo exist in db
-                      if (value!.isEmpty) {
-                        return Kname_error_msg;
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: kBasicVerticalPadding(size: size)),
-                  CustomTextField(
-                      error_msg: password_error_msg,
-                      controller: _passwordController,
-                      hintText: 'Entrer un mot de passe',
-                      label_text: 'Mot de passe',
-                      textInputType: TextInputType.text,
-                      obscureText: true,
-                      validator: (value) {
-                        if (passwordValidate(value)) {
-                          return Kpassword_error_msg;
-                        }
-                        return null;
-                      }),
-                  SizedBox(height: kBasicVerticalPadding(size: size)),
-                  CustomTextField(
-                    hintText: 'Confirmer le mot de passe',
-                    label_text: 'Confirmer',
+                ),
+                Text(
+                  widget.email,
+                  style: textTheme.displayMedium!
+                      .apply(color: themeColor.onPrimary),
+                ),
+                const Spacer(),
+                CustomTextField(
+                  error_msg: pseudoErrorMsg,
+                  controller: _pseudoController,
+                  hintStyle:
+                      textTheme.bodyText1!.copyWith(color: themeColor.surface),
+                  hintText: 'Entrer un pseudo',
+                  label_text: 'Pseudo',
+                  textInputType: TextInputType.name,
+                  prefix_text: '@',
+                  validator: (value) {
+                    // TODO : check if pseudo exist in db
+                    if (value!.isEmpty) {
+                      return Kpseudo_error_msg;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: kBasicVerticalPadding(size: size)),
+                CustomTextField(
+                  controller: _nameController,
+                  hintText: 'Entrer un prénom et un nom',
+                  label_text: 'Prénom et nom',
+                  textInputType: TextInputType.name,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return Kname_error_msg;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: kBasicVerticalPadding(size: size)),
+                CustomTextField(
+                    error_msg: passwordErrorMsg,
+                    controller: _passwordController,
+                    hintText: 'Entrer un mot de passe',
+                    label_text: 'Mot de passe',
+                    textInputType: TextInputType.text,
                     obscureText: true,
                     validator: (value) {
-                      if (value != _passwordController.text) {
-                        return Kpassword_unmatch;
-                      } else {
-                        return null;
+                      if (value!.isEmpty) {
+                        return Kpassword_empty_error_msg;
+                      } else if (passwordValidate(value)) {
+                        return Kpassword_error_msg;
                       }
-                    },
-                  ),
-                  SizedBox(height: kBasicVerticalPadding(size: size)),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/terms_of_use'),
-                      child: AutoSizeText(
-                        "Voir les conditions d'utilisations",
-                        style: textTheme.bodyText2
-                            ?.copyWith(decoration: TextDecoration.underline),
-                      ),
+                      return null;
+                    }),
+                SizedBox(height: kBasicVerticalPadding(size: size)),
+                CustomTextField(
+                  hintText: 'Confirmer le mot de passe',
+                  label_text: 'Confirmer',
+                  obscureText: true,
+                  validator: (value) {
+                    if (value!.isEmpty || value != _passwordController.text) {
+                      return Kpassword_unmatch;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                SizedBox(height: kBasicVerticalPadding(size: size)),
+                SizedBox(
+                  width: size.width * 0.8,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/terms_of_use'),
+                    child: AutoSizeText(
+                      "Voir les conditions d'utilisations",
+                      style: textTheme.bodyText2
+                          ?.copyWith(decoration: TextDecoration.underline),
                     ),
                   ),
-                  Spacer(),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      width: size.width * 0.7,
-                      child: CustomLoadingButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            authVM.isLoading = true;
-                            try {
-                              await appState
-                                  .registerAccount(
-                                    emailAddress: widget.email,
-                                    name: _nameController.text,
-                                    login: _pseudoController.text,
-                                    password: _passwordController.text,
-                                  )
-                                  .then((value) => authVM.isLoading = false);
-                            } on FirebaseAuthException catch (e) {
-                              setState(() {
-                                password_error_msg = e.message;
-                              });
-                              authVM.isLoading = false;
-                            }
+                ),
+                const Spacer(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: size.width * 0.7,
+                    child: CustomLoadingButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          authVM.isLoading = true;
+                          try {
+                            await appState
+                                .registerAccount(
+                                  emailAddress: widget.email,
+                                  name: _nameController.text,
+                                  login: _pseudoController.text,
+                                  password: _passwordController.text,
+                                )
+                                .then((value) => Navigator.pushReplacementNamed(
+                                    context, '/auth/logged_out/verify_email'));
+                          } on FirebaseAuthException catch (e) {
+                            handleFireRegisterException(e.code);
+                            authVM.isLoading = false;
                           }
-                        },
-                        maxWidth: size.width * 0.7,
-                        text_is_loading: 'Chargement',
-                        text_not_loading:
-                            'Accepter les conditions d\'utilisations',
-                        text_color_is_loading: themeColor.onBackground,
-                        text_color_not_loading: null,
-                        background_color_is_loading: themeColor.onSurface,
-                        background_color_not_loading: null,
-                        is_loading: authVM.isLoading,
-                      ),
+                        }
+                      },
+                      maxWidth: size.width * 0.7,
+                      text_not_loading:
+                          "Accepter les conditions d'utilisations",
+                      text_color_is_loading: themeColor.onBackground,
+                      background_color_is_loading: themeColor.onSurface,
+                      is_loading: authVM.isLoading,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -192,9 +181,27 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
+  void handleFireRegisterException(String code) {
+    if (code == 'network-request-failed') {
+      handleNetworkError(context);
+    } else if (code == 'too-many-requests') {
+      setState(() {
+        pseudoErrorMsg = Ktoo_many_requests_error_msg;
+      });
+    } else if (code == 'operation-not-allowed') {
+      setState(() {
+        pseudoErrorMsg = Kpseudo_operation_not_allowed;
+      });
+    } else if (code == 'weak-password') {
+      setState(() {
+        passwordErrorMsg = Kpassword_error_long_msg;
+      });
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
-    password_error_msg = null;
+    passwordErrorMsg = null;
   }
 }

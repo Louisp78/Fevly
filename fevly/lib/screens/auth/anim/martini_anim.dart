@@ -1,15 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 
 class MartiniAnim {
-  const MartiniAnim();
+  MartiniAnim();
 
-  static SMITrigger? _exit_martini;
+  static const Duration delayDuration = Duration(seconds: 1);
 
-  static void exitAnim() => _exit_martini?.fire();
+  static SMITrigger? _changeShow;
+
+  static void changeShowStatus() => _changeShow?.fire();
 
   static void onRiveInit(Artboard artboard) {
     final controller = StateMachineController.fromArtboard(artboard, 'basicSM');
     artboard.addController(controller!);
-    _exit_martini = controller.findInput<bool>('exit') as SMITrigger;
+    _changeShow = controller.findInput<bool>('changeShow') as SMITrigger;
   }
 }

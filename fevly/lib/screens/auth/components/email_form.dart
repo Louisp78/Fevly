@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_snackbar.dart';
-import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
 import 'package:fevly/errors_msg.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/anim/martini_anim.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
@@ -28,7 +25,7 @@ class _EmailFormState extends State<EmailForm>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>(debugLabel: '_EmailFormState');
   final _controller = TextEditingController();
-  String? email_error_msg;
+  String? emailErrorMsg;
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +37,26 @@ class _EmailFormState extends State<EmailForm>
     final AuthViewModel authVM = Provider.of<AuthViewModel>(context);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          width: size.width * 0.7,
-          child: AutoSizeText(
-            'S\'identifier',
-            maxLines: 1,
-            style: textTheme.headline1,
-          ),
-        ),
-        SizedBox(
-          height: kBasicVerticalPadding(size: size) * 2.5,
-        ),
         Form(
           key: _formKey,
           child: Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  width: size.width * 0.7,
+                  child: AutoSizeText(
+                    "S'identifier",
+                    maxLines: 1,
+                    style: textTheme.headline1,
+                  ),
+                ),
+                const Spacer(),
                 SizedBox(
                   width: size.width * 0.7,
                   child: CustomTextField(
                     textInputType: TextInputType.emailAddress,
-                    error_msg: email_error_msg,
+                    error_msg: emailErrorMsg,
                     controller: _controller,
                     label_text: 'Email',
                     hintText: 'Entrer une adresse email',
@@ -76,12 +69,12 @@ class _EmailFormState extends State<EmailForm>
                     },
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: SizedBox(
                     height: size.height * 0.4,
-                    child: RiveAnimation.asset(
+                    child: const RiveAnimation.asset(
                       'assets/anim/martini.riv',
                       alignment: Alignment.centerLeft,
                       fit: BoxFit.contain,
@@ -90,7 +83,7 @@ class _EmailFormState extends State<EmailForm>
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 CustomLoadingButton(
                   onPressed: () async {
                     authVM.setwidthAndHeightAndColor(
@@ -101,44 +94,47 @@ class _EmailFormState extends State<EmailForm>
                       try {
                         await appState
                             .verifyEmailAddress(
-                          functionBeforeRebuild: () {
-                            MartiniAnim.exitAnim();
-                            authVM.setwidthAndHeightAndColor(
-                                0, 0, Colors.transparent);
-                          },
-                          delayBeforeRebuild: 1,
                           emailAddress: _controller.text,
                         )
-                            .then((value) {
-                          if (value) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              buildCustomSnackBar(
-                                themeColor: themeColor,
-                                textTheme: textTheme,
-                                size: size,
-                                text:
-                                    'Cette email est déjà utilisé par un compte Google ⛔',
-                              ),
-                            );
-                          }
-                        }).then((value) => authVM.isLoading = false);
-                      } on FirebaseAuthException catch (e) {
-                        setState(() {
-                          email_error_msg = e.message;
+                            .then((value) async {
+                          MartiniAnim.changeShowStatus();
+                          authVM.setwidthAndHeightAndColor(
+                              0, 0, Colors.transparent);
+                          await Future.delayed(
+                              MartiniAnim.delayDuration,
+                              () => buildRoute(
+                                  context: context,
+                                  loginState: appState.loginState));
                         });
+
+                        if (appState.loginState ==
+                            ApplicationLoginState.loggedOut) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            buildCustomSnackBar(
+                              themeColor: themeColor,
+                              textTheme: textTheme,
+                              size: size,
+                              text:
+                                  'Cette email est déjà utilisé par un compte Google ⛔',
+                            ),
+                          );
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        print('FirebaseAuthException: ${e.code}');
+                        setState(() {
+                          emailErrorMsg = handleFireEmailException(
+                              code: e.code, context: context);
+                        });
+
                         authVM.isLoading = false;
                       }
                     }
                   },
-                  text_is_loading: 'Chargement',
                   text_not_loading: 'Suivant',
                   text_color_is_loading: themeColor.onBackground,
-                  text_color_not_loading: null,
                   background_color_is_loading: themeColor.onSurface,
-                  background_color_not_loading: null,
                   is_loading: authVM.isLoading,
                 ),
-                //SizedBox(height: kBasicVerticalPadding(size: size)),
               ],
             ),
           ),
@@ -147,9 +143,36 @@ class _EmailFormState extends State<EmailForm>
     );
   }
 
+  void buildRoute(
+      {required BuildContext context,
+      required ApplicationLoginState loginState}) {
+    final AuthViewModel authVM =
+        Provider.of<AuthViewModel>(context, listen: false);
+    switch (loginState) {
+      case ApplicationLoginState.loggedOut:
+        Navigator.pop(context);
+        break;
+      case ApplicationLoginState.register:
+        Navigator.pushNamed(context, '/auth/logged_out/register').then((value) {
+          authVM.isLoading = false;
+          emailErrorMsg = null;
+          Future.delayed(MartiniAnim.delayDuration, () {
+            MartiniAnim.changeShowStatus();
+          });
+        });
+        break;
+      case ApplicationLoginState.password:
+        Navigator.pushNamed(context, '/auth/logged_out/sign_in');
+        break;
+
+      default:
+        throw Exception('Unknown login state: $loginState');
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
-    email_error_msg = null;
+    emailErrorMsg = null;
   }
 }

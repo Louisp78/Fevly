@@ -16,7 +16,7 @@ SnackBar buildCustomSnackBar(
           horizontal: kBasicHorizontalPadding(size: size) / 6),
       constraints: BoxConstraints(maxHeight: size.height * 0.1),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: AutoSizeText(
@@ -27,13 +27,15 @@ SnackBar buildCustomSnackBar(
               maxLines: 2,
             ),
           ),
-          if (undoPress != null)
+          if (undoPress != null) ...[
+            SizedBox(width: kBasicHorizontalPadding(size: size)),
             CustomSmallButton(
               text: "Annuler",
               press: undoPress,
               buttonSize: CustomSmallButtonSize.small,
               textColor: themeColor.onBackground,
-            )
+            ),
+          ]
         ],
       ),
     ),

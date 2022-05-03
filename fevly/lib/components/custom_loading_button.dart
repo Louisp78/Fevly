@@ -38,7 +38,7 @@ class CustomLoadingButton extends StatelessWidget {
           ? SizedBox(
               height: size.height * 0.03,
               width: size.height * 0.03,
-              child: RiveAnimation.asset(
+              child: const RiveAnimation.asset(
                 'assets/anim/loading.riv',
                 animations: ['load'],
               ),

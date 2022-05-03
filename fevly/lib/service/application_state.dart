@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:fevly/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -23,7 +20,6 @@ class ApplicationState extends ChangeNotifier {
   }
 
   // Members
-  /// Login state
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _loginState;
 
@@ -48,23 +44,22 @@ class ApplicationState extends ChangeNotifier {
     // Firebase auth
     FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
-        // User is connected
+        // User is connected but not verified
         if (!user.emailVerified) {
           _loginState = ApplicationLoginState.verifyEmail;
-        } else
+        } else {
+          // User is connected and verified
           _loginState = ApplicationLoginState.loggedIn;
+        }
       } else {
         // User is disconnected
         _loginState = ApplicationLoginState.loggedOut;
       }
-      notifyListeners();
     });
   }
 
-  /// Launch login flow
-  /// Call when user click on connect with email
+  /// Start login flow for email connexion
   void startLoginFlow() {
-    print("Starting login flow");
     _loginState = ApplicationLoginState.emailAddress;
     notifyListeners();
   }
@@ -72,16 +67,13 @@ class ApplicationState extends ChangeNotifier {
   /// Veryfing email address is already used
   /// and update loginstate.
   /// Call errorCallback if email address is not valid
-  Future<bool> verifyEmailAddress({
+  Future<void> verifyEmailAddress({
     required String emailAddress,
-    required void Function() functionBeforeRebuild,
-    required int delayBeforeRebuild,
-    //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
     try {
-      var is_already_used_by_google = false;
-      var methodsOfConnexion =
+      final methodsOfConnexion =
           await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+      _emailAddress = emailAddress;
       if (methodsOfConnexion.isEmpty) {
         // Email address is not used
         _loginState = ApplicationLoginState.register;
@@ -91,16 +83,13 @@ class ApplicationState extends ChangeNotifier {
       } else if (methodsOfConnexion.first == 'google.com') {
         // Email address is already used by google account
         _loginState = ApplicationLoginState.loggedOut;
-        is_already_used_by_google = true;
+      } else {
+        throw FirebaseAuthException(
+            code: 'unknown-error', message: 'Application state not handled');
       }
-      _emailAddress = emailAddress;
-      functionBeforeRebuild();
-      await Future.delayed(Duration(seconds: delayBeforeRebuild), () {
-        notifyListeners();
-      });
-      return is_already_used_by_google;
-    } on FirebaseAuthException catch (e) {
-      throw e;
+      notifyListeners();
+    } on FirebaseAuthException {
+      rethrow;
     }
   }
 
@@ -109,8 +98,9 @@ class ApplicationState extends ChangeNotifier {
     try {
       return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      print('Error while send password reset email: ' + e.message!);
+      print('Error while send password reset email: ${e.message!}');
       print(e);
+      rethrow;
     }
   }
 
@@ -118,20 +108,22 @@ class ApplicationState extends ChangeNotifier {
   Future<UserCredential> signInWithEmailAndPassword({
     required String emailAddress,
     required String password,
-    //required void Function(FirebaseAuthException e) errorCallback,
   }) async {
+    // update context
+
     try {
       return await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
-    } on FirebaseAuthException catch (e) {
-      //errorCallback(e);
-      throw e;
+    } on FirebaseAuthException catch (_) {
+      rethrow;
     }
   }
 
   Future<UserCredential> signInWithGoogle() async {
+    // update context
+
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -147,20 +139,16 @@ class ApplicationState extends ChangeNotifier {
       );
 
       // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      throw e;
+      return await FirebaseAuth.instance
+          .signInWithCredential(credential)
+          .then((value) {
+        _loginState = ApplicationLoginState.loggedIn;
+        return value;
+      });
+    } on Exception catch (_) {
+      // TODO : handle error here with an unexpected PlatformException ?
+      rethrow;
     }
-  }
-
-  /// Cancel registration during login flow
-  void cancelRegistration({
-    required int delayBeforeRebuild,
-  }) async {
-    _loginState = ApplicationLoginState.loggedOut;
-    await Future.delayed(Duration(seconds: delayBeforeRebuild), () {
-      notifyListeners();
-    });
   }
 
   /// Register new user
@@ -170,8 +158,10 @@ class ApplicationState extends ChangeNotifier {
     required String login, // TODO: add login support with firebase
     required String password,
   }) async {
+    // Update context
+
     try {
-      final user_credential = await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailAddress, password: password)
           .then((userCred) async {
@@ -179,16 +169,16 @@ class ApplicationState extends ChangeNotifier {
         return userCred;
       });
 
-      await user_credential.user!.updateDisplayName(name);
+      await userCredential.user!.updateDisplayName(name);
 
-      return user_credential;
-    } on FirebaseAuthException catch (e) {
-      throw e;
+      return userCredential;
+    } on FirebaseAuthException catch (_) {
+      rethrow;
     }
   }
 
   /// Sign out
-  void signOut() {
+  void signOut({required BuildContext context}) {
     FirebaseAuth.instance.signOut();
     // Here listener in _init function will be call because of
     // an update of the user state.

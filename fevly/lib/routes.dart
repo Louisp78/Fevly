@@ -1,9 +1,12 @@
-import 'package:fevly/components/custom_snackbar.dart';
-import 'package:fevly/constant.dart';
 import 'package:fevly/models/user.dart';
-import 'package:fevly/screens/auth/auth_screen.dart';
+import 'package:fevly/screens/auth/email_screen.dart';
+import 'package:fevly/screens/auth/logged_out_screen.dart';
+import 'package:fevly/screens/auth/register_screen.dart';
+import 'package:fevly/screens/auth/verify_email_screen.dart';
+import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
+import 'package:fevly/screens/loading/loading_screen.dart';
 import 'package:fevly/screens/notifications/notifications_screen.dart';
 import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
@@ -14,36 +17,71 @@ import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/transition.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fevly/models/party.dart';
 
-import 'models/party.dart';
+import 'screens/auth/sign_in_screen.dart';
 
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-
-      // FIXME : find a better way to rebuild and keep the good route
       case '/':
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              Consumer<ApplicationState>(builder: (context, appState, _) {
-            final ApplicationState appState =
-                Provider.of<ApplicationState>(context);
-            if (appState.loginState == ApplicationLoginState.loggedIn) {
-              //return Navigator.pushNamed(context, '/dashboard');
-              return const DashboardScreen();
-            } else {
-              return const AuthScreen();
-              //Navigator.pushNamed(context, '/auth');
-            }
-          }),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            // init of the context of the application state
+            return const LoadingScreen();
+          },
           transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 1000),
         );
 
-      case '/auth':
+      case '/auth/logged_out':
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const AuthScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ChangeNotifierProvider<AuthViewModel>(
+                create: (context) => AuthViewModel(),
+                child: const LoggedOutScreen());
+          },
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
+
+      case '/auth/logged_out/verify_email':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ChangeNotifierProvider<AuthViewModel>(
+                create: (context) => AuthViewModel(),
+                child: const VerifyEmailScreen());
+          },
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
+      case '/auth/logged_out/email':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ChangeNotifierProvider<AuthViewModel>(
+                create: (context) => AuthViewModel(),
+                child: const EmailScreen());
+          },
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
+      case '/auth/logged_out/sign_in':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ChangeNotifierProvider<AuthViewModel>(
+                create: (context) => AuthViewModel(),
+                child: const SignInScreen());
+          },
+          transitionsBuilder: slideLeftTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
+      case '/auth/logged_out/register':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ChangeNotifierProvider<AuthViewModel>(
+                create: (context) => AuthViewModel(),
+                child: const RegisterScreen());
+          },
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
