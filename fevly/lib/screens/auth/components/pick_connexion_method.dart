@@ -1,8 +1,10 @@
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/service/application_state.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,9 +40,12 @@ class PickConnexionMethod extends StatelessWidget {
             style: textTheme.headline1!
                 .copyWith(color: themeColor.primary, fontSize: 85),
           ),
-          Spacer(),
+          const Spacer(),
           CustomTextButton(
-            press: () => appState.startLoginFlow(),
+            press: () {
+              appState.startLoginFlow();
+              buildRoute(context: context, loginState: appState.loginState);
+            },
             text: 'Se connecter par email',
             prefixIcon: Icon(
               Icons.email_rounded,
@@ -51,7 +56,20 @@ class PickConnexionMethod extends StatelessWidget {
             height: kBasicVerticalPadding(size: size),
           ),
           CustomTextButton(
-            press: () => appState.signInWithGoogle(),
+            press: () async {
+              try {
+                await appState.signInWithGoogle().then((value) => buildRoute(
+                    context: context, loginState: appState.loginState));
+              } on PlatformException catch (e) {
+                print('PlatformException : ${e}');
+                if (e.code == 'network_error') {
+                  handleNetworkError(context);
+                }
+                /*if (e.code == 'network_error') {
+                  handleNetworkError(context);
+                }*/
+              }
+            },
             text: 'Se connecter avec Google',
             prefixIcon: SvgPicture.asset('assets/base/google.svg',
                 color: themeColor.background),
@@ -62,5 +80,23 @@ class PickConnexionMethod extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void buildRoute(
+      {required BuildContext context,
+      required ApplicationLoginState loginState}) {
+    switch (loginState) {
+      case ApplicationLoginState.loggedOut:
+        break;
+      case ApplicationLoginState.emailAddress:
+        Navigator.pushNamed(context, '/auth/logged_out/email');
+        break;
+      case ApplicationLoginState.loggedIn:
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/dashboard', (route) => false);
+        break;
+      default:
+        throw Exception('Unknown login state: $loginState');
+    }
   }
 }

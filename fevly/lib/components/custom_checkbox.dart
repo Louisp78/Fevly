@@ -1,4 +1,3 @@
-import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomCheckBox extends StatelessWidget {

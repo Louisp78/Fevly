@@ -1,6 +1,7 @@
 import 'package:fevly/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
+import 'package:fevly/styles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,6 +54,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         widget.controller ?? TextEditingController();
     final Size size = MediaQuery.of(context).size;
     final ColorScheme themeColor = Theme.of(context).colorScheme;
+
+    final TextTheme textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     return Container(
       width: widget.width ?? size.width * 0.8,
       height: widget.height,
@@ -76,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onSaved: widget.onSaved,
           cursorColor: themeColor.primary,
           obscureText: widget.obscureText,
+          style: textTheme.headline3!.copyWith(color: themeColor.onBackground),
           decoration: getInputDecoration(type: widget.type, context: context)),
     );
   }
