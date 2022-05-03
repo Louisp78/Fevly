@@ -39,6 +39,7 @@ dependencies:
   rive: ^0.8.4
   google_sign_in: ^5.3.0
   page_transition: ^2.0.5
+  lint: ^1.8.2
 
 
 

@@ -12,8 +12,9 @@ class Body extends StatelessWidget {
     return Center(
       child: CustomTextButton(
         press: () async {
-          appState.signOut();
-          Navigator.popAndPushNamed(context, '/');
+          appState.signOut(context: context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/auth/logged_out', (route) => false);
         },
         text: 'Sign Out',
       ),

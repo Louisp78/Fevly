@@ -17,6 +17,8 @@ class CustomAuthAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var route = ModalRoute.of(context)!.settings.name;
+    print("current route ${route}");
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
@@ -27,11 +29,11 @@ class CustomAuthAppBar extends StatelessWidget {
         alignment: Alignment.centerLeft,
         clipBehavior: Clip.none,
         children: [
-          if (appState.loginState != ApplicationLoginState.loggedOut)
+          /*if (route != null)
             Positioned(
               left: size.width * 0.1,
               child: leading,
-            ),
+            ),*/
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

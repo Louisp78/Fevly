@@ -1,10 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_small_button.dart';
-import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/errors_msg.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/service/custom_timer.dart';
@@ -73,7 +72,7 @@ class _SignInForm extends State<SignInForm> {
                       textInputType: TextInputType.text,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return Kpassword_error_msg;
+                          return Kpassword_empty_error_msg;
                         }
                         return null;
                       },
@@ -115,19 +114,22 @@ class _SignInForm extends State<SignInForm> {
                                 .signInWithEmailAndPassword(
                                     emailAddress: widget.email,
                                     password: _passwordController.text)
-                                .then((value) => authVM.isLoading = false);
+                                .then((value) => buildRoute(
+                                    context: context,
+                                    loginState: appState.loginState));
                           } on FirebaseAuthException catch (e) {
-                            print(e);
+                            print('FirebaseAuthException : ${e.code}');
+                            setState(() {
+                              password_error_msg = handleFireSignInException(
+                                  code: e.code, context: context);
+                            });
                             authVM.isLoading = false;
                           }
                         }
                       },
-                      text_is_loading: 'Chargement',
                       text_not_loading: 'Suivant',
                       text_color_is_loading: themeColor.onBackground,
-                      text_color_not_loading: null,
                       background_color_is_loading: themeColor.onSurface,
-                      background_color_not_loading: null,
                       is_loading: authVM.isLoading,
                     ),
                   ),
@@ -138,6 +140,23 @@ class _SignInForm extends State<SignInForm> {
         ],
       ),
     );
+  }
+
+  void buildRoute(
+      {required BuildContext context,
+      required ApplicationLoginState loginState}) {
+    switch (loginState) {
+      case ApplicationLoginState.loggedIn:
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/dashboard', (route) => false);
+        break;
+      case ApplicationLoginState.verifyEmail:
+        Navigator.pushReplacementNamed(
+            context, '/auth/logged_out/verify_email');
+        break;
+      default:
+        throw Exception('Unexpected login state : $loginState');
+    }
   }
 
   @override

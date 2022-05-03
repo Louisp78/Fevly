@@ -9,10 +9,10 @@ class AuthViewModel extends ChangeNotifier {
   double _width = 0.0;
   double _height = 0.0;
 
-  bool _is_loading = false;
-  bool get isLoading => _is_loading;
+  var _isLoading = false;
+  bool get isLoading => _isLoading;
   set isLoading(bool value) {
-    _is_loading = value;
+    _isLoading = value;
     notifyListeners();
   }
 

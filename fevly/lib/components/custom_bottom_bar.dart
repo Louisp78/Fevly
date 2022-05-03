@@ -1,14 +1,10 @@
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
-import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/search/search_screen.dart';
-import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test_data/data_example.dart';
 import 'package:fevly/test_data/data_guest_list.dart';
 import 'package:fevly/test_data/data_list_of_user.dart';
 import 'package:flutter/material.dart';
-
 
 class CustomBottomBar extends StatelessWidget {
   const CustomBottomBar({
@@ -44,16 +40,15 @@ class CustomBottomBar extends StatelessWidget {
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               onPressed: () =>
-                            Navigator.pushNamed(context, '/search', arguments: {
-                          'mainList': guestListList[0].listOfUser,
-                          'suggestionList1Name': "Récent",
-                          'suggestionList2Name': "Mes amis",
-                          'userSuggestionList1': listOfUsers1,
-                          'userSuggestionList2': listOfFriends1,
-                          'type': SearchScreenType.all,
-                        }),
-              icon: Icon(Icons.search_rounded,
-                  color: themeColor.onBackground)),
+                  Navigator.pushNamed(context, '/search', arguments: {
+                    'mainList': guestListList[0].listOfUser,
+                    'suggestionList1Name': "Récent",
+                    'suggestionList2Name': "Mes amis",
+                    'userSuggestionList1': listOfUsers1,
+                    'userSuggestionList2': listOfFriends1,
+                    'type': SearchScreenType.all,
+                  }),
+              icon: Icon(Icons.search_rounded, color: themeColor.onBackground)),
           CustomIconButton(
             press: () {},
             icon: Icons.add_rounded,
@@ -62,16 +57,17 @@ class CustomBottomBar extends StatelessWidget {
             backgroundColor: themeColor.primary,
           ),
           IconButton(
-              onPressed: () => Navigator.pushNamed(context, '/notifications'),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              icon: Icon(
-                Icons.notifications_rounded,
-                color: themeColor.onBackground,
-              ),
-              ),
+            onPressed: () => Navigator.pushNamed(context, '/notifications'),
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            icon: Icon(
+              Icons.notifications_rounded,
+              color: themeColor.onBackground,
+            ),
+          ),
           IconButton(
-              onPressed: () => Navigator.pushNamed(context, '/profile', arguments: kCurrentUser),
+              onPressed: () => Navigator.pushNamed(context, '/profile',
+                  arguments: kCurrentUser),
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               icon: Icon(

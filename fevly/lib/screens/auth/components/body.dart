@@ -1,10 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_auth_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant.dart';
 import 'package:fevly/screens/auth/anim/martini_anim.dart';
-import 'package:fevly/screens/auth/components/form_section.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +9,11 @@ import 'package:provider/provider.dart';
 
 /// Body of Authentification screen
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({
+    required this.formContent,
+  });
+
+  final Widget formContent;
 
   @override
   Widget build(BuildContext context) {
@@ -40,22 +41,18 @@ class Body extends StatelessWidget {
               Column(
                 children: [
                   CustomAuthAppBar(
-                    title:
-                        appState.loginState != ApplicationLoginState.loggedOut
-                            ? "Fevly"
-                            : "",
+                    title: "Fevly",
                     leading: CustomIconButton(
                       size: const CustomIconButtonSize.small(),
                       press: () {
-                        if (appState.loginState !=
-                            ApplicationLoginState.loggedOut) {
-                          MartiniAnim.exitAnim();
-                          appState.cancelRegistration(delayBeforeRebuild: 1);
-                          authVM.setwidthAndHeightAndColor(
-                              0, 0, Colors.transparent);
-                        } else {
-                          Navigator.pop(context);
-                        }
+                        // Exit animations
+                        authVM.setwidthAndHeightAndColor(
+                            0, 0, Colors.transparent);
+                        // Let the animation finish before popping
+                        MartiniAnim.changeShowStatus();
+                        Future.delayed(const Duration(seconds: 1), () {
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                        });
                       },
                       outline: true,
                       circle: false,
@@ -65,7 +62,7 @@ class Body extends StatelessWidget {
                       borderColor: themeColor.onBackground,
                     ),
                   ),
-                  Expanded(child: const FormSection()),
+                  Expanded(child: formContent),
                   SizedBox(
                     height: kBasicVerticalPadding(size: size),
                   ),
