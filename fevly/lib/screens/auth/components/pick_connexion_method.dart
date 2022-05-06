@@ -1,4 +1,6 @@
+import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
+import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
@@ -20,6 +22,7 @@ class PickConnexionMethod extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final ApplicationState appState = Provider.of<ApplicationState>(context);
     final Size size = MediaQuery.of(context).size;
+    final AuthViewModel authVM = Provider.of<AuthViewModel>(context);
     return SizedBox(
       width: size.width * 0.8,
       child: Column(
@@ -43,6 +46,7 @@ class PickConnexionMethod extends StatelessWidget {
           const Spacer(),
           CustomTextButton(
             press: () {
+              if (authVM.isLoading) return; // avoid multiple clicks
               appState.startLoginFlow();
               buildRoute(context: context, loginState: appState.loginState);
             },
@@ -55,8 +59,9 @@ class PickConnexionMethod extends StatelessWidget {
           SizedBox(
             height: kBasicVerticalPadding(size: size),
           ),
-          CustomTextButton(
-            press: () async {
+          CustomLoadingButton(
+            onPressed: () async {
+              if (authVM.isLoading) return; // avoid mutiple clicks
               try {
                 await appState.signInWithGoogle().then((value) => buildRoute(
                     context: context, loginState: appState.loginState));
@@ -70,9 +75,12 @@ class PickConnexionMethod extends StatelessWidget {
                 }*/
               }
             },
-            text: 'Se connecter avec Google',
+            text_not_loading: 'Se connecter avec Google',
             prefixIcon: SvgPicture.asset('assets/base/google.svg',
                 color: themeColor.background),
+            is_loading: authVM.isLoading,
+            text_color_is_loading: themeColor.onBackground,
+            background_color_is_loading: themeColor.onSurface,
           ),
           SizedBox(
             height: kBasicVerticalPadding(size: size),
@@ -91,12 +99,12 @@ class PickConnexionMethod extends StatelessWidget {
       case ApplicationLoginState.emailAddress:
         Navigator.pushNamed(context, '/auth/logged_out/email');
         break;
-      case ApplicationLoginState.loggedIn:
+      /*case ApplicationLoginState.loggedIn:
         Navigator.pushNamedAndRemoveUntil(
             context, '/dashboard', (route) => false);
-        break;
+        break;*/
       default:
-        throw Exception('Unknown login state: $loginState');
+        break;
     }
   }
 }

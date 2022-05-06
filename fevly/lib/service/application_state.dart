@@ -12,6 +12,7 @@ enum ApplicationLoginState {
   password,
   register,
   verifyEmail,
+  loading,
 }
 
 class ApplicationState extends ChangeNotifier {
@@ -20,7 +21,7 @@ class ApplicationState extends ChangeNotifier {
   }
 
   // Members
-  ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
+  ApplicationLoginState _loginState = ApplicationLoginState.loading;
   ApplicationLoginState get loginState => _loginState;
 
   /// ThemeMode state
@@ -55,6 +56,7 @@ class ApplicationState extends ChangeNotifier {
         // User is disconnected
         _loginState = ApplicationLoginState.loggedOut;
       }
+      notifyListeners();
     });
   }
 
@@ -177,9 +179,57 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
+  /// Update password
+  Future<void> updatePassword({
+    required String newPassword,
+  }) {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.updatePassword(newPassword);
+    }
+    return Future.value();
+  }
+
+  /// TODO: Get a user's provider-specific profile information.
+
+  /// Update display name
+  Future<bool> updateDisplayName({required String newName}) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.updateDisplayName(newName).then((value) => true);
+    }
+    return Future.value(false);
+  }
+
+  /// Update photo url
+  Future<bool> updatePhotoUrl({required String newPhotoUrl}) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.updatePhotoURL(newPhotoUrl).then((value) => true);
+    }
+    return Future.value(false);
+  }
+
+  /// Update email address
+  Future<bool> updateEmailAddress({required String newEmailAddress}) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.updateEmail(newEmailAddress).then((value) => true);
+    }
+    return Future.value(false);
+  }
+
+  Future<bool> deleteUser() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.delete().then((value) => true);
+    }
+    return Future.value(false);
+  }
+
   /// Sign out
-  void signOut({required BuildContext context}) {
-    FirebaseAuth.instance.signOut();
+  Future<void> signOut({required BuildContext context}) {
+    return FirebaseAuth.instance.signOut();
     // Here listener in _init function will be call because of
     // an update of the user state.
   }

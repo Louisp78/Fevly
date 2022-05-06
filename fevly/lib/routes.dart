@@ -1,7 +1,7 @@
-import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/auth/email_screen.dart';
 import 'package:fevly/screens/auth/logged_out_screen.dart';
 import 'package:fevly/screens/auth/register_screen.dart';
+import 'package:fevly/screens/auth/sign_in_screen.dart';
 import 'package:fevly/screens/auth/verify_email_screen.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
@@ -10,8 +10,6 @@ import 'package:fevly/screens/loading/loading_screen.dart';
 import 'package:fevly/screens/notifications/notifications_screen.dart';
 import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
-import 'package:fevly/screens/profile/profile_screen.dart';
-import 'package:fevly/screens/search/search_screen.dart';
 import 'package:fevly/screens/settings/settings_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/transition.dart';
@@ -19,22 +17,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fevly/models/party.dart';
 
-import 'screens/auth/sign_in_screen.dart';
-
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            // init of the context of the application state
-            return const LoadingScreen();
-          },
-          transitionsBuilder: slideUpTransition(),
-          transitionDuration: const Duration(milliseconds: 1000),
-        );
-
-      case '/auth/logged_out':
+            pageBuilder: (context, animation, secondaryAnimation) {
+          return Consumer<ApplicationState>(
+              builder: (context, appState, child) {
+            if (appState.loginState == ApplicationLoginState.loggedIn) {
+              return const DashboardScreen();
+            } else if (appState.loginState == ApplicationLoginState.loading) {
+              return const LoadingScreen();
+            } else {
+              return ChangeNotifierProvider(
+                  create: (context) => AuthViewModel(),
+                  child: const LoggedOutScreen());
+            }
+          });
+        });
+      /*case '/auth/logged_out':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider<AuthViewModel>(
@@ -43,7 +45,7 @@ mixin RouterNav {
           },
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
-        );
+        );*/
 
       case '/auth/logged_out/verify_email':
         return PageRouteBuilder(
@@ -88,15 +90,15 @@ mixin RouterNav {
       case '/terms_of_use':
         return MaterialPageRoute(builder: (_) => const TermOfUseScreen());
 
-      case '/profile':
+      /*case '/profile':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               ProfileScreen(profileOwner: settings.arguments! as User),
           transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 500),
-        );
+        );*/
 
-      case '/search':
+      /*case '/search':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             final Map args = settings.arguments! as Map;
@@ -111,12 +113,13 @@ mixin RouterNav {
           },
           transitionsBuilder: slideLeftTransition(),
         );
-
+*/
       case '/dashboard':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const DashboardScreen(),
           transitionDuration: const Duration(milliseconds: 500),
+          transitionsBuilder: slideLeftTransition(),
         );
 
       case '/party/party_info':
@@ -139,6 +142,8 @@ mixin RouterNav {
         );
       case '/settings':
         return PageRouteBuilder(
+            transitionsBuilder: slideLeftTransition(),
+            transitionDuration: const Duration(milliseconds: 500),
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const SettingsScreen());
 
