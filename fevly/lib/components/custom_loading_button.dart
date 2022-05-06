@@ -12,7 +12,8 @@ class CustomLoadingButton extends StatelessWidget {
       required this.text_color_is_loading,
       this.text_color_not_loading,
       this.text_is_loading = 'Chargement',
-      this.maxWidth = double.infinity});
+      this.maxWidth = double.infinity,
+      this.prefixIcon});
 
   final GestureTapCallback onPressed;
   final bool is_loading;
@@ -23,12 +24,14 @@ class CustomLoadingButton extends StatelessWidget {
   final Color? text_color_is_loading;
   final Color? text_color_not_loading;
   final double maxWidth;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return CustomTextButton(
       press: onPressed,
+      prefixIcon: prefixIcon,
       text: is_loading ? text_is_loading : text_not_loading,
       textColor: is_loading ? text_color_is_loading : text_color_not_loading,
       backgroundColor: is_loading
