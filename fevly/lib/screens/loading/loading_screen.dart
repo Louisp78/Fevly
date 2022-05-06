@@ -18,7 +18,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    /*WidgetsBinding.instance!.addPostFrameCallback((_) {
       final ApplicationState appState =
           Provider.of<ApplicationState>(context, listen: false);
       if (appState.loginState == ApplicationLoginState.loggedIn) {
@@ -26,7 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       } else {
         Navigator.pushReplacementNamed(context, '/auth/logged_out');
       }
-    });
+    });*/
   }
 
   @override

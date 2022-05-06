@@ -20,7 +20,7 @@ class CustomDashboardAppBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),
-      height: height,
+      height: 70,
       width: size.width,
       decoration: BoxDecoration(
         color: themeColor.surface,
