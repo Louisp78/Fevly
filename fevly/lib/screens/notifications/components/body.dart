@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_basic_app_bar.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/custom_notification.dart';
 import 'package:fevly/screens/notifications/components/custom_notification_item.dart';
 import 'package:fevly/styles/colors.dart';

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
@@ -101,8 +101,8 @@ class CustomBottomSheet extends StatelessWidget {
                   validator: (value) {},
                   width: size.width * 0.6,
                   height: 35,
-                      hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                      hintText: "Nom du produit",
+                  hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
+                  hintText: "Nom du produit",
                 ),
               ),
             ],
@@ -117,8 +117,8 @@ class CustomBottomSheet extends StatelessWidget {
               validator: (value) {},
               width: size.width * 0.6,
               height: 35,
-                  hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
-                  hintText: "Nom ",
+              hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
+              hintText: "Nom ",
             ),
           ),
           Row(

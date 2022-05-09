@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class CustomAuthAppBar extends StatelessWidget {
-  const CustomAuthAppBar({
+class CustomLiteAppBar extends StatelessWidget {
+  const CustomLiteAppBar({
     Key? key,
     required this.title,
     required this.leading,

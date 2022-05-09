@@ -1,4 +1,4 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 
 //$ ENUMERATION

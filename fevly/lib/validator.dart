@@ -7,8 +7,7 @@ final Knumber_pattern = RegExp(r'[0-9]');
 final Kletters_pattern = RegExp(r'[a-zA-Z]');
 
 bool passwordValidate(String? value) {
-  return value!.isEmpty ||
-      !value.contains(Knumber_pattern) ||
+  return !value!.contains(Knumber_pattern) ||
       !value.contains(Kletters_pattern) ||
       value.length < 8;
 }

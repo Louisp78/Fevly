@@ -61,9 +61,7 @@ class DashboardScreen extends StatelessWidget {
                       const Align(
                           alignment: Alignment.bottomCenter,
                           child: CustomBottomBar()),
-                      const CustomDashboardAppBar(
-                        height: heightAppBar,
-                      ),
+                      const CustomDashboardAppBar(),
                     ],
                   ),
                 ),

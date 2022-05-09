@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rive/rive.dart';
 
 /// Login state enum
 enum ApplicationLoginState {
@@ -15,6 +16,11 @@ enum ApplicationLoginState {
   loading,
 }
 
+enum AuthProvider {
+  google,
+  emailPassword,
+}
+
 class ApplicationState extends ChangeNotifier {
   ApplicationState() {
     _init();
@@ -23,6 +29,11 @@ class ApplicationState extends ChangeNotifier {
   // Members
   ApplicationLoginState _loginState = ApplicationLoginState.loading;
   ApplicationLoginState get loginState => _loginState;
+
+  User? userLastInstance;
+
+  late AuthProvider _authProvider;
+  AuthProvider get authProvider => _authProvider;
 
   /// ThemeMode state
   ThemeMode _themeModeState = ThemeMode.system;
@@ -44,6 +55,8 @@ class ApplicationState extends ChangeNotifier {
 
     // Firebase auth
     FirebaseAuth.instance.userChanges().listen((user) async {
+      print('User listener called : $user');
+      userLastInstance = user;
       if (user != null) {
         // User is connected but not verified
         if (!user.emailVerified) {
@@ -51,6 +64,7 @@ class ApplicationState extends ChangeNotifier {
         } else {
           // User is connected and verified
           _loginState = ApplicationLoginState.loggedIn;
+          setAuthProvider();
         }
       } else {
         // User is disconnected
@@ -95,6 +109,33 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
+  /// set authprovider
+  void setAuthProvider() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    try {
+      final methodsOfConnexion =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(user.email!);
+      _emailAddress = emailAddress;
+      if (methodsOfConnexion.isEmpty) {
+        // Email address is not used
+        /*throw FirebaseAuthException(
+            code: 'unknown-email', message: 'Email address not used');*/
+      } else if (methodsOfConnexion.first == 'password') {
+        // Email address is already used
+        _authProvider = AuthProvider.emailPassword;
+      } else if (methodsOfConnexion.first == 'google.com') {
+        // Email address is already used by google account
+        _authProvider = AuthProvider.google;
+      } else {
+        throw FirebaseAuthException(
+            code: 'unknown-error', message: 'Application state not handled');
+      }
+    } on FirebaseAuthException {
+      rethrow;
+    }
+  }
+
   /// Reset email address
   Future<void> resetEmailAddress({required String email}) async {
     try {
@@ -114,10 +155,15 @@ class ApplicationState extends ChangeNotifier {
     // update context
 
     try {
-      return await FirebaseAuth.instance.signInWithEmailAndPassword(
+      return await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
-      );
+      )
+          .then((value) {
+        _authProvider = AuthProvider.emailPassword;
+        return value;
+      });
     } on FirebaseAuthException catch (_) {
       rethrow;
     }
@@ -145,6 +191,7 @@ class ApplicationState extends ChangeNotifier {
           .signInWithCredential(credential)
           .then((value) {
         _loginState = ApplicationLoginState.loggedIn;
+        _authProvider = AuthProvider.google;
         return value;
       });
     } on Exception catch (_) {
@@ -168,6 +215,7 @@ class ApplicationState extends ChangeNotifier {
               email: emailAddress, password: password)
           .then((userCred) async {
         await userCred.user!.sendEmailVerification();
+        _authProvider = AuthProvider.emailPassword;
         return userCred;
       });
 
@@ -182,10 +230,21 @@ class ApplicationState extends ChangeNotifier {
   /// Update password
   Future<void> updatePassword({
     required String newPassword,
+    required void Function() onRequiresRecentLogin,
+    required void Function() onSuccess,
   }) {
     final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.updatePassword(newPassword);
+    try {
+      if (user != null) {
+        return user.updatePassword(newPassword).then((value) {
+          onSuccess();
+          return value;
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        onRequiresRecentLogin();
+      }
     }
     return Future.value();
   }
@@ -211,24 +270,80 @@ class ApplicationState extends ChangeNotifier {
   }
 
   /// Update email address
-  Future<bool> updateEmailAddress({required String newEmailAddress}) async {
+  Future<void> updateEmailAddress(
+      {required String newEmailAddress,
+      required void Function() onEmailAlreadyInUse,
+      required void Function() onRequiresRecentLogin,
+      required void Function() onSucess}) async {
     final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.updateEmail(newEmailAddress).then((value) => true);
+    try {
+      if (user != null) {
+        return await user
+            .verifyBeforeUpdateEmail(newEmailAddress)
+            .then((value) {
+          onSucess();
+          return value;
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException : ${e.code}');
+      if (e.code == 'email-already-in-use') {
+        onEmailAlreadyInUse();
+      }
+      if (e.code == 'requires-recent-login') {
+        print('here !!');
+        onRequiresRecentLogin();
+      }
+    }
+  }
+
+  /// delete user
+  Future<bool> deleteUser(
+      {required void Function() onRequiresRecentLogin,
+      required void Function() onSucess}) async {
+    final user = FirebaseAuth.instance.currentUser;
+    try {
+      if (user != null) {
+        return await user.delete().then((value) {
+          onSucess();
+          return true;
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException : ${e.code}');
+      if (e.code == 'requires-recent-login') {
+        onRequiresRecentLogin();
+      }
     }
     return Future.value(false);
   }
 
-  Future<bool> deleteUser() {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.delete().then((value) => true);
+  /// Reauthenticate user
+  Future<bool> reauthenticateUser({
+    required String emailAddress,
+    required String password,
+  }) async {
+    if (_authProvider == AuthProvider.emailPassword) {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        return user
+            .reauthenticateWithCredential(EmailAuthProvider.credential(
+              email: user.email!,
+              password: password,
+            ))
+            .then((value) => true);
+      }
+    } else if (_authProvider == AuthProvider.google) {
+      await signOut();
+      await signInWithGoogle();
+      return Future.value(true);
     }
     return Future.value(false);
   }
 
   /// Sign out
-  Future<void> signOut({required BuildContext context}) {
+  Future<void> signOut() {
     return FirebaseAuth.instance.signOut();
     // Here listener in _init function will be call because of
     // an update of the user state.

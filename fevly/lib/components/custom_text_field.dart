@@ -1,4 +1,4 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/input_decoration.dart';
 import 'package:fevly/styles/theme.dart';
@@ -20,6 +20,7 @@ class CustomTextField extends StatefulWidget {
   final InputDecorationType type;
   final TextEditingController? controller;
   final String? error_msg;
+  final String? helper_msg;
   final String? label_text;
   final String? prefix_text;
   final TextInputType? textInputType;
@@ -39,6 +40,7 @@ class CustomTextField extends StatefulWidget {
       this.type = InputDecorationType.basic,
       this.controller,
       this.error_msg,
+      this.helper_msg,
       this.textInputType,
       this.label_text,
       this.prefix_text});
@@ -113,6 +115,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           hintStyle: widget.hintStyle ??
               kBasicHintStyle(textTheme: textTheme, themeColor: themeColor),
           errorText: widget.error_msg,
+          helperText: widget.helper_msg,
           labelText: widget.label_text,
           labelStyle: textTheme.headline3!.copyWith(color: kTextColor),
           prefixText: widget.prefix_text,

@@ -1,4 +1,4 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/profile/components/list_of_badges.dart';
@@ -8,7 +8,6 @@ import 'package:fevly/view_models/text_field_model_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 
 class Body extends StatelessWidget {
   const Body({Key? key, required this.profileOwner}) : super(key: key);
@@ -79,8 +78,7 @@ class Body extends StatelessWidget {
               needToBeFriendMessage(
                 username: profileOwner.pseudo,
               ),
-              style:
-                  textTheme.headline5?.copyWith(color: kTextColor)),
+              style: textTheme.headline5?.copyWith(color: kTextColor)),
         );
       default:
         return ListOfBadges(

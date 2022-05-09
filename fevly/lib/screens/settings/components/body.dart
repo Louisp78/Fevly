@@ -1,21 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fevly/components/custom_bottom_bar.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/components/dialog/delete_account.dart';
+import 'package:fevly/components/dialog/disconnect.dart';
+import 'package:fevly/constant/constant.dart';
+import 'package:fevly/model/option_item.dart';
+import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/screens/settings/components/custom_card.dart';
 import 'package:fevly/screens/settings/components/custom_lite_app_bar.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/no_glow_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-class OptionItem {
-  OptionItem(
-      {required this.title, required this.prefixWidget, required this.onTap});
-
-  final String title;
-  final Widget prefixWidget;
-  final GestureTapCallback onTap;
-}
 
 class Body extends StatelessWidget {
   const Body();
@@ -56,54 +51,19 @@ class Body extends StatelessWidget {
       OptionItem(
         title: 'Supprimer le compte',
         prefixWidget: const Icon(Icons.delete_forever_rounded),
-        onTap: () => AwesomeDialog(
+        onTap: () => buildDeleteAccountDialog(
           context: context,
-          dialogType: DialogType.WARNING,
-          headerAnimationLoop: false,
-          animType: AnimType.SCALE,
-          title: 'Supprimer le compte ?',
-          desc:
-              'Attention cette action est irréversible. Vous perdrez toutes vos données.',
-          descTextStyle: textTheme.bodyMedium,
-          btnOkColor: themeColor.surface,
-          btnCancelText: 'Annuler',
-          btnOkText: 'Confirmer',
-          btnCancelColor: themeColor.primary,
-          buttonsTextStyle: textTheme.bodyLarge,
-          titleTextStyle: textTheme.bodyLarge,
-          showCloseIcon: true,
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show(),
+          onRequiresRecentLogin: () => Navigator.pushNamed(
+            context,
+            '/reauthenticate',
+            arguments: ReauthenticationType.deleteAccount,
+          ),
+        ),
       ),
       OptionItem(
           title: 'Se déconnecter',
           prefixWidget: const Icon(Icons.logout_rounded),
-          onTap: () {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.QUESTION,
-              headerAnimationLoop: false,
-              title: 'Se déconnecter',
-              desc: 'Voulez-vous vraiment vous déconnecter ?',
-              descTextStyle: textTheme.bodyMedium,
-              btnOkColor: themeColor.surface,
-              btnCancelText: 'Non',
-              btnOkText: 'Oui',
-              btnCancelColor: themeColor.primary,
-              buttonsTextStyle: textTheme.bodyLarge,
-              titleTextStyle: textTheme.bodyLarge,
-              showCloseIcon: true,
-              btnCancelOnPress: () {},
-              btnOkOnPress: () => appState
-                  .signOut(context: context)
-                  .then((value) => Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/',
-                        (Route<dynamic> route) => false,
-                      )),
-            ).show();
-          }),
+          onTap: () => buildDisconnectDialog(context: context)),
     ];
 
     return Stack(
@@ -116,7 +76,7 @@ class Body extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   appState
-                      .signOut(context: context)
+                      .signOut()
                       .then((value) => Navigator.pushNamedAndRemoveUntil(
                             context,
                             '/',
@@ -153,7 +113,7 @@ class Body extends StatelessWidget {
             ],
           ),
         ),
-        CustomBottomBar(),
+        const CustomBottomBar(),
       ],
     );
   }

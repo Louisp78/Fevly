@@ -1,4 +1,4 @@
-import 'package:fevly/errors_msg.dart';
+import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

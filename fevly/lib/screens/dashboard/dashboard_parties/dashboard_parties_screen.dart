@@ -1,4 +1,4 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/party.dart';
 import 'package:fevly/screens/dashboard/dashboard_parties/components/accepted_parties.dart';
 import 'package:fevly/screens/dashboard/dashboard_parties/components/parties_invite.dart';
