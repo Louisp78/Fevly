@@ -1,5 +1,5 @@
 import 'package:fevly/components/custom_grid_item.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/screens/profile/components/header_list_badge.dart';
 import 'package:fevly/view_models/text_field_model_view.dart';

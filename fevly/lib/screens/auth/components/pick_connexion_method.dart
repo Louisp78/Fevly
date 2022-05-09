@@ -4,7 +4,7 @@ import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';

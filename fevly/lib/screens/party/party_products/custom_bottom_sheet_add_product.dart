@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/product.dart';
 import 'package:fevly/models/product_list.dart';
 import 'package:fevly/screens/party/model_views/model_view_party.dart';
@@ -91,8 +91,8 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                                 ),
                                 Text(
                                   "Catégorie",
-                                  style: textTheme.headline5?.copyWith(
-                                      color: kDarkerTextColor),
+                                  style: textTheme.headline5
+                                      ?.copyWith(color: kDarkerTextColor),
                                 ),
                               ],
                             ),
@@ -107,9 +107,8 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                         validator: (value) {},
                         width: size.width * 0.6,
                         height: 35,
-                            hintStyle:
-                                kBottomSheetHintStyle(textTheme: textTheme),
-                            hintText: "Nom du produit",
+                        hintStyle: kBottomSheetHintStyle(textTheme: textTheme),
+                        hintText: "Nom du produit",
                       ),
                     ],
                   ),
@@ -123,8 +122,7 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                   ),
                   Text(
                     modelViewShopping.count.toString(),
-                    style: textTheme.headline2
-                        ?.copyWith(color: kTextColor),
+                    style: textTheme.headline2?.copyWith(color: kTextColor),
                   ),
                   SizedBox(width: size.width * 0.02),
                   CustomIconButton(
@@ -170,8 +168,8 @@ class CustomBottomSheetAddProduct extends StatelessWidget {
                               maxLines: 1,
                               style: modelViewShopping.category != null
                                   ? textTheme.headline5
-                                  : textTheme.headline5?.copyWith(
-                                      color: themeColor.primary),
+                                  : textTheme.headline5
+                                      ?.copyWith(color: themeColor.primary),
                             ),
                             const Spacer(),
                           ],

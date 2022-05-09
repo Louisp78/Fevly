@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
@@ -40,7 +40,7 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
       width: size.width * 0.7,
       child: Column(
         children: [
-          AutoSizeText('Verify your email address',
+          AutoSizeText('Verifier votre email',
               style: textTheme.headline1!, maxLines: 1),
           const Spacer(),
           CustomLoadingButton(
@@ -117,6 +117,14 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
         );
         break;
       case ApplicationLoginState.loggedIn:
+        ScaffoldMessenger.of(context).showSnackBar(
+          buildCustomSnackBar(
+            themeColor: themeColor,
+            textTheme: textTheme,
+            size: size,
+            text: 'Email validé 🎉',
+          ),
+        );
         Navigator.pushNamedAndRemoveUntil(
             context, '/dashboard', (route) => route.isFirst);
         break;

@@ -21,7 +21,11 @@ class SignInScreen extends StatelessWidget {
         body: Body(
           formContent: ChangeNotifierProvider<CustomTimer>(
             create: (context) => CustomTimer(number_of_seconds: 30),
-            child: SignInForm(email: appState.emailAddress!),
+            child: SignInForm(
+              email: appState.emailAddress!,
+              title: 'Connexion à',
+              subtitle: appState.emailAddress!,
+            ),
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/auth/email_screen.dart';
 import 'package:fevly/screens/auth/logged_out_screen.dart';
 import 'package:fevly/screens/auth/register_screen.dart';
@@ -7,9 +8,13 @@ import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/loading/loading_screen.dart';
+import 'package:fevly/screens/modify_profile/modify_profile_screen.dart';
+import 'package:fevly/screens/modify_profile/view_model/modify_profile_view_model.dart';
 import 'package:fevly/screens/notifications/notifications_screen.dart';
 import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
+import 'package:fevly/screens/profile/profile_screen.dart';
+import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/screens/settings/settings_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/transition.dart';
@@ -29,6 +34,11 @@ mixin RouterNav {
               return const DashboardScreen();
             } else if (appState.loginState == ApplicationLoginState.loading) {
               return const LoadingScreen();
+            } else if (appState.loginState ==
+                ApplicationLoginState.verifyEmail) {
+              return ChangeNotifierProvider(
+                  create: (context) => AuthViewModel(),
+                  child: const VerifyEmailScreen());
             } else {
               return ChangeNotifierProvider(
                   create: (context) => AuthViewModel(),
@@ -89,14 +99,33 @@ mixin RouterNav {
         );
       case '/terms_of_use':
         return MaterialPageRoute(builder: (_) => const TermOfUseScreen());
+      case '/reauthenticate':
+        return MaterialPageRoute(builder: (_) {
+          final args = settings.arguments! as Map<String, dynamic>;
+          return ReauthenticateScreen(
+            type: args['type'] as ReauthenticationType,
+            strValue: args['valueStr'] as String,
+          );
+        });
 
-      /*case '/profile':
+      case '/profile':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               ProfileScreen(profileOwner: settings.arguments! as User),
           transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 500),
-        );*/
+        );
+      case '/profile/modify':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              Consumer<ApplicationState>(builder: (context, appState, _) {
+            return ChangeNotifierProvider(
+                create: (context) => ModifyProfileViewModel(),
+                child: const ModifyProfileScreen());
+          }),
+          transitionsBuilder: slideUpTransition(),
+          transitionDuration: const Duration(milliseconds: 500),
+        );
 
       /*case '/search':
         return PageRouteBuilder(

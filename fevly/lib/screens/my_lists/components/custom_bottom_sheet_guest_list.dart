@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/general.dart';
 import 'package:fevly/models/guest_list.dart';
 import 'package:fevly/styles/colors.dart';

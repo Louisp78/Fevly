@@ -1,15 +1,16 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
+import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:fevly/test_data/data_example.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CustomDashboardAppBar extends StatelessWidget {
-  final double height;
-  const CustomDashboardAppBar({Key? key, required this.height})
-      : super(key: key);
+  const CustomDashboardAppBar();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,10 @@ class CustomDashboardAppBar extends StatelessWidget {
     final TextTheme textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final ColorScheme themeColor = Theme.of(context).colorScheme;
+
+    /// user is not null
+    final appState = Provider.of<ApplicationState>(context);
+    final user = appState.userLastInstance!;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),
@@ -28,15 +33,20 @@ class CustomDashboardAppBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CustomCircleAvatar(
-            press: () => Navigator.pushNamed(context, '/profile',
-                arguments: kCurrentUser),
-            icon: Icon(
-              Icons.person_rounded,
-              color: themeColor.primary,
+          if (user.photoURL != null)
+            CircleAvatar(
+              backgroundImage: NetworkImage(user.photoURL!),
             ),
-            backgroundColor: themeColor.onSurface,
-          ),
+          if (user.photoURL == null)
+            CustomCircleAvatar(
+              press: () => Navigator.pushNamed(context, '/profile',
+                  arguments: kCurrentUser),
+              icon: Icon(
+                Icons.person_rounded,
+                color: themeColor.primary,
+              ),
+              backgroundColor: themeColor.onSurface,
+            ),
           SizedBox(width: kBasicHorizontalPadding(size: size)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +64,7 @@ class CustomDashboardAppBar extends StatelessWidget {
                   /*const LevelLabel(level: 13),*/
                 ],
               ),
-              Text('Louis Place',
+              Text(user.displayName!,
                   style: textTheme.bodyText2?.copyWith(color: kTextColor)),
               /*Stack(
                 alignment: Alignment.centerLeft,

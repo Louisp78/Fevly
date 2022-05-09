@@ -1,8 +1,8 @@
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_small_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
-import 'package:fevly/errors_msg.dart';
+import 'package:fevly/constant/constant.dart';
+import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
@@ -16,10 +16,14 @@ import 'package:provider/provider.dart';
 /// Form for sign in
 class SignInForm extends StatefulWidget {
   const SignInForm({
+    required this.title,
     required this.email,
+    required this.subtitle,
   });
 
   final String email;
+  final String title;
+  final String subtitle;
 
   @override
   State<SignInForm> createState() => _SignInForm();
@@ -42,17 +46,16 @@ class _SignInForm extends State<SignInForm> {
     return SizedBox(
       width: size.width * 0.8,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Connexion à',
+            widget.title,
             style: textTheme.displayLarge,
           ),
           SizedBox(
             height: kBasicVerticalPadding(size: size) / 2,
           ),
           Text(
-            widget.email,
+            widget.subtitle,
             style: textTheme.displayMedium!.apply(color: themeColor.primary),
           ),
           SizedBox(

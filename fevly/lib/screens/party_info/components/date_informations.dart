@@ -4,14 +4,14 @@ import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:intl/intl.dart';
 
 class DateInformations extends StatelessWidget {
   final DateTime begin;
   final DateTime end;
   const DateInformations({
-    Key? key, 
+    Key? key,
     required this.begin,
     required this.end,
   }) : super(key: key);
@@ -82,7 +82,7 @@ class DateInformations extends StatelessWidget {
                     SizedBox(height: size.height * 0.008),
                     CustomSmallButton(
                       buttonSize: CustomSmallButtonSize.verySmall,
-                      text:"$endDateStr à $endHoursStr",
+                      text: "$endDateStr à $endHoursStr",
                       press: () {},
                       prefixIcon: Icon(
                         Icons.calendar_today,

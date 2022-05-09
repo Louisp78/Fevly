@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_small_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
@@ -116,13 +116,11 @@ class Body extends StatelessWidget {
         Positioned(
             left: size.width * 0.07,
             top: kBasicVerticalPadding(size: size),
-            child: Icon(Icons.logout_rounded,
-                color: themeColor.onBackground)),
+            child: Icon(Icons.logout_rounded, color: themeColor.onBackground)),
         Positioned(
           top: kBasicVerticalPadding(size: size),
           child: Text("Vote dans 10:52",
-              style:
-                  textTheme.headline4?.copyWith(color: kTextColor)),
+              style: textTheme.headline4?.copyWith(color: kTextColor)),
         ),
       ],
     );

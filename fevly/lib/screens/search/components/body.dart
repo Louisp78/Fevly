@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_bottom_bar.dart';
 import 'package:fevly/components/custom_user_list_item.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/build_app_bar_for_search_screen.dart';
 import 'package:fevly/functions/create_new_from.dart';
 import 'package:fevly/models/user.dart';

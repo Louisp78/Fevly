@@ -1,4 +1,4 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/product.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';

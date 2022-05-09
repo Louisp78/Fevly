@@ -1,6 +1,6 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/search/search_screen.dart';
@@ -18,8 +18,7 @@ class CustomUserListItem extends StatelessWidget {
     this.type = SearchScreenType.all,
     this.listOfUserViewModel,
   }) : assert(
-            (type == SearchScreenType.all &&
-                    listOfUserViewModel != null) ||
+            (type == SearchScreenType.all && listOfUserViewModel != null) ||
                 (type == SearchScreenType.guests &&
                     listOfUserViewModel != null),
             "Need to define guestList or not.");
@@ -45,7 +44,9 @@ class CustomUserListItem extends StatelessWidget {
         width: size.width * 0.9,
         child: Row(
           children: [
-            CustomCircleAvatar(press: () {},),
+            CustomCircleAvatar(
+              press: () {},
+            ),
             SizedBox(
               width: kBasicHorizontalPadding(size: size),
             ),

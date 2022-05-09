@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
-import 'package:fevly/errors_msg.dart';
+import 'package:fevly/constant/constant.dart';
+import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
@@ -11,7 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:fevly/errors_msg.dart';
+import 'package:fevly/constant/errors_msg.dart';
 
 /// Form for new user to register
 class RegisterForm extends StatefulWidget {
