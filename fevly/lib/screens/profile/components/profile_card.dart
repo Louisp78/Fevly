@@ -1,7 +1,8 @@
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_dialog_list.dart';
+import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_small_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/change_relation_state.dart';
 import 'package:fevly/models/user.dart';
 import 'package:fevly/screens/profile/components/counter_item.dart';
@@ -46,7 +47,9 @@ class ProfileCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomCircleAvatar(press: (){},),
+              CustomCircleAvatar(
+                press: () {},
+              ),
               const SizedBox(
                 width: 15.0,
               ),
@@ -75,6 +78,9 @@ class ProfileCard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
+              CustomIconButton(
+                  press: () => Navigator.pushNamed(context, '/profile/modify'),
+                  icon: Icons.create_outlined),
               GestureDetector(
                 onTap: () {
                   showDialog(
@@ -98,21 +104,20 @@ class ProfileCard extends StatelessWidget {
           const Spacer(
             flex: 3,
           ),
-
-          if(profileOwner.relationState != UserRelationState.me) 
+          if (profileOwner.relationState != UserRelationState.me)
             CustomSmallButton(
-            buttonSize: CustomSmallButtonSize.small,
-            text: profileOwner.relationState.name,
-            press: changeRelationState(
-                    themeColor: themeColor,
-                    user: profileOwner,
-                    context: context,
-                  ),
-            prefixIcon: Icon(
-              profileOwner.relationState.iconData,
-              color: Colors.white,
-              size: kSmallIconSize,
-            ),
+              buttonSize: CustomSmallButtonSize.small,
+              text: profileOwner.relationState.name,
+              press: changeRelationState(
+                themeColor: themeColor,
+                user: profileOwner,
+                context: context,
+              ),
+              prefixIcon: Icon(
+                profileOwner.relationState.iconData,
+                color: Colors.white,
+                size: kSmallIconSize,
+              ),
             ),
           const Spacer(
             flex: 2,
@@ -151,13 +156,12 @@ class ProfileCard extends StatelessWidget {
               text: TextSpan(children: [
             TextSpan(
               text: "Inviter à ",
-              style: textTheme.headline5
-                  ?.copyWith(color: themeColor.onBackground),
+              style:
+                  textTheme.headline5?.copyWith(color: themeColor.onBackground),
             ),
             TextSpan(
               text: "${listParties1[index].name}.",
-              style: textTheme.headline5
-                  ?.copyWith(color: themeColor.primary),
+              style: textTheme.headline5?.copyWith(color: themeColor.primary),
             ),
           ])),
         ),

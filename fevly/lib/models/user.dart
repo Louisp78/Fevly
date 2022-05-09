@@ -1,9 +1,8 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/contains_in_string.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/models/party.dart';
 import 'package:flutter/material.dart';
-
 
 //$ ENUMERATION
 //$ ============================================================
@@ -71,8 +70,7 @@ class User extends ChangeNotifier {
       required String email,
       this.listOfBadges = const [],
       this.listOfFriends = const [],
-      this.listOfParties = const []
-      })
+      this.listOfParties = const []})
       : _email = email,
         _name = name,
         _password = password,

@@ -1,6 +1,6 @@
-import 'package:fevly/components/custom_auth_app_bar.dart';
+import 'package:fevly/components/custom_lite_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/screens/auth/anim/martini_anim.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
@@ -40,7 +40,7 @@ class Body extends StatelessWidget {
               ),
               Column(
                 children: [
-                  CustomAuthAppBar(
+                  CustomLiteAppBar(
                     title: "Fevly",
                     leading: CustomIconButton(
                       size: const CustomIconButtonSize.small(),

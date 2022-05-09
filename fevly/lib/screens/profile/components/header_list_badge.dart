@@ -1,5 +1,5 @@
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/sort_list.dart';
 import 'package:fevly/models/badge.dart';
 import 'package:fevly/styles/colors.dart';
@@ -49,11 +49,11 @@ class HeaderListBadge extends StatelessWidget {
               }
             },
             child: CustomSearchBar(
-                controller: _controller,
-                searchField: searchField,
-                defaultListOfBadge: defaultListOfBadge,
-                hintText: "Rechercher un badge",
-                ),
+              controller: _controller,
+              searchField: searchField,
+              defaultListOfBadge: defaultListOfBadge,
+              hintText: "Rechercher un badge",
+            ),
           ),
           Text(
             "${defaultListOfBadge.length}/100",

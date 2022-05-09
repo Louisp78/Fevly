@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,8 +40,8 @@ class CustomBasicAppBar extends StatelessWidget {
       height: 110,
       padding: const EdgeInsets.only(bottom: 20),
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-          color: themeColor.onSurface, boxShadow: [kShadowBase]),
+      decoration:
+          BoxDecoration(color: themeColor.onSurface, boxShadow: [kShadowBase]),
       child: Stack(
         alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none,

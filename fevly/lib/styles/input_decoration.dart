@@ -1,15 +1,13 @@
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-enum InputDecorationType {
-  basic,
-  searchsmall,
-  search
-}
+enum InputDecorationType { basic, searchsmall, search }
 
 InputDecoration basicInputDecoration(
-    {required TextStyle hintStyle, required String hintText, required ColorScheme themeColor}) {
+    {required TextStyle hintStyle,
+    required String hintText,
+    required ColorScheme themeColor}) {
   return InputDecoration(
     filled: true,
     hintText: hintText,

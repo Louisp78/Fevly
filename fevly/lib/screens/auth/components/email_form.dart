@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/errors_msg.dart';
+import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/anim/martini_anim.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';

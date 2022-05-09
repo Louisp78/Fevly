@@ -2,14 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_text_button.dart';
-import 'package:fevly/constant.dart';
+import 'package:fevly/constant/constant.dart';
 import 'package:fevly/models/party.dart';
 import 'package:fevly/screens/dashboard/dashboard_parties/components/info_item.dart';
 import 'package:fevly/styles/colors.dart';
 import 'package:fevly/styles/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class CustomPartyItem extends StatelessWidget {
   const CustomPartyItem({
@@ -106,7 +105,7 @@ class CustomPartyItem extends StatelessWidget {
                                 leading: CustomCircleAvatar(
                                   radius: 11,
                                   backgroundColor: Colors.black,
-                                  press: (){},
+                                  press: () {},
                                 ),
                                 text: party.listOfOrganizer[0].pseudo,
                               ),
