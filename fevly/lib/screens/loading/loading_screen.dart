@@ -1,33 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
-class LoadingScreen extends StatefulWidget {
+class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoadingScreen> createState() => _LoadingScreenState();
-}
-
-class _LoadingScreenState extends State<LoadingScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    /*WidgetsBinding.instance!.addPostFrameCallback((_) {
-      final ApplicationState appState =
-          Provider.of<ApplicationState>(context, listen: false);
-      if (appState.loginState == ApplicationLoginState.loggedIn) {
-        Navigator.pushReplacementNamed(context, '/dashboard');
-      } else {
-        Navigator.pushReplacementNamed(context, '/auth/logged_out');
-      }
-    });*/
-  }
 
   @override
   Widget build(BuildContext context) {

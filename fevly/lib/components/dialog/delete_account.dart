@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,9 @@ Future<dynamic> buildDeleteAccountDialog(
     showCloseIcon: true,
     btnCancelOnPress: () {},
     btnOkOnPress: () => appState.deleteUser(
+      onNetworkRequestFailed: () => handleNetworkError(context),
+      onOperationNotAllowed: () => handleOperationNotAllowed(context),
+      onTooManyRequests: () => handleTooManyRequests(context),
       onSucess: () => Navigator.pushNamedAndRemoveUntil(
         context,
         '/',

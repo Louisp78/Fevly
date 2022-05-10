@@ -5,6 +5,7 @@ import 'package:fevly/components/dialog/delete_account.dart';
 import 'package:fevly/constant/auth_msg.dart';
 import 'package:fevly/constant/constant.dart';
 import 'package:fevly/constant/errors_msg.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,6 +81,12 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
                       if (_formkey.currentState!.validate()) {
                         appState
                             .reauthenticateUser(
+                                onNetworkRequestFailed: () =>
+                                    handleNetworkError(context),
+                                onOperationNotAllowed: () =>
+                                    handleOperationNotAllowed(context),
+                                onTooManyRequests: () =>
+                                    handleTooManyRequests(context),
                                 emailAddress: user!.email!,
                                 password: _passwordController.text)
                             .then((value) {
@@ -114,10 +121,13 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
     final ColorScheme themeColor = Theme.of(context).colorScheme;
-    final appState = Provider.of<ApplicationState>(context);
+    final appState = Provider.of<ApplicationState>(context, listen: false);
     switch (widget.type) {
       case ReauthenticationType.deleteAccount:
         await appState.deleteUser(
+          onNetworkRequestFailed: () => handleNetworkError(context),
+          onOperationNotAllowed: () => handleOperationNotAllowed(context),
+          onTooManyRequests: () => handleTooManyRequests(context),
           onSucess: () => Navigator.pushNamedAndRemoveUntil(
             context,
             '/',
@@ -131,6 +141,9 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
       case ReauthenticationType.changePassword:
         await appState.updatePassword(
             newPassword: widget.strValue!,
+            onNetworkRequestFailed: () => handleNetworkError(context),
+            onOperationNotAllowed: () => handleOperationNotAllowed(context),
+            onTooManyRequests: () => handleTooManyRequests(context),
             onRequiresRecentLogin: () =>
                 throw Exception('Requires recent login infinite loop !'),
             onSuccess: () {
@@ -142,12 +155,16 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
                   text: kPasswordUpdateSuccess,
                 ),
               );
-              Navigator.pop(context);
+              Navigator.popUntil(
+                  context, ModalRoute.withName('/profile/modify'));
             });
         break;
       case ReauthenticationType.changeEmail:
         print('updating email adress ! ');
         await appState.updateEmailAddress(
+          onNetworkRequestFailed: () => handleNetworkError(context),
+          onOperationNotAllowed: () => handleOperationNotAllowed(context),
+          onTooManyRequests: () => handleTooManyRequests(context),
           newEmailAddress: widget.strValue!,
           onRequiresRecentLogin: () =>
               throw Exception('Requires recent login infinite loop !'),
@@ -160,7 +177,7 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
             ),
           ),
 
-          onSucess: () {
+          onSuccess: () async {
             ScaffoldMessenger.of(context).showSnackBar(
               buildCustomSnackBar(
                 themeColor: themeColor,
@@ -169,7 +186,9 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
                 text: kEmailValidateToContinue(newEmail: widget.strValue),
               ),
             );
-            Navigator.pop(context);
+            await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+            await Navigator.pushNamedAndRemoveUntil(
+                context, '/', (route) => false);
           }, // TODO: show toast
         );
         break;

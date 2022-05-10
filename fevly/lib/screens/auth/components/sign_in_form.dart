@@ -112,22 +112,28 @@ class _SignInForm extends State<SignInForm> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           authVM.isLoading = true;
-                          try {
-                            await appState
-                                .signInWithEmailAndPassword(
-                                    emailAddress: widget.email,
-                                    password: _passwordController.text)
-                                .then((value) => buildRoute(
-                                    context: context,
-                                    loginState: appState.loginState));
-                          } on FirebaseAuthException catch (e) {
-                            print('FirebaseAuthException : ${e.code}');
-                            setState(() {
-                              password_error_msg = handleFireSignInException(
-                                  code: e.code, context: context);
-                            });
-                            authVM.isLoading = false;
-                          }
+                          await appState
+                              .signInWithEmailAndPassword(
+                                emailAddress: widget.email,
+                                password: _passwordController.text,
+                                onNetworkRequestFailed: () {
+                                  handleNetworkError(context);
+                                  setState(() => password_error_msg = '');
+                                },
+                                onTooManyRequests: () => setState(() =>
+                                    password_error_msg =
+                                        Ktoo_many_requests_error_msg),
+                                onOperationNotAllowed: () => setState(() =>
+                                    password_error_msg =
+                                        Koperation_not_allowed),
+                                onWrongPassword: () => setState(() =>
+                                    password_error_msg = Kpassword_error_msg),
+                              )
+                              .then((value) => buildRoute(
+                                  context: context,
+                                  loginState: appState.loginState));
+
+                          authVM.isLoading = false;
                         }
                       },
                       text_not_loading: 'Suivant',
@@ -147,14 +153,15 @@ class _SignInForm extends State<SignInForm> {
 
   void buildRoute(
       {required BuildContext context,
-      required ApplicationLoginState loginState}) {
+      required ApplicationLoginState loginState}) async {
     switch (loginState) {
       case ApplicationLoginState.loggedIn:
         Navigator.pushNamedAndRemoveUntil(
             context, '/dashboard', (route) => false);
         break;
       case ApplicationLoginState.verifyEmail:
-        Navigator.pushReplacementNamed(
+        await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+        await Navigator.pushReplacementNamed(
             context, '/auth/logged_out/verify_email');
         break;
       default:

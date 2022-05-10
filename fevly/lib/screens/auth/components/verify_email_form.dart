@@ -42,6 +42,13 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
         children: [
           AutoSizeText('Verifier votre email',
               style: textTheme.headline1!, maxLines: 1),
+          SizedBox(
+            height: kBasicVerticalPadding(size: size),
+          ),
+          Text(
+            '${FirebaseAuth.instance.currentUser!.email}',
+            style: textTheme.displayMedium!.apply(color: themeColor.primary),
+          ),
           const Spacer(),
           CustomLoadingButton(
             onPressed: () async {
@@ -107,14 +114,14 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     switch (loginState) {
       case ApplicationLoginState.verifyEmail:
-        ScaffoldMessenger.of(context).showSnackBar(
+        /*ScaffoldMessenger.of(context).showSnackBar(
           buildCustomSnackBar(
             themeColor: themeColor,
             textTheme: textTheme,
             size: size,
             text: 'Email non validé 🙃',
           ),
-        );
+        );*/
         break;
       case ApplicationLoginState.loggedIn:
         ScaffoldMessenger.of(context).showSnackBar(
