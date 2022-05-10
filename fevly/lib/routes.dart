@@ -8,6 +8,7 @@ import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/loading/loading_screen.dart';
+import 'package:fevly/screens/modify_password/modify_password_screen.dart';
 import 'package:fevly/screens/modify_profile/modify_profile_screen.dart';
 import 'package:fevly/screens/modify_profile/view_model/modify_profile_view_model.dart';
 import 'package:fevly/screens/notifications/notifications_screen.dart';
@@ -126,7 +127,11 @@ mixin RouterNav {
           transitionsBuilder: slideUpTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-
+      case '/profile/modify/password':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ModifyPasswordScreen(),
+        );
       /*case '/search':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {

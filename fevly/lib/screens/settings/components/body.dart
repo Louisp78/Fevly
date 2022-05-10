@@ -49,6 +49,10 @@ class Body extends StatelessWidget {
         onTap: () {},
       ),
       OptionItem(
+          title: 'Se déconnecter',
+          prefixWidget: const Icon(Icons.logout_rounded),
+          onTap: () => buildDisconnectDialog(context: context)),
+      OptionItem(
         title: 'Supprimer le compte',
         prefixWidget: const Icon(Icons.delete_forever_rounded),
         onTap: () => buildDeleteAccountDialog(
@@ -60,10 +64,6 @@ class Body extends StatelessWidget {
           ),
         ),
       ),
-      OptionItem(
-          title: 'Se déconnecter',
-          prefixWidget: const Icon(Icons.logout_rounded),
-          onTap: () => buildDisconnectDialog(context: context)),
     ];
 
     return Stack(

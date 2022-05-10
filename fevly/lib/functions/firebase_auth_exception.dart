@@ -1,3 +1,4 @@
+import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -44,4 +45,13 @@ void handleNetworkError(BuildContext context) {
       text: 'Pas de connexion internet 🌛',
     ),
   );
+}
+
+void handleOperationNotAllowed(BuildContext context) {
+  buildBasicSnackbar(context: context, message: 'Opération non autorisée');
+}
+
+void handleTooManyRequests(BuildContext context) {
+  buildBasicSnackbar(
+      context: context, message: "Trop d'essais, réessayez plus tard");
 }
