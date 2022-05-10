@@ -3,6 +3,7 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/constant/auth_msg.dart';
 import 'package:fevly/constant/constant.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/modify_profile/view_model/modify_profile_view_model.dart';
 import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/screens/settings/components/custom_card.dart';
@@ -83,13 +84,14 @@ class ModifyProfileForm extends StatelessWidget {
                 },
               ),
               SizedBox(height: kBasicVerticalPadding(size: size) * 2),
-              CustomCard(
-                title: 'Changer de mot de passe',
-                onTap: () =>
-                    Navigator.pushNamed(context, '/profile/modify/password'),
-                prefixWidget: const Icon(Icons.lock_outline_rounded),
-                suffixWidget: const Icon(Icons.arrow_forward_ios_rounded),
-              ),
+              if (appState.authProvider == AuthProvider.emailPassword)
+                CustomCard(
+                  title: 'Changer de mot de passe',
+                  onTap: () =>
+                      Navigator.pushNamed(context, '/profile/modify/password'),
+                  prefixWidget: const Icon(Icons.lock_outline_rounded),
+                  suffixWidget: const Icon(Icons.arrow_forward_ios_rounded),
+                ),
               const Spacer(),
               CustomTextButton(
                   press: () async {
@@ -97,19 +99,33 @@ class ModifyProfileForm extends StatelessWidget {
                       // Display name update
                       if (_displayName.text != user!.displayName) {
                         print('update display name : $_displayName');
-                        await appState
-                            .updateDisplayName(newName: _displayName.text)
-                            .then((value) => buildBasicSnackbar(
-                                context: context,
-                                message: 'Votre nom a été mis à jour ✔️'));
+                        await appState.updateDisplayName(
+                          newName: _displayName.text,
+                          onSuccess: () => buildBasicSnackbar(
+                              context: context,
+                              message: 'Votre nom a été mis à jour ✔️'),
+                          onNetworkRequestFailed: () =>
+                              handleNetworkError(context),
+                          onOperationNotAllowed: () =>
+                              handleOperationNotAllowed(context),
+                          onTooManyRequests: () =>
+                              handleTooManyRequests(context),
+                        );
                       }
                       // Pseudo update
                       /// TODO : check if pseudo is already used and update it
 
-                      // Email update
+                      /// Email update
+                      /// Must be the last update
                       if (_email.text != user.email) {
                         print('update email : $_email');
                         await appState.updateEmailAddress(
+                            onNetworkRequestFailed: () =>
+                                handleNetworkError(context),
+                            onOperationNotAllowed: () =>
+                                handleOperationNotAllowed(context),
+                            onTooManyRequests: () =>
+                                handleTooManyRequests(context),
                             onRequiresRecentLogin: () => Navigator.pushNamed(
                                   context,
                                   '/reauthenticate',
@@ -118,15 +134,23 @@ class ModifyProfileForm extends StatelessWidget {
                                     'valueStr': _email.text
                                   },
                                 ),
-                            onEmailAlreadyInUse: () => buildBasicSnackbar(
-                                context: context, message: kEmailAlreadyInUse),
-                            onSucess: () {
+                            onEmailAlreadyInUse: () {
+                              buildBasicSnackbar(
+                                  context: context,
+                                  message: kEmailAlreadyInUse);
+                              _email.text = user.email!;
+                            },
+                            onSuccess: () async {
                               buildBasicSnackbar(
                                 context: context,
                                 message: kEmailValidateToContinue(
                                     newEmail: _email.text),
                               );
-                              modifyVM.requestedEmail = _email.text;
+                              await FirebaseAuth.instance.currentUser!
+                                  .sendEmailVerification();
+                              await Navigator.pushNamedAndRemoveUntil(
+                                  context, '/', (route) => false);
+                              //modifyVM.requestedEmail = _email.text;
                             },
                             newEmailAddress: _email.text);
                       }

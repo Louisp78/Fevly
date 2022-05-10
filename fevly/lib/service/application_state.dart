@@ -131,8 +131,10 @@ class ApplicationState extends ChangeNotifier {
         throw FirebaseAuthException(
             code: 'unknown-error', message: 'Application state not handled');
       }
-    } on FirebaseAuthException {
-      rethrow;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        print('Network request failed');
+      }
     }
   }
 
@@ -148,9 +150,14 @@ class ApplicationState extends ChangeNotifier {
   }
 
   /// Sign in with email and password
-  Future<UserCredential> signInWithEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required String emailAddress,
     required String password,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    required void Function() onNetworkRequestFailed,
+    required void Function() onWrongPassword,
+    void Function()? onSuccess,
   }) async {
     // update context
 
@@ -162,10 +169,23 @@ class ApplicationState extends ChangeNotifier {
       )
           .then((value) {
         _authProvider = AuthProvider.emailPassword;
-        return value;
+        if (onSuccess != null) {
+          onSuccess();
+        }
       });
-    } on FirebaseAuthException catch (_) {
-      rethrow;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'wrong-password') {
+        onWrongPassword();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
     }
   }
 
@@ -201,14 +221,18 @@ class ApplicationState extends ChangeNotifier {
   }
 
   /// Register new user
-  Future<UserCredential> registerAccount({
+  Future<void> registerAccount({
     required String emailAddress,
     required String name,
     required String login, // TODO: add login support with firebase
     required String password,
-  }) async {
-    // Update context
 
+    /// Exceptions
+    required void Function() onOperationNotAllowed,
+    required void Function() onTooManyRequests,
+    required void Function() onNetworkRequestFailed,
+    required void Function() onWeakPassword,
+  }) async {
     try {
       final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -220,23 +244,37 @@ class ApplicationState extends ChangeNotifier {
       });
 
       await userCredential.user!.updateDisplayName(name);
-
-      return userCredential;
-    } on FirebaseAuthException catch (_) {
-      rethrow;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'weak-password') {
+        onWeakPassword();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
     }
   }
 
   /// Update password
   Future<void> updatePassword({
     required String newPassword,
+
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
     required void Function() onRequiresRecentLogin,
     required void Function() onSuccess,
-  }) {
+  }) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
       if (user != null) {
-        return user.updatePassword(newPassword).then((value) {
+        return await user.updatePassword(newPassword).then((value) {
           onSuccess();
           return value;
         });
@@ -244,6 +282,15 @@ class ApplicationState extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         onRequiresRecentLogin();
+      } else if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
       }
     }
     return Future.value();
@@ -252,57 +299,116 @@ class ApplicationState extends ChangeNotifier {
   /// TODO: Get a user's provider-specific profile information.
 
   /// Update display name
-  Future<bool> updateDisplayName({required String newName}) async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.updateDisplayName(newName).then((value) => true);
+  Future<bool> updateDisplayName({
+    required String newName,
+
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    required void Function() onSuccess,
+  }) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        return await user.updateDisplayName(newName).then((value) {
+          onSuccess();
+          return true;
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
     }
     return Future.value(false);
   }
 
   /// Update photo url
-  Future<bool> updatePhotoUrl({required String newPhotoUrl}) async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.updatePhotoURL(newPhotoUrl).then((value) => true);
+  Future<bool> updatePhotoUrl({
+    required String newPhotoUrl,
+
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+  }) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        return await user.updatePhotoURL(newPhotoUrl).then((value) => true);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
     }
     return Future.value(false);
   }
 
   /// Update email address
-  Future<void> updateEmailAddress(
-      {required String newEmailAddress,
-      required void Function() onEmailAlreadyInUse,
-      required void Function() onRequiresRecentLogin,
-      required void Function() onSucess}) async {
-    final user = FirebaseAuth.instance.currentUser;
+  Future<void> updateEmailAddress({
+    required String newEmailAddress,
+
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    required void Function() onRequiresRecentLogin,
+    required void Function() onEmailAlreadyInUse,
+    required void Function() onSuccess,
+  }) async {
     try {
+      final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        return await user
-            .verifyBeforeUpdateEmail(newEmailAddress)
-            .then((value) {
-          onSucess();
+        return await user.updateEmail(newEmailAddress).then((value) {
+          onSuccess();
           return value;
         });
       }
     } on FirebaseAuthException catch (e) {
-      print('FirebaseAuthException : ${e.code}');
       if (e.code == 'email-already-in-use') {
         onEmailAlreadyInUse();
-      }
-      if (e.code == 'requires-recent-login') {
-        print('here !!');
+      } else if (e.code == 'requires-recent-login') {
         onRequiresRecentLogin();
+      } else if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
       }
     }
   }
 
   /// delete user
-  Future<bool> deleteUser(
-      {required void Function() onRequiresRecentLogin,
-      required void Function() onSucess}) async {
-    final user = FirebaseAuth.instance.currentUser;
+  Future<bool> deleteUser({
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    required void Function() onRequiresRecentLogin,
+    required void Function() onSucess,
+  }) async {
     try {
+      final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         return await user.delete().then((value) {
           onSucess();
@@ -310,9 +416,17 @@ class ApplicationState extends ChangeNotifier {
         });
       }
     } on FirebaseAuthException catch (e) {
-      print('FirebaseAuthException : ${e.code}');
       if (e.code == 'requires-recent-login') {
         onRequiresRecentLogin();
+      } else if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
       }
     }
     return Future.value(false);
@@ -322,22 +436,39 @@ class ApplicationState extends ChangeNotifier {
   Future<bool> reauthenticateUser({
     required String emailAddress,
     required String password,
-  }) async {
-    if (_authProvider == AuthProvider.emailPassword) {
-      final user = FirebaseAuth.instance.currentUser;
 
-      if (user != null) {
-        return user
-            .reauthenticateWithCredential(EmailAuthProvider.credential(
-              email: user.email!,
-              password: password,
-            ))
-            .then((value) => true);
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+  }) async {
+    try {
+      if (_authProvider == AuthProvider.emailPassword) {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          return await user
+              .reauthenticateWithCredential(EmailAuthProvider.credential(
+                email: user.email!,
+                password: password,
+              ))
+              .then((value) => true);
+        }
+      } else if (_authProvider == AuthProvider.google) {
+        await signOut();
+        await signInWithGoogle();
+        return Future.value(true);
       }
-    } else if (_authProvider == AuthProvider.google) {
-      await signOut();
-      await signInWithGoogle();
-      return Future.value(true);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
     }
     return Future.value(false);
   }

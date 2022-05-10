@@ -21,7 +21,7 @@ class CustomDashboardAppBar extends StatelessWidget {
 
     /// user is not null
     final appState = Provider.of<ApplicationState>(context);
-    final user = appState.userLastInstance!;
+    final user = appState.userLastInstance;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),
@@ -33,11 +33,11 @@ class CustomDashboardAppBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (user.photoURL != null)
+          if (user?.photoURL != null)
             CircleAvatar(
-              backgroundImage: NetworkImage(user.photoURL!),
+              backgroundImage: NetworkImage(user!.photoURL!),
             ),
-          if (user.photoURL == null)
+          if (user?.photoURL == null)
             CustomCircleAvatar(
               press: () => Navigator.pushNamed(context, '/profile',
                   arguments: kCurrentUser),
@@ -64,7 +64,7 @@ class CustomDashboardAppBar extends StatelessWidget {
                   /*const LevelLabel(level: 13),*/
                 ],
               ),
-              Text(user.displayName!,
+              Text(user?.displayName ?? '',
                   style: textTheme.bodyText2?.copyWith(color: kTextColor)),
               /*Stack(
                 alignment: Alignment.centerLeft,

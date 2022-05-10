@@ -15,8 +15,7 @@ Le mot de passe doit respecter les criteres suivant:
 """;
 const Kname_error_msg = 'Vous avez oubliez de renseigner votre nom et prénom';
 const Kpseudo_error_msg = 'Vous avez oubliez de renseigner votre pseudo';
-const Kpseudo_operation_not_allowed =
-    "La creation de compte n'est pas autorisée";
+const Koperation_not_allowed = "La creation de compte n'est pas autorisée";
 const Kpassword_unmatch = 'Les mot de passes ne sont pas les même';
 const Ktoo_many_requests_error_msg =
     "Trop d'essais, veuillez réessayer plus tard";

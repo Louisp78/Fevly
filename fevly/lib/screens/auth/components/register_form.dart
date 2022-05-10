@@ -7,11 +7,9 @@ import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:fevly/constant/errors_msg.dart';
 
 /// Form for new user to register
 class RegisterForm extends StatefulWidget {
@@ -148,20 +146,27 @@ class _RegisterFormState extends State<RegisterForm> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           authVM.isLoading = true;
-                          try {
-                            await appState
-                                .registerAccount(
-                                  emailAddress: widget.email,
-                                  name: _nameController.text,
-                                  login: _pseudoController.text,
-                                  password: _passwordController.text,
-                                )
-                                .then((value) => Navigator.pushReplacementNamed(
-                                    context, '/auth/logged_out/verify_email'));
-                          } on FirebaseAuthException catch (e) {
-                            handleFireRegisterException(e.code);
-                            authVM.isLoading = false;
-                          }
+                          await appState
+                              .registerAccount(
+                                emailAddress: widget.email,
+                                name: _nameController.text,
+                                login: _pseudoController.text,
+                                password: _passwordController.text,
+                                onNetworkRequestFailed: () =>
+                                    handleNetworkError(context),
+                                onOperationNotAllowed: () => setState(() {
+                                  pseudoErrorMsg = Koperation_not_allowed;
+                                }),
+                                onWeakPassword: () => setState(() {
+                                  passwordErrorMsg = Kpassword_error_long_msg;
+                                }),
+                                onTooManyRequests: () => setState(() {
+                                  pseudoErrorMsg = Ktoo_many_requests_error_msg;
+                                }),
+                              )
+                              .then((value) => Navigator.pushReplacementNamed(
+                                  context, '/auth/logged_out/verify_email'));
+                          authVM.isLoading = false;
                         }
                       },
                       maxWidth: size.width * 0.7,
@@ -179,24 +184,6 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
       ],
     );
-  }
-
-  void handleFireRegisterException(String code) {
-    if (code == 'network-request-failed') {
-      handleNetworkError(context);
-    } else if (code == 'too-many-requests') {
-      setState(() {
-        pseudoErrorMsg = Ktoo_many_requests_error_msg;
-      });
-    } else if (code == 'operation-not-allowed') {
-      setState(() {
-        pseudoErrorMsg = Kpseudo_operation_not_allowed;
-      });
-    } else if (code == 'weak-password') {
-      setState(() {
-        passwordErrorMsg = Kpassword_error_long_msg;
-      });
-    }
   }
 
   @override
