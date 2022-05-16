@@ -1,11 +1,9 @@
-
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
 
 enum QuantityUnit { none, L, cL, m, cm, pack, paquet, part }
 
 class Product {
-
-  final User fromUser;
+  final UserInfos fromUser;
   final String name;
   QuantityUnit unit;
   int quantity;
@@ -16,5 +14,4 @@ class Product {
     required this.unit,
     this.quantity = 1,
   });
-
 }

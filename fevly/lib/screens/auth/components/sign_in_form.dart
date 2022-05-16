@@ -8,7 +8,6 @@ import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/service/custom_timer.dart';
 import 'package:fevly/styles/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class _SignInForm extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_SignInFormState');
   final _passwordController = TextEditingController();
 
-  String? password_error_msg;
+  String? passwordErrorMsg;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +64,9 @@ class _SignInForm extends State<SignInForm> {
             key: _formKey,
             child: Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomTextField(
-                      error_msg: password_error_msg,
+                      error_msg: passwordErrorMsg,
                       controller: _passwordController,
                       label_text: 'Mot de passe',
                       hintText: 'Entrer un mot de passe',
@@ -95,8 +93,15 @@ class _SignInForm extends State<SignInForm> {
                         press: () async {
                           if (customTimer.timerState == TimerState.stopped) {
                             customTimer.startTimer();
-                            await appState.resetEmailAddress(
-                                email: widget.email);
+                            await appState.sendPasswordReset(
+                              onNetworkRequestFailed: () =>
+                                  handleNetworkError(context),
+                              onOperationNotAllowed: () =>
+                                  handleOperationNotAllowed(context),
+                              onTooManyRequests: () =>
+                                  handleTooManyRequests(context),
+                              email: widget.email,
+                            );
                           }
                         },
                         text: customTimer.timerState == TimerState.running
@@ -105,7 +110,7 @@ class _SignInForm extends State<SignInForm> {
                       );
                     }),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: CustomLoadingButton(
@@ -118,22 +123,21 @@ class _SignInForm extends State<SignInForm> {
                                 password: _passwordController.text,
                                 onNetworkRequestFailed: () {
                                   handleNetworkError(context);
-                                  setState(() => password_error_msg = '');
+                                  setState(() => passwordErrorMsg = '');
                                 },
                                 onTooManyRequests: () => setState(() =>
-                                    password_error_msg =
+                                    passwordErrorMsg =
                                         Ktoo_many_requests_error_msg),
                                 onOperationNotAllowed: () => setState(() =>
-                                    password_error_msg =
-                                        Koperation_not_allowed),
+                                    passwordErrorMsg = Koperation_not_allowed),
                                 onWrongPassword: () => setState(() =>
-                                    password_error_msg = Kpassword_error_msg),
+                                    passwordErrorMsg =
+                                        Kwrong_password_error_msg),
                               )
+                              .then((value) => authVM.isLoading = false)
                               .then((value) => buildRoute(
                                   context: context,
                                   loginState: appState.loginState));
-
-                          authVM.isLoading = false;
                         }
                       },
                       text_not_loading: 'Suivant',
@@ -151,21 +155,26 @@ class _SignInForm extends State<SignInForm> {
     );
   }
 
-  void buildRoute(
+  Future<void> buildRoute(
       {required BuildContext context,
       required ApplicationLoginState loginState}) async {
+    final appState = Provider.of<ApplicationState>(context, listen: false);
     switch (loginState) {
       case ApplicationLoginState.loggedIn:
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/dashboard', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         break;
       case ApplicationLoginState.verifyEmail:
-        await FirebaseAuth.instance.currentUser!.sendEmailVerification();
-        await Navigator.pushReplacementNamed(
-            context, '/auth/logged_out/verify_email');
+        await appState.sendEmailVerification(
+          onNetworkRequestFailed: () => handleNetworkError(context),
+          onTooManyRequests: () {}, // To many request to send email
+          onOperationNotAllowed: () => handleOperationNotAllowed(context),
+          onSuccess: () =>
+              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false),
+        );
         break;
       default:
-        throw Exception('Unexpected login state : $loginState');
+        break;
+      //throw Exception('Unexpected login state : $loginState');
     }
   }
 
@@ -173,6 +182,6 @@ class _SignInForm extends State<SignInForm> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    password_error_msg = null;
+    passwordErrorMsg = null;
   }
 }

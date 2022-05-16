@@ -1,19 +1,20 @@
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
 import 'package:test/test.dart';
 
 void main(List<String> args) {
   group("User Basics", () {
     test("Instanciate", () {
       var user =
-          User(name: "Loulou", login: "llouisp78", password: "123456799");
+          UserInfos(name: "Loulou", pseudo: "llouisp78", password: "123456799");
       expect(user.toString(),
           "User(name: Loulou, login: llouisp, password: 123456799)");
     });
     group("User relations", () {
-      var user1 = User(name: "Loulou", login: "llouisp", password: "123456799");
-      var user2 = User(
+      var user1 =
+          UserInfos(name: "Loulou", pseudo: "llouisp", password: "123456799");
+      var user2 = UserInfos(
         name: "Loulou",
-        login: "llouisp",
+        pseudo: "llouisp",
         password: "123456799",
       );
       test("Block user", () {

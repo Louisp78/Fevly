@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,11 +26,15 @@ Future<dynamic> buildDisconnectDialog({required BuildContext context}) {
     titleTextStyle: textTheme.bodyLarge,
     showCloseIcon: true,
     btnCancelOnPress: () {},
-    btnOkOnPress: () =>
-        appState.signOut().then((value) => Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/',
-              (Route<dynamic> route) => false,
-            )),
+    btnOkOnPress: () => appState.signOut(
+      onNetworkRequestFailed: () => handleNetworkError(context),
+      onOperationNotAllowed: () => handleOperationNotAllowed(context),
+      onTooManyRequests: () => handleTooManyRequests(context),
+      onSuccess: () => Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/',
+        (Route<dynamic> route) => false,
+      ),
+    ),
   ).show();
 }

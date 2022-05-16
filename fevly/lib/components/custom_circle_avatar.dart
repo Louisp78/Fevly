@@ -6,14 +6,14 @@ class CustomCircleAvatar extends StatelessWidget {
     Key? key,
     this.radius = 25,
     this.icon,
-    this.backgroundColor, 
-    required this.press,
+    this.backgroundColor,
+    this.press,
   }) : super(key: key);
 
   final double radius;
   final Widget? icon;
   final Color? backgroundColor;
-  final GestureTapCallback press;
+  final GestureTapCallback? press;
 
   @override
   Widget build(BuildContext context) {

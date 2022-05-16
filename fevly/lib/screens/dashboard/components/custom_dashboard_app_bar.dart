@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_circle_avatar.dart';
 import 'package:fevly/constant/constant.dart';
 import 'package:fevly/service/application_state.dart';
@@ -48,79 +49,52 @@ class CustomDashboardAppBar extends StatelessWidget {
               backgroundColor: themeColor.onSurface,
             ),
           SizedBox(width: kBasicHorizontalPadding(size: size)),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "llouisp78",
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: AutoSizeText(
+                    '@${appState.userInfos?.pseudo}',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: textTheme.headline2,
                   ),
-                  SizedBox(
-                    width: size.width * 0.03,
-                  ),
-                  /*const LevelLabel(level: 13),*/
-                ],
-              ),
-              Text(user?.displayName ?? '',
-                  style: textTheme.bodyText2?.copyWith(color: kTextColor)),
-              /*Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  Container(
-                    width: size.width * 0.32,
-                    height: 5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: kTextColor),
-                  ),
-                  Container(
-                    width: (size.width * 0.32) * 0.40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: kSecondaryColor),
-                  ),
-                ],
-              )*/
-            ],
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.only(
-                  left: kBasicHorizontalPadding(size: size) * 2.5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  /*InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/profile/my_lists'),
-                    child: Icon(
-                      Icons.format_list_bulleted_rounded,
-                      color: themeColor.kBaseOppositeColor,
-                    ),
-                  ),*/
-                  const Spacer(),
-                  InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/notifications'),
-                    child: Icon(Icons.notifications_rounded,
-                        color: themeColor.onBackground),
-                  ),
-                  SizedBox(
-                    width: kBasicHorizontalPadding(size: size),
-                  ),
-                  InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/settings'),
-                    child: Icon(
-                      Icons.settings_rounded,
-                      color: themeColor.onBackground,
-                    ),
-                  )
-                ],
-              ),
+                ),
+                const SizedBox(height: 5),
+                Text(user?.displayName ?? '',
+                    style: textTheme.bodyText2?.copyWith(color: kTextColor)),
+              ],
             ),
+          ),
+          Row(
+            children: [
+              /*InkWell(
+                  onTap: () =>
+                      Navigator.pushNamed(context, '/profile/my_lists'),
+                  child: Icon(
+                    Icons.format_list_bulleted_rounded,
+                    color: themeColor.kBaseOppositeColor,
+                  ),
+                ),*/
+              InkWell(
+                onTap: () => Navigator.pushNamed(context, '/notifications'),
+                child: Icon(Icons.notifications_rounded,
+                    color: themeColor.onBackground),
+              ),
+              SizedBox(
+                width: kBasicHorizontalPadding(size: size),
+              ),
+              InkWell(
+                onTap: () => Navigator.pushNamed(context, '/settings'),
+                child: Icon(
+                  Icons.settings_rounded,
+                  color: themeColor.onBackground,
+                ),
+              )
+            ],
           ),
         ],
       ),

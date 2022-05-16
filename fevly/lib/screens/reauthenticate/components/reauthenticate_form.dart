@@ -1,7 +1,6 @@
 import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
-import 'package:fevly/components/dialog/delete_account.dart';
 import 'package:fevly/constant/auth_msg.dart';
 import 'package:fevly/constant/constant.dart';
 import 'package:fevly/constant/errors_msg.dart';
@@ -77,37 +76,24 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
                   ),
                 const Spacer(),
                 CustomTextButton(
-                    press: () async {
-                      if (_formkey.currentState!.validate()) {
-                        appState
-                            .reauthenticateUser(
-                                onNetworkRequestFailed: () =>
-                                    handleNetworkError(context),
-                                onOperationNotAllowed: () =>
-                                    handleOperationNotAllowed(context),
-                                onTooManyRequests: () =>
-                                    handleTooManyRequests(context),
-                                emailAddress: user!.email!,
-                                password: _passwordController.text)
-                            .then((value) {
-                          if (value) {
-                            buildDialog(context);
-                            /*buildDeleteAccountDialog(
-                              context: context,
-                              onRequiresRecentLogin: () => throw Exception(
-                                  'Requires recent login infinite loop !'),
-                            );*/
-                          }
-                          return value;
-                        });
-                      } else {
-                        print('Not valid');
-                        setState(() {
+                  press: () async {
+                    if (_formkey.currentState!.validate()) {
+                      appState.reauthenticateUser(
+                        onNetworkRequestFailed: () =>
+                            handleNetworkError(context),
+                        onOperationNotAllowed: () =>
+                            handleOperationNotAllowed(context),
+                        onTooManyRequests: () => handleTooManyRequests(context),
+                        onWrongPassword: () => setState(() {
                           password_error_msg = 'Mot de passe invalide';
-                        });
-                      }
-                    },
-                    text: 'Suivant'),
+                        }),
+                        emailAddress: user!.email!,
+                        password: _passwordController.text,
+                        onSuccess: () => buildDialog(context),
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -186,7 +172,11 @@ class _ReauthenticateFormState extends State<ReauthenticateForm> {
                 text: kEmailValidateToContinue(newEmail: widget.strValue),
               ),
             );
-            await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+            await appState.sendEmailVerification(
+                onNetworkRequestFailed: () => handleNetworkError(context),
+                onTooManyRequests: () => handleTooManyRequests(context),
+                onOperationNotAllowed: () =>
+                    handleOperationNotAllowed(context));
             await Navigator.pushNamedAndRemoveUntil(
                 context, '/', (route) => false);
           }, // TODO: show toast

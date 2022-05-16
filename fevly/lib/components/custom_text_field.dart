@@ -22,28 +22,29 @@ class CustomTextField extends StatefulWidget {
   final String? error_msg;
   final String? helper_msg;
   final String? label_text;
-  final String? prefix_text;
   final TextInputType? textInputType;
+  final Widget? prefix;
 
-  const CustomTextField(
-      {this.obscureText = false,
-      this.isSelected = false,
-      this.onChanged,
-      this.onSaved,
-      this.validator,
-      this.width,
-      this.height,
-      this.padding,
-      this.withCleaning = false,
-      this.hintStyle,
-      required this.hintText,
-      this.type = InputDecorationType.basic,
-      this.controller,
-      this.error_msg,
-      this.helper_msg,
-      this.textInputType,
-      this.label_text,
-      this.prefix_text});
+  const CustomTextField({
+    this.obscureText = false,
+    this.isSelected = false,
+    this.onChanged,
+    this.onSaved,
+    this.validator,
+    this.width,
+    this.height,
+    this.padding,
+    this.withCleaning = false,
+    this.hintStyle,
+    required this.hintText,
+    this.type = InputDecorationType.basic,
+    this.controller,
+    this.error_msg,
+    this.helper_msg,
+    this.textInputType,
+    this.label_text,
+    this.prefix,
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -118,7 +119,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           helperText: widget.helper_msg,
           labelText: widget.label_text,
           labelStyle: textTheme.headline3!.copyWith(color: kTextColor),
-          prefixText: widget.prefix_text,
+          prefix: widget.prefix,
           errorMaxLines: 2,
         ).applyDefaults(themeInput);
     }

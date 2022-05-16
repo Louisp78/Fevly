@@ -1,13 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
-import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_field.dart';
+import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:fevly/screens/auth/anim/martini_anim.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/service/application_state.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -91,43 +90,34 @@ class _EmailFormState extends State<EmailForm>
 
                     if (_formKey.currentState!.validate()) {
                       authVM.isLoading = true;
-                      try {
-                        await appState
-                            .verifyEmailAddress(
+                      await appState.verifyEmailAddress(
+                          onInvalidEmail: () => setState(
+                              () => emailErrorMsg = Kemail_badly_formatted),
+                          onTooManyRequests: () => setState(() =>
+                              emailErrorMsg = Ktoo_many_requests_error_msg),
+                          onNetworkRequestFailed: () =>
+                              handleNetworkError(context),
                           emailAddress: _controller.text,
-                        )
-                            .then((value) async {
-                          MartiniAnim.changeShowStatus();
-                          authVM.setwidthAndHeightAndColor(
-                              0, 0, Colors.transparent);
-                          await Future.delayed(
+                          onSuccess: () async {
+                            MartiniAnim.changeShowStatus();
+                            authVM.setwidthAndHeightAndColor(
+                                0, 0, Colors.transparent);
+                            await Future.delayed(
                               MartiniAnim.delayDuration,
                               () => buildRoute(
-                                  context: context,
-                                  loginState: appState.loginState));
-                        });
+                                context: context,
+                                loginState: appState.loginState,
+                              ),
+                            );
+                          });
 
-                        if (appState.loginState ==
-                            ApplicationLoginState.loggedOut) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            buildCustomSnackBar(
-                              themeColor: themeColor,
-                              textTheme: textTheme,
-                              size: size,
-                              text:
-                                  'Cette email est déjà utilisé par un compte Google ⛔',
-                            ),
-                          );
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        print('FirebaseAuthException: ${e.code}');
-                        setState(() {
-                          emailErrorMsg = handleFireEmailException(
-                              code: e.code, context: context);
-                        });
-
-                        authVM.isLoading = false;
+                      if (appState.loginState ==
+                          ApplicationLoginState.loggedOut) {
+                        buildBasicSnackbar(
+                            context: context,
+                            message: Kemail_already_in_use_by_google);
                       }
+                      authVM.isLoading = false;
                     }
                   },
                   text_not_loading: 'Suivant',
@@ -153,7 +143,8 @@ class _EmailFormState extends State<EmailForm>
         Navigator.pop(context);
         break;
       case ApplicationLoginState.register:
-        Navigator.pushNamed(context, '/auth/logged_out/register').then((value) {
+        Navigator.pushNamed(context, '/email/register').then((value) {
+          /// After poping the [RegisterScreen] reload the martini animation
           authVM.isLoading = false;
           emailErrorMsg = null;
           Future.delayed(MartiniAnim.delayDuration, () {
@@ -162,17 +153,23 @@ class _EmailFormState extends State<EmailForm>
         });
         break;
       case ApplicationLoginState.password:
-        Navigator.pushNamed(context, '/auth/logged_out/sign_in');
+        Navigator.pushNamed(context, '/email/sign_in').then((value) {
+          /// After poping the [SignInScreen] reload the martini animation
+          authVM.isLoading = false;
+          Future.delayed(MartiniAnim.delayDuration, () {
+            MartiniAnim.changeShowStatus();
+          });
+        });
         break;
 
       default:
-        throw Exception('Unknown login state: $loginState');
+        break;
     }
   }
 
   @override
   void dispose() {
-    super.dispose();
     emailErrorMsg = null;
+    super.dispose();
   }
 }

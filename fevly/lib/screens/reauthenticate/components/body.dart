@@ -4,6 +4,7 @@ import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/screens/settings/components/custom_lite_app_bar.dart';
 import 'package:flutter/material.dart';
 
+/// Body of [ReauthenticateScreen]
 class Body extends StatelessWidget {
   const Body({required this.type, this.strValue});
 

@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:fevly/screens/auth/components/body.dart';
 import 'package:provider/provider.dart';
 
-/// Route: /auth/logged_out/email
+/// Route: /email
 class EmailScreen extends StatelessWidget {
   const EmailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AuthViewModel authViewModel =
-        Provider.of<AuthViewModel>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
+        final authViewModel =
+            Provider.of<AuthViewModel>(context, listen: false);
         MartiniAnim.changeShowStatus();
         authViewModel.setwidthAndHeightAndColor(0, 0, Colors.transparent);
         await Future.delayed(MartiniAnim.delayDuration, () {

@@ -1,14 +1,15 @@
 import 'package:fevly/model/chat.dart';
 import 'package:fevly/model/location.dart';
 import 'package:fevly/model/party.dart';
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
 import 'package:test/test.dart';
 
 void main() {
   group("Party Basics", () {
     var party = Party(
         name: "Party 1",
-        organizer: User(login: "login", name: "name", password: "password"),
+        organizer:
+            UserInfos(pseudo: "login", name: "name", password: "password"),
         startDate: DateTime.now(),
         endDate: DateTime.now(),
         location: Location(

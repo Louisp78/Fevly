@@ -3,13 +3,16 @@ import 'package:fevly/components/custom_text_field.dart';
 import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/constant/auth_msg.dart';
 import 'package:fevly/constant/constant.dart';
+import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
+import 'package:fevly/model/user_infos.dart';
 import 'package:fevly/screens/modify_profile/view_model/modify_profile_view_model.dart';
 import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
 import 'package:fevly/screens/settings/components/custom_card.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ModifyProfileForm extends StatelessWidget {
@@ -19,9 +22,7 @@ class ModifyProfileForm extends StatelessWidget {
 
   final _displayName = TextEditingController();
 
-  final _pseudo = TextEditingController(
-    text: 'llouisp78',
-  );
+  final _pseudo = TextEditingController();
 
   final _email = TextEditingController();
 
@@ -32,13 +33,18 @@ class ModifyProfileForm extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final ModifyProfileViewModel modifyVM =
         Provider.of<ModifyProfileViewModel>(context);
+    final UserInfos? userInfos = appState.userInfos;
+    final textTheme =
+        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
+    final ColorScheme themeColor = Theme.of(context).colorScheme;
 
-    String? helper_msg = modifyVM.requestedEmail != null &&
+    final String? helperMsg = modifyVM.requestedEmail != null &&
             modifyVM.requestedEmail != user?.email
         ? "Verifier l'email ${modifyVM.requestedEmail}"
         : null;
-    _email.text = '${appState.userLastInstance?.email}';
+    _email.text = appState.userLastInstance!.email!;
     _displayName.text = '${appState.userLastInstance?.displayName}';
+    _pseudo.text = appState.userInfos!.pseudo;
     print('user from firebase instance: ${FirebaseAuth.instance.currentUser}');
     return Form(
       key: _formKey,
@@ -60,12 +66,19 @@ class ModifyProfileForm extends StatelessWidget {
               ),
               SizedBox(height: kBasicVerticalPadding(size: size)),
               CustomTextField(
-                hintText: 'Pseudo',
                 controller: _pseudo,
+                hintText: 'Entrer un pseudo',
                 label_text: 'Pseudo',
+                prefix: Text('@',
+                    style: textTheme.headline3!
+                        .copyWith(color: themeColor.onBackground)),
+                textInputType: TextInputType.name,
                 validator: (value) {
+                  // TODO : check if pseudo exist in db
                   if (value!.isEmpty) {
-                    return 'Veuillez entrer votre pseudo';
+                    return Kpseudo_error_msg;
+                  } else if (value.contains('@') || value.contains(' ')) {
+                    return Kwrong_pseudo_error_msg;
                   }
                   return null;
                 },
@@ -74,7 +87,8 @@ class ModifyProfileForm extends StatelessWidget {
               CustomTextField(
                 hintText: 'Email',
                 controller: _email,
-                helper_msg: helper_msg,
+                helper_msg: helperMsg,
+                textInputType: TextInputType.emailAddress,
                 label_text: 'Email',
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -98,7 +112,6 @@ class ModifyProfileForm extends StatelessWidget {
                     if (_formKey.currentState!.validate()) {
                       // Display name update
                       if (_displayName.text != user!.displayName) {
-                        print('update display name : $_displayName');
                         await appState.updateDisplayName(
                           newName: _displayName.text,
                           onSuccess: () => buildBasicSnackbar(
@@ -113,12 +126,26 @@ class ModifyProfileForm extends StatelessWidget {
                         );
                       }
                       // Pseudo update
-                      /// TODO : check if pseudo is already used and update it
+                      /// check if pseudo is already used and update it
+                      if (_pseudo.text != userInfos!.pseudo) {
+                        await appState.updatePseudo(
+                          userId: user.uid,
+                          newPseudo: _pseudo.text,
+                          onSuccess: () => buildBasicSnackbar(
+                              context: context,
+                              message: 'Votre pseudo a été mis à jour ✔️'),
+                          onNetworkRequestFailed: () =>
+                              handleNetworkError(context),
+                          onOperationNotAllowed: () =>
+                              handleOperationNotAllowed(context),
+                          onTooManyRequests: () =>
+                              handleTooManyRequests(context),
+                        );
+                      }
 
                       /// Email update
                       /// Must be the last update
                       if (_email.text != user.email) {
-                        print('update email : $_email');
                         await appState.updateEmailAddress(
                             onNetworkRequestFailed: () =>
                                 handleNetworkError(context),
@@ -146,30 +173,21 @@ class ModifyProfileForm extends StatelessWidget {
                                 message: kEmailValidateToContinue(
                                     newEmail: _email.text),
                               );
-                              await FirebaseAuth.instance.currentUser!
-                                  .sendEmailVerification();
-                              await Navigator.pushNamedAndRemoveUntil(
-                                  context, '/', (route) => false);
-                              //modifyVM.requestedEmail = _email.text;
+                              await appState.sendEmailVerification(
+                                onNetworkRequestFailed: () =>
+                                    handleNetworkError(context),
+                                onTooManyRequests: () =>
+                                    handleTooManyRequests(context),
+                                onOperationNotAllowed: () =>
+                                    handleOperationNotAllowed(context),
+                                onSuccess: () =>
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/', (route) => false),
+                              );
                             },
                             newEmailAddress: _email.text);
                       }
-
-                      // Password update
-                      /*if (_password.text.isNotEmpty) {
-                        print('update password : $_password');
-                        await appState.updatePassword(
-                            newPassword: _password.text,
-                            onRequiresRecentLogin: () =>
-                                Navigator.pushNamed(
-                                    context, '/reauthenticate',
-                                    arguments: ReauthenticationType
-                                        .changePassword),
-                            onSuccess: () => buildBasicSnackbar(
-                                context: context,
-                                message: kPasswordUpdateSuccess));
-                      }*/
-                    } else {}
+                    }
                   },
                   text: 'Sauvegarder'),
               SizedBox(height: kBasicVerticalPadding(size: size)),

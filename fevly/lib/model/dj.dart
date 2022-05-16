@@ -1,17 +1,12 @@
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Dj extends User {
-
-  Dj({
-    required String login,
-    required String name,
-    required String password,
-    int xp = 0
-  }) : super(login: login, name: name, password: password, xp: xp);
+class Dj extends UserInfos {
+  Dj({required String login, required User user, int xp = 0})
+      : super(pseudo: login, user: user, xp: xp);
 
   @override
   String toString() {
     return "Dj";
   }
-
 }
