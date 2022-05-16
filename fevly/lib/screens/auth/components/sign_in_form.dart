@@ -166,7 +166,8 @@ class _SignInForm extends State<SignInForm> {
       case ApplicationLoginState.verifyEmail:
         await appState.sendEmailVerification(
           onNetworkRequestFailed: () => handleNetworkError(context),
-          onTooManyRequests: () {}, // To many request to send email
+          onTooManyRequests: () =>
+              handleTooManyRequests(context), // To many request to send email
           onOperationNotAllowed: () => handleOperationNotAllowed(context),
           onSuccess: () =>
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false),
