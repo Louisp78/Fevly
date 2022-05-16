@@ -41,6 +41,10 @@ dependencies:
   page_transition: ^2.0.5
   lint: ^1.8.2
   awesome_dialog: ^2.2.1
+  firebase_storage: ^10.2.15
+  image_picker: ^0.8.5
+  firebase_database: ^9.0.13
+  recase: ^4.0.0
 
 
 dev_dependencies:

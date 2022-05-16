@@ -1,30 +1,29 @@
 import 'dart:math';
 
 import 'package:fevly/model/party.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class User {
+class UserInfos {
   // Private
   final double _y = 2;
   final double _x = 0.07;
 
   // Public
-  String login;
-  String name;
-  String password;
+  String pseudo;
+  User user;
   // Friends is a bijective relation
-  Set<User> listOfFriends;
-  Set<User> listOfMadeRequests;
-  Set<User> listOfReceivedRequests;
-  Set<User> listOfBlocked;
+  Set<UserInfos> listOfFriends;
+  Set<UserInfos> listOfMadeRequests;
+  Set<UserInfos> listOfReceivedRequests;
+  Set<UserInfos> listOfBlocked;
 
   /// To differenciate party where user is organizer or not see Party.organizer
   Set<Party> listOfParties;
   int xp;
 
-  User(
-      {required this.login,
-      required this.name,
-      required this.password,
+  UserInfos(
+      {required this.pseudo,
+      required this.user,
       this.xp = 0,
       this.listOfFriends = const {},
       this.listOfParties = const {},
@@ -37,7 +36,7 @@ class User {
   }
 
   // Block user
-  bool blockUser(final User user) {
+  bool blockUser(final UserInfos user) {
     if (listOfBlocked.contains(user)) return false;
 
     listOfFriends.remove(user);
@@ -49,12 +48,12 @@ class User {
   }
 
   // Unblock user
-  bool unblockUser(final User user) {
+  bool unblockUser(final UserInfos user) {
     return listOfBlocked.remove(user);
   }
 
   // Accept request from user
-  bool acceptRequestFrom(final User user) {
+  bool acceptRequestFrom(final UserInfos user) {
     if (listOfReceivedRequests.remove(user)) {
       listOfFriends.add(user);
       user.listOfMadeRequests.remove(this);
@@ -65,13 +64,13 @@ class User {
   }
 
   // Reject request from user
-  bool rejectRequest(final User user) {
+  bool rejectRequest(final UserInfos user) {
     return listOfReceivedRequests.remove(user);
     // Dont remove this from user.listOfMadeRequests
   }
 
   // Send request to user
-  bool sendRequestTo(final User user) {
+  bool sendRequestTo(final UserInfos user) {
     if (listOfFriends.contains(user) || isBlockedWith(user)) {
       return false;
     } else if (user.listOfMadeRequests.remove(this)) {
@@ -82,30 +81,30 @@ class User {
     return listOfMadeRequests.add(user);
   }
 
-  bool undoRequestTo(final User user) {
+  bool undoRequestTo(final UserInfos user) {
     user.listOfReceivedRequests.remove(this);
     return listOfMadeRequests.remove(user);
   }
 
-  bool removeFriend(final User user) {
+  bool removeFriend(final UserInfos user) {
     final returnVal = listOfFriends.remove(user);
     user.listOfFriends.remove(this);
     return returnVal;
   }
 
-  bool isFriendWith(final User user) {
+  bool isFriendWith(final UserInfos user) {
     return listOfFriends.contains(user);
   }
 
-  bool haveEmitRequestTo(final User user) {
+  bool haveEmitRequestTo(final UserInfos user) {
     return listOfMadeRequests.contains(user);
   }
 
-  bool haveReceivedRequestFrom(final User user) {
+  bool haveReceivedRequestFrom(final UserInfos user) {
     return listOfReceivedRequests.contains(user);
   }
 
-  bool isBlockedWith(User user) {
+  bool isBlockedWith(UserInfos user) {
     return listOfBlocked.contains(user);
   }
 
@@ -119,6 +118,6 @@ class User {
 
   @override
   String toString() {
-    return "User(login: $login, name: $name, password: $password, xp: $xp)";
+    return "User(login: $pseudo, name: ${user.displayName}, pseudo: $pseudo, xp: $xp)";
   }
 }

@@ -1,12 +1,12 @@
 import 'package:fevly/model/chat.dart';
 import 'package:fevly/model/guest.dart';
 import 'package:fevly/model/location.dart';
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
 import 'package:fevly/models/product.dart';
 
 class Party {
   String name;
-  User organizer;
+  UserInfos organizer;
   DateTime startDate;
   DateTime endDate;
   Location location;

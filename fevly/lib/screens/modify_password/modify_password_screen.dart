@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fevly/screens/modify_password/components/body.dart';
 
-class ModifyPasswordScreen extends StatefulWidget {
-  ModifyPasswordScreen({Key? key}) : super(key: key);
+/// Route: /profile/modify/password
+/// This screen permit to modify the user's password
+class ModifyPasswordScreen extends StatelessWidget {
+  const ModifyPasswordScreen({Key? key}) : super(key: key);
 
-  @override
-  State<ModifyPasswordScreen> createState() => _ModifyPasswordScreenState();
-}
-
-class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

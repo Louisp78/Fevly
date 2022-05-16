@@ -1,51 +1,41 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:rive/rive.dart';
+import 'package:fevly/screens/loading/components/body.dart';
 
-class LoadingScreen extends StatelessWidget {
+class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
 
   @override
+  State<LoadingScreen> createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<LoadingScreen> {
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// Define a reload timer every 5 seconds to check if network is available
+    /// when stuck in this screen because of network issue
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer t) async {
+      FirebaseAuth.instance.currentUser
+          ?.reload()
+          .catchError((error) => print(' catch error : $error'));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    final ColorScheme themeColor = Theme.of(context).colorScheme;
-    final Size size = MediaQuery.of(context).size;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Spacer(
-          flex: 3,
-        ),
-        AutoSizeText.rich(
-          TextSpan(text: 'F', children: [
-            TextSpan(
-              text: 'evly',
-              style: textTheme.headline1!.copyWith(
-                fontSize: 75,
-                letterSpacing: 3,
-                color: themeColor.onBackground,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ]),
-          style: textTheme.headline1!
-              .copyWith(color: themeColor.primary, fontSize: 85),
-        ),
-        const Spacer(),
-        SizedBox(
-          height: size.height * 0.06,
-          width: size.height * 0.06,
-          child: const RiveAnimation.asset(
-            'assets/anim/loading.riv',
-            animations: ['load'],
-          ),
-        ),
-        const Spacer(
-          flex: 3,
-        ),
-      ],
+    return const Scaffold(
+      body: Body(),
     );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }

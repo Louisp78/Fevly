@@ -109,7 +109,7 @@ TextTheme textTheme({bool darkMode = false}) {
     headline1: TextStyle(
       fontWeight: FontWeight.bold,
       color: currentTextColor,
-      fontSize: 38,
+      fontSize: 38.0,
     ),
 
     // QS 14 Reg
