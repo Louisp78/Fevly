@@ -2,12 +2,15 @@ import 'package:fevly/components/custom_lite_app_bar.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/constant/constant.dart';
 import 'package:fevly/screens/auth/anim/martini_anim.dart';
+import 'package:fevly/screens/auth/logged_out_screen.dart';
+import 'package:fevly/screens/auth/register_screen.dart';
+import 'package:fevly/screens/auth/sign_in_screen.dart';
+import 'package:fevly/screens/auth/verify_email_screen.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
-import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/// Body of Authentification screen
+/// Body for all Auth screen : [LoggedOutScreen], [RegisterScreen], [SignInScreen], [VerifyEmailScreen]
 class Body extends StatelessWidget {
   const Body({
     required this.formContent,
@@ -19,7 +22,6 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final ColorScheme themeColor = Theme.of(context).colorScheme;
-    final ApplicationState appState = Provider.of<ApplicationState>(context);
 
     return SingleChildScrollView(
       child: SizedBox(

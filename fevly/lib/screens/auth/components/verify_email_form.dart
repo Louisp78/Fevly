@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_loading_button.dart';
-import 'package:fevly/components/custom_snackbar.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant/constant.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+/// Form for verify email
 class VerifyEmailForm extends StatefulWidget {
   const VerifyEmailForm({Key? key}) : super(key: key);
 
@@ -23,6 +23,8 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
   @override
   void initState() {
     super.initState();
+
+    // Start timer after build is completed
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       Provider.of<CustomTimer>(context, listen: false).startTimer();
     });
@@ -46,24 +48,22 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
             height: kBasicVerticalPadding(size: size),
           ),
           Text(
-            '${FirebaseAuth.instance.currentUser!.email}',
+            '${FirebaseAuth.instance.currentUser?.email}',
             style: textTheme.displayMedium!.apply(color: themeColor.primary),
           ),
           const Spacer(),
           CustomLoadingButton(
             onPressed: () async {
               authVM.isLoading = true;
-              print('current user : ${FirebaseAuth.instance.currentUser}');
-              // Update current context because the user listener can be call here
-              try {
-                await FirebaseAuth.instance.currentUser!.reload().then(
-                    (value) => builRoute(
-                        context: context, loginState: appState.loginState));
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'network-request-failed') {
-                  handleNetworkError(context);
-                }
-              }
+
+              // Update current [BuildContext] because the user listener can be call here
+              await appState.reloadUser(
+                context: context,
+                onNetworkRequestFailed: () => handleNetworkError(context),
+                onTooManyRequests: () => handleTooManyRequests(context),
+                onOperationNotAllowed: () => handleOperationNotAllowed(context),
+              );
+
               authVM.isLoading = false;
             },
             text_not_loading: "J'ai vérifié mon email",
@@ -78,13 +78,11 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
             return CustomTextButton(
               press: () async {
                 if (customTimer.counter.inSeconds == 0) {
-                  try {
-                    await FirebaseAuth.instance.currentUser!
-                        .sendEmailVerification();
-                  } on FirebaseAuthException catch (e) {
-                    print(e.code);
-                    print(e.message);
-                  }
+                  await appState.sendEmailVerification(
+                      onNetworkRequestFailed: () => handleNetworkError(context),
+                      onTooManyRequests: () => handleTooManyRequests(context),
+                      onOperationNotAllowed: () =>
+                          handleOperationNotAllowed(context));
                   customTimer.resetTimer();
                   customTimer.startTimer();
                 }
@@ -103,40 +101,5 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
         ],
       ),
     );
-  }
-
-  void builRoute(
-      {required BuildContext context,
-      required ApplicationLoginState loginState}) {
-    final Size size = MediaQuery.of(context).size;
-    final ColorScheme themeColor = Theme.of(context).colorScheme;
-    final TextTheme textTheme =
-        GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
-    switch (loginState) {
-      case ApplicationLoginState.verifyEmail:
-        /*ScaffoldMessenger.of(context).showSnackBar(
-          buildCustomSnackBar(
-            themeColor: themeColor,
-            textTheme: textTheme,
-            size: size,
-            text: 'Email non validé 🙃',
-          ),
-        );*/
-        break;
-      case ApplicationLoginState.loggedIn:
-        ScaffoldMessenger.of(context).showSnackBar(
-          buildCustomSnackBar(
-            themeColor: themeColor,
-            textTheme: textTheme,
-            size: size,
-            text: 'Email validé 🎉',
-          ),
-        );
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/dashboard', (route) => route.isFirst);
-        break;
-      default:
-        throw Exception('Unknown login state: $loginState');
-    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:fevly/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Custom lite app bar used in [SettingsScreen]
 class CustomLiteAppBar extends StatelessWidget {
   const CustomLiteAppBar({required this.title});
 

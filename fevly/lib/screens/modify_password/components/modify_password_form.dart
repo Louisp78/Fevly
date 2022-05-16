@@ -1,5 +1,6 @@
 import 'package:fevly/components/custom_loading_button.dart';
 import 'package:fevly/components/custom_text_field.dart';
+import 'package:fevly/screens/modify_password/modify_password_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:flutter/material.dart';
 import 'package:fevly/components/snackbar/basic_snackbar.dart';
@@ -11,8 +12,10 @@ import 'package:fevly/constant/errors_msg.dart';
 import 'package:fevly/functions/firebase_auth_exception.dart';
 import 'package:provider/provider.dart';
 
+/// Form to modify password
+/// of [ModifyPasswordScreen]
 class ModifyPasswordForm extends StatefulWidget {
-  ModifyPasswordForm({Key? key}) : super(key: key);
+  const ModifyPasswordForm({Key? key}) : super(key: key);
 
   @override
   State<ModifyPasswordForm> createState() => _ModifyPasswordFormState();
@@ -39,7 +42,7 @@ class _ModifyPasswordFormState extends State<ModifyPasswordForm> {
       child: Expanded(
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             CustomTextField(
                 error_msg: passwordErrorMsg,
                 controller: _passwordController,
@@ -95,9 +98,11 @@ class _ModifyPasswordFormState extends State<ModifyPasswordForm> {
                         Navigator.pop(context);
                       });
                 }
-                setState(() {
-                  _isLoading = false;
-                });
+                if (mounted) {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                }
               },
               is_loading: _isLoading,
               text_not_loading: 'Valider',

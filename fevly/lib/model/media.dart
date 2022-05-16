@@ -1,13 +1,12 @@
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
 
 class Media {
   final Object video;
-  final User fromUser;
+  final UserInfos fromUser;
   final DateTime addedAt = DateTime.now();
 
   Media({
     required this.video,
     required this.fromUser,
   });
-
 }

@@ -1,12 +1,7 @@
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Barman extends User {
-
-  Barman({
-    required String login,
-    required String name,
-    required String password,
-    int xp = 0
-  }) : super(login: login, name: name, password: password, xp: xp);
-
+class Barman extends UserInfos {
+  Barman({required String login, required User user, int xp = 0})
+      : super(pseudo: login, user: user, xp: xp);
 }

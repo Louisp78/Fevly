@@ -30,12 +30,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   String? passwordErrorMsg;
   String? pseudoErrorMsg;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _pseudoController.text = '@';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +68,15 @@ class _RegisterFormState extends State<RegisterForm> {
                   hintText: 'Entrer un pseudo',
                   label_text: 'Pseudo',
                   textInputType: TextInputType.name,
-                  prefix_text: '@',
+                  prefix: Text('@',
+                      style: textTheme.headline3!
+                          .copyWith(color: themeColor.onBackground)),
                   validator: (value) {
                     // TODO : check if pseudo exist in db
                     if (value!.isEmpty) {
                       return Kpseudo_error_msg;
+                    } else if (value.contains('@') || value.contains(' ')) {
+                      return Kwrong_pseudo_error_msg;
                     }
                     return null;
                   },
@@ -146,26 +144,28 @@ class _RegisterFormState extends State<RegisterForm> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           authVM.isLoading = true;
-                          await appState
-                              .registerAccount(
-                                emailAddress: widget.email,
-                                name: _nameController.text,
-                                login: _pseudoController.text,
-                                password: _passwordController.text,
-                                onNetworkRequestFailed: () =>
-                                    handleNetworkError(context),
-                                onOperationNotAllowed: () => setState(() {
-                                  pseudoErrorMsg = Koperation_not_allowed;
-                                }),
-                                onWeakPassword: () => setState(() {
-                                  passwordErrorMsg = Kpassword_error_long_msg;
-                                }),
-                                onTooManyRequests: () => setState(() {
-                                  pseudoErrorMsg = Ktoo_many_requests_error_msg;
-                                }),
-                              )
-                              .then((value) => Navigator.pushReplacementNamed(
-                                  context, '/auth/logged_out/verify_email'));
+                          await appState.registerAccount(
+                            emailAddress: widget.email,
+                            name: _nameController.text,
+                            pseudo: _pseudoController.text,
+                            password: _passwordController.text,
+                            onNetworkRequestFailed: () =>
+                                handleNetworkError(context),
+                            onOperationNotAllowed: () => setState(() {
+                              pseudoErrorMsg = Koperation_not_allowed;
+                            }),
+                            onWeakPassword: () => setState(() {
+                              passwordErrorMsg = Kpassword_error_long_msg;
+                            }),
+                            onTooManyRequests: () => setState(() {
+                              pseudoErrorMsg = Ktoo_many_requests_error_msg;
+                            }),
+                            onSuccess: () => Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false,
+                            ),
+                          );
                           authVM.isLoading = false;
                         }
                       },
@@ -188,7 +188,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   void dispose() {
-    super.dispose();
     passwordErrorMsg = null;
+    super.dispose();
   }
 }

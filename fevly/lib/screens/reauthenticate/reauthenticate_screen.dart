@@ -1,5 +1,4 @@
 import 'package:fevly/screens/reauthenticate/components/body.dart';
-
 import 'package:flutter/material.dart';
 
 /// type of reauthentication

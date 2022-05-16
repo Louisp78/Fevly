@@ -3,6 +3,7 @@ import 'package:fevly/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Custom card used in [ListView] in [SettingsScreen]
 class CustomCard extends StatelessWidget {
   const CustomCard({
     required this.title,

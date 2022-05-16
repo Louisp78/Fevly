@@ -1,11 +1,16 @@
+import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/firebase_options.dart';
+import 'package:fevly/model/user_infos.dart';
+import 'package:fevly/service/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rive/rive.dart';
+import 'package:recase/recase.dart';
 
-/// Login state enum
+/// Login state enum :
+/// Describe the current login state of the user
 enum ApplicationLoginState {
   loggedOut,
   loggedIn,
@@ -16,6 +21,8 @@ enum ApplicationLoginState {
   loading,
 }
 
+/// Auth provider :
+/// All available auth providers
 enum AuthProvider {
   google,
   emailPassword,
@@ -28,11 +35,23 @@ class ApplicationState extends ChangeNotifier {
 
   // Members
   ApplicationLoginState _loginState = ApplicationLoginState.loading;
+
+  /// Current login state of the user
   ApplicationLoginState get loginState => _loginState;
 
+  /// member only use to send notification to the user that email is verified
+  /// in [_init] method inside user listener
+  BuildContext? _prevContext;
+
+  /// Last instance from the user listener
   User? userLastInstance;
 
+  /// Last instance from the pseudo listener
+  UserInfos? userInfos;
+
   late AuthProvider _authProvider;
+
+  /// Current auth provider
   AuthProvider get authProvider => _authProvider;
 
   /// ThemeMode state
@@ -44,9 +63,15 @@ class ApplicationState extends ChangeNotifier {
   }
 
   String? _emailAddress;
+
+  /// Email address of current user
   String? get emailAddress => _emailAddress;
 
-  /// Get user login state and subscript to different collections in Firestore
+  /// _init() :
+  /// - Init Firebase
+  /// - Listen for user login state changes and update [_loginState] member
+  /// - When user is logged in, listen for pseudo changes and update
+  /// - Setting the [_authProvider] member if logged in
   Future<void> _init() async {
     // Init
     await Firebase.initializeApp(
@@ -55,20 +80,27 @@ class ApplicationState extends ChangeNotifier {
 
     // Firebase auth
     FirebaseAuth.instance.userChanges().listen((user) async {
-      print('User listener called : $user');
+      //print('User listener called : $user');
       userLastInstance = user;
       if (user != null) {
+        //print('Current user id : ${user.uid}');
+        pseudoListener(user: user);
         // User is connected but not verified
         if (!user.emailVerified) {
           _loginState = ApplicationLoginState.verifyEmail;
         } else {
           // User is connected and verified
+          if (_loginState == ApplicationLoginState.verifyEmail) {
+            buildBasicSnackbar(
+                context: _prevContext!, message: 'Votre email est vérifié 🎉');
+          }
           _loginState = ApplicationLoginState.loggedIn;
           setAuthProvider();
         }
       } else {
         // User is disconnected
         _loginState = ApplicationLoginState.loggedOut;
+        userInfos = null;
       }
       notifyListeners();
     });
@@ -80,11 +112,49 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Listener of pseudo changes in Cloud Firestore
+  Future<void> pseudoListener({required User user}) async {
+    final docRef = await db.collection("users").doc(user.uid);
+
+    docRef.snapshots().listen(
+      (res) async {
+        try {
+          userInfos = UserInfos(
+            pseudo: await res.get('pseudo') as String,
+            user: user,
+          );
+        } on StateError catch (e) {
+          if (user.displayName != null) {
+            // If pseudo is not inside the db use displayName in snake case instead
+            final rc = ReCase(user.displayName!);
+            await addUserToFS(userId: user.uid, pseudo: rc.snakeCase);
+            userInfos = UserInfos(
+              pseudo: rc.snakeCase,
+              user: user,
+            );
+          } else {
+            // If displayName is null, set pseudo to 'Anonyme'
+            userInfos = UserInfos(
+              pseudo: 'Anonyme',
+              user: user,
+            );
+          }
+        }
+        notifyListeners();
+      },
+      onError: (e) => print("Error completing: $e"), // FIXME : Handle error
+    );
+  }
+
   /// Veryfing email address is already used
-  /// and update loginstate.
+  /// and update [_loginState] member
   /// Call errorCallback if email address is not valid
   Future<void> verifyEmailAddress({
     required String emailAddress,
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onInvalidEmail,
+    void Function()? onSuccess,
   }) async {
     try {
       final methodsOfConnexion =
@@ -103,14 +173,77 @@ class ApplicationState extends ChangeNotifier {
         throw FirebaseAuthException(
             code: 'unknown-error', message: 'Application state not handled');
       }
-      notifyListeners();
-    } on FirebaseAuthException {
-      rethrow;
+      onSuccess?.call();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'invalid-email') {
+        onInvalidEmail();
+      } else {
+        print('Not handle exception $e');
+        rethrow;
+      }
+    }
+
+    notifyListeners();
+  }
+
+  /// Send email verification
+  Future<void> sendEmailVerification({
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    void Function()? onSuccess,
+  }) async {
+    try {
+      return await FirebaseAuth.instance.currentUser!
+          .sendEmailVerification()
+          .then((_) => onSuccess?.call());
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else {
+        print('Not handle exception $e');
+        rethrow;
+      }
     }
   }
 
-  /// set authprovider
-  void setAuthProvider() async {
+  /// Safe reload user with error handling
+  /// This method will trigger the user listener in [_init] method
+  /// Only use this method when necessary (likely after a email verification)
+  Future<void> reloadUser({
+    required BuildContext context,
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+  }) async {
+    try {
+      _prevContext = context;
+      await FirebaseAuth.instance.currentUser!.reload();
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else {
+        print('Not handle exception $e');
+        rethrow;
+      }
+    }
+  }
+
+  /// Determine what is the provider used by the user for authentication (see [AuthProvider] enum)
+  /// Set [_authProvider] member from fetchingSignInMethodsForEmail method
+  Future<void> setAuthProvider() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
     try {
@@ -133,23 +266,49 @@ class ApplicationState extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'network-request-failed') {
-        print('Network request failed');
+        _loginState = ApplicationLoginState.loading;
+      }
+      if (e.code == 'too-many-requests') {
+        _loginState = ApplicationLoginState.loading;
+      } else if (e.code == 'operation-not-allowed') {
+        _loginState = ApplicationLoginState.loading;
+      } else {
+        print('Not handle exception $e');
+        rethrow;
       }
     }
   }
 
-  /// Reset email address
-  Future<void> resetEmailAddress({required String email}) async {
+  /// Send a link to reset password on [email] specified
+  Future<void> sendPasswordReset({
+    required String email,
+
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    void Function()? onSuccess,
+  }) async {
     try {
-      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      print('Error while send password reset email: ${e.message!}');
-      print(e);
-      rethrow;
+      return await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email)
+          .then((value) => onSuccess?.call());
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else {
+        print('Not handle exception $e');
+        rethrow;
+      }
     }
   }
 
   /// Sign in with email and password
+  /// This method will trigger the user listener in [_init] method
   Future<void> signInWithEmailAndPassword({
     required String emailAddress,
     required String password,
@@ -159,8 +318,6 @@ class ApplicationState extends ChangeNotifier {
     required void Function() onWrongPassword,
     void Function()? onSuccess,
   }) async {
-    // update context
-
     try {
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(
@@ -189,9 +346,14 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    // update context
-
+  /// Sign in with google
+  /// This method will trigger the user listener in [_init] method
+  Future<void> signInWithGoogle({
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    required void Function() onSuccess,
+  }) async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -212,19 +374,39 @@ class ApplicationState extends ChangeNotifier {
           .then((value) {
         _loginState = ApplicationLoginState.loggedIn;
         _authProvider = AuthProvider.google;
-        return value;
-      });
-    } on Exception catch (_) {
+      }).then((_) => onSuccess());
+    } on FirebaseException catch (e) {
       // TODO : handle error here with an unexpected PlatformException ?
-      rethrow;
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
+    } on PlatformException catch (e) {
+      if (e.code == 'network_error') {
+        onNetworkRequestFailed();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
     }
   }
 
-  /// Register new user
+  /// Register new user from email and password
+  /// sendEmailVerification is called after signInWithEmailAndPassword automatically
+  /// and provider is set to [AuthProvider.emailPassword].
+  /// displayName is update and
+  /// [pseudo] is written in Cloud Firestore
+  /// This method will trigger the user listener in [_init] method
   Future<void> registerAccount({
     required String emailAddress,
     required String name,
-    required String login, // TODO: add login support with firebase
+    required String pseudo, // TODO: add login support with firebase
     required String password,
 
     /// Exceptions
@@ -232,8 +414,10 @@ class ApplicationState extends ChangeNotifier {
     required void Function() onTooManyRequests,
     required void Function() onNetworkRequestFailed,
     required void Function() onWeakPassword,
+    required void Function() onSuccess,
   }) async {
     try {
+      /// Register new user
       final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailAddress, password: password)
@@ -243,8 +427,13 @@ class ApplicationState extends ChangeNotifier {
         return userCred;
       });
 
+      /// Update display name
       await userCredential.user!.updateDisplayName(name);
-    } on FirebaseAuthException catch (e) {
+
+      /// Update pseudo
+      await addUserToFS(userId: userCredential.user!.uid, pseudo: pseudo)
+          .then((_) => onSuccess());
+    } on FirebaseException catch (e) {
       if (e.code == 'network-request-failed') {
         onNetworkRequestFailed();
       } else if (e.code == 'operation-not-allowed') {
@@ -260,7 +449,8 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
-  /// Update password
+  /// Update password with [newPassword].
+  /// [onRequiresRecentLogin] is called to ask user to login again.
   Future<void> updatePassword({
     required String newPassword,
 
@@ -276,7 +466,6 @@ class ApplicationState extends ChangeNotifier {
       if (user != null) {
         return await user.updatePassword(newPassword).then((value) {
           onSuccess();
-          return value;
         });
       }
     } on FirebaseAuthException catch (e) {
@@ -293,10 +482,7 @@ class ApplicationState extends ChangeNotifier {
         rethrow;
       }
     }
-    return Future.value();
   }
-
-  /// TODO: Get a user's provider-specific profile information.
 
   /// Update display name
   Future<bool> updateDisplayName({
@@ -331,19 +517,24 @@ class ApplicationState extends ChangeNotifier {
     return Future.value(false);
   }
 
-  /// Update photo url
-  Future<bool> updatePhotoUrl({
+  /// Update photo url of the current user.
+  /// This method is likely called after the photo has been uploaded to Firebase Storage,
+  /// thanks to [FireStorage.uploadProfilePhoto(userId, file)]
+  Future<void> updatePhotoUrl({
     required String newPhotoUrl,
 
     /// Exceptions
     required void Function() onNetworkRequestFailed,
     required void Function() onTooManyRequests,
     required void Function() onOperationNotAllowed,
+    void Function()? onSuccess,
   }) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        return await user.updatePhotoURL(newPhotoUrl).then((value) => true);
+        return await user
+            .updatePhotoURL(newPhotoUrl)
+            .then((value) => onSuccess?.call());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'network-request-failed') {
@@ -357,7 +548,6 @@ class ApplicationState extends ChangeNotifier {
         rethrow;
       }
     }
-    return Future.value(false);
   }
 
   /// Update email address
@@ -377,7 +567,6 @@ class ApplicationState extends ChangeNotifier {
       if (user != null) {
         return await user.updateEmail(newEmailAddress).then((value) {
           onSuccess();
-          return value;
         });
       }
     } on FirebaseAuthException catch (e) {
@@ -398,22 +587,48 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
-  /// delete user
-  Future<bool> deleteUser({
+  /// Update pseudo from Cloud Firestore
+  Future<void> updatePseudo({
+    required String userId,
+    required String newPseudo,
+
+    /// Exceptions
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    required void Function() onSuccess,
+  }) async {
+    try {
+      return await addUserToFS(userId: userId, pseudo: newPseudo)
+          .then((value) => onSuccess());
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
+    }
+  }
+
+  /// Delete current logged user
+  /// This method will trigger the user listener in [_init] method
+  Future<void> deleteUser({
     /// Exceptions
     required void Function() onNetworkRequestFailed,
     required void Function() onTooManyRequests,
     required void Function() onOperationNotAllowed,
     required void Function() onRequiresRecentLogin,
-    required void Function() onSucess,
+    void Function()? onSucess,
   }) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        return await user.delete().then((value) {
-          onSucess();
-          return true;
-        });
+        return await user.delete().then((value) => onSucess?.call());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
@@ -429,11 +644,15 @@ class ApplicationState extends ChangeNotifier {
         rethrow;
       }
     }
-    return Future.value(false);
   }
 
   /// Reauthenticate user
-  Future<bool> reauthenticateUser({
+  /// This method is likely called after a [onRequiresRecentLogin] exception from [updatePassword] for example.
+  /// What is happening depend on the [_authProvider] member :
+  /// - if [_authProvider] is [AuthProvider.Google] : the user is logged out and immediately logged in again
+  /// - if [_authProvider] is [AuthProvider.EmailAndPassword] : the method [reauthenticateWithEmailAndPassword] is called
+  /// This method will trigger the user listener in [_init] method
+  Future<void> reauthenticateUser({
     required String emailAddress,
     required String password,
 
@@ -441,6 +660,8 @@ class ApplicationState extends ChangeNotifier {
     required void Function() onNetworkRequestFailed,
     required void Function() onTooManyRequests,
     required void Function() onOperationNotAllowed,
+    required void Function() onWrongPassword,
+    void Function()? onSuccess,
   }) async {
     try {
       if (_authProvider == AuthProvider.emailPassword) {
@@ -451,14 +672,43 @@ class ApplicationState extends ChangeNotifier {
                 email: user.email!,
                 password: password,
               ))
-              .then((value) => true);
+              .then((value) => onSuccess?.call());
         }
       } else if (_authProvider == AuthProvider.google) {
-        await signOut();
-        await signInWithGoogle();
-        return Future.value(true);
+        await FirebaseAuth.instance.signOut();
+        await signInWithGoogle(
+            onNetworkRequestFailed: onNetworkRequestFailed,
+            onOperationNotAllowed: onOperationNotAllowed,
+            onTooManyRequests: onTooManyRequests,
+            onSuccess: onSuccess ?? (() {}));
       }
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        onNetworkRequestFailed();
+      } else if (e.code == 'operation-not-allowed') {
+        onOperationNotAllowed();
+      } else if (e.code == 'too-many-requests') {
+        onTooManyRequests();
+      } else if (e.code == 'wrong-password') {
+        onWrongPassword();
+      } else {
+        print('Not handled error: $e');
+        rethrow;
+      }
+    }
+  }
+
+  /// Sign out the current user
+  /// This method will trigger the user listener in [_init] method
+  Future<void> signOut({
+    required void Function() onNetworkRequestFailed,
+    required void Function() onTooManyRequests,
+    required void Function() onOperationNotAllowed,
+    void Function()? onSuccess,
+  }) async {
+    try {
+      return FirebaseAuth.instance.signOut().then((_) => onSuccess?.call());
+    } on FirebaseException catch (e) {
       if (e.code == 'network-request-failed') {
         onNetworkRequestFailed();
       } else if (e.code == 'operation-not-allowed') {
@@ -470,13 +720,5 @@ class ApplicationState extends ChangeNotifier {
         rethrow;
       }
     }
-    return Future.value(false);
-  }
-
-  /// Sign out
-  Future<void> signOut() {
-    return FirebaseAuth.instance.signOut();
-    // Here listener in _init function will be call because of
-    // an update of the user state.
   }
 }

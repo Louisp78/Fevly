@@ -6,12 +6,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant/constant.dart';
 import 'package:fevly/service/application_state.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 /// Display list of buttons with connexion methods
+/// For Google and Email connection
 class PickConnexionMethod extends StatelessWidget {
   const PickConnexionMethod();
 
@@ -62,18 +62,13 @@ class PickConnexionMethod extends StatelessWidget {
           CustomLoadingButton(
             onPressed: () async {
               if (authVM.isLoading) return; // avoid mutiple clicks
-              try {
-                await appState.signInWithGoogle().then((value) => buildRoute(
-                    context: context, loginState: appState.loginState));
-              } on PlatformException catch (e) {
-                print('PlatformException : ${e}');
-                if (e.code == 'network_error') {
-                  handleNetworkError(context);
-                }
-                /*if (e.code == 'network_error') {
-                  handleNetworkError(context);
-                }*/
-              }
+              await appState.signInWithGoogle(
+                onNetworkRequestFailed: () => handleNetworkError(context),
+                onOperationNotAllowed: () => handleOperationNotAllowed(context),
+                onTooManyRequests: () => handleTooManyRequests(context),
+                onSuccess: () => buildRoute(
+                    context: context, loginState: appState.loginState),
+              );
             },
             text_not_loading: 'Se connecter avec Google',
             prefixIcon: SvgPicture.asset('assets/base/google.svg',
@@ -97,12 +92,8 @@ class PickConnexionMethod extends StatelessWidget {
       case ApplicationLoginState.loggedOut:
         break;
       case ApplicationLoginState.emailAddress:
-        Navigator.pushNamed(context, '/auth/logged_out/email');
+        Navigator.pushNamed(context, '/email');
         break;
-      /*case ApplicationLoginState.loggedIn:
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/dashboard', (route) => false);
-        break;*/
       default:
         break;
     }

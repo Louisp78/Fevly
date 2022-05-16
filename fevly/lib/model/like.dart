@@ -1,12 +1,8 @@
-import 'package:fevly/model/user.dart';
+import 'package:fevly/model/user_infos.dart';
 
 class Like {
-
-  final User fromUser;
+  final UserInfos fromUser;
   final DateTime atDate;
 
-  Like({
-    required this.fromUser,
-    required this.atDate
-  });
+  Like({required this.fromUser, required this.atDate});
 }

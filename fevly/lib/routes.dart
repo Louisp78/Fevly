@@ -1,4 +1,7 @@
+import 'package:fevly/components/dialog/disconnect.dart';
+import 'package:fevly/components/dialog/leave.dart';
 import 'package:fevly/models/user.dart';
+import 'package:fevly/screens/auth/anim/martini_anim.dart';
 import 'package:fevly/screens/auth/email_screen.dart';
 import 'package:fevly/screens/auth/logged_out_screen.dart';
 import 'package:fevly/screens/auth/register_screen.dart';
@@ -26,59 +29,81 @@ import 'package:fevly/models/party.dart';
 mixin RouterNav {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+
+      /// This route is the root and auto build right screen depending on [ApplicationState.loginState]
+      /// Following screens can be build :
+      /// - [LoadingScreen]
+      /// - [LoggedOutScreen]
+      /// - [VerifyEmailScreen]
+      /// - [DashboardScreen]
       case '/':
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) {
           return Consumer<ApplicationState>(
               builder: (context, appState, child) {
             if (appState.loginState == ApplicationLoginState.loggedIn) {
-              return const DashboardScreen();
+              return WillPopScope(
+                onWillPop: () async {
+                  buildLeaveAppDialog(context: context);
+                  return false;
+                },
+                child: const DashboardScreen(),
+              );
             } else if (appState.loginState == ApplicationLoginState.loading) {
-              return const LoadingScreen();
+              return WillPopScope(
+                onWillPop: () => Future.value(false),
+                child: const LoadingScreen(),
+              );
             } else if (appState.loginState ==
                 ApplicationLoginState.verifyEmail) {
               return ChangeNotifierProvider(
-                  create: (context) => AuthViewModel(),
-                  child: const VerifyEmailScreen());
+                create: (context) => AuthViewModel(),
+                child: WillPopScope(
+                  onWillPop: () {
+                    buildDisconnectDialog(context: context);
+                    return Future.value(false);
+                  },
+                  child: const VerifyEmailScreen(),
+                ),
+              );
             } else {
               return ChangeNotifierProvider(
-                  create: (context) => AuthViewModel(),
-                  child: const LoggedOutScreen());
+                create: (context) => AuthViewModel(),
+                child: WillPopScope(
+                    onWillPop: () {
+                      buildLeaveAppDialog(context: context);
+                      return Future.value(false);
+                    },
+                    child: const LoggedOutScreen()),
+              );
             }
           });
         });
-      /*case '/auth/logged_out':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider<AuthViewModel>(
-                create: (context) => AuthViewModel(),
-                child: const LoggedOutScreen());
-          },
-          transitionsBuilder: slideLeftTransition(),
-          transitionDuration: const Duration(milliseconds: 500),
-        );*/
 
-      case '/auth/logged_out/verify_email':
+      /// This route is call from [RegisterScreen]
+      case '/verify_email':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider<AuthViewModel>(
-                create: (context) => AuthViewModel(),
-                child: const VerifyEmailScreen());
+              create: (context) => AuthViewModel(),
+              child: const VerifyEmailScreen(),
+            );
           },
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-      case '/auth/logged_out/email':
+      case '/email':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider<AuthViewModel>(
-                create: (context) => AuthViewModel(),
-                child: const EmailScreen());
+              create: (context) => AuthViewModel(),
+              child: const EmailScreen(),
+            );
           },
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-      case '/auth/logged_out/sign_in':
+      case '/email/sign_in':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider<AuthViewModel>(
@@ -88,7 +113,7 @@ mixin RouterNav {
           transitionsBuilder: slideLeftTransition(),
           transitionDuration: const Duration(milliseconds: 500),
         );
-      case '/auth/logged_out/register':
+      case '/email/register':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider<AuthViewModel>(
@@ -132,22 +157,6 @@ mixin RouterNav {
           pageBuilder: (context, animation, secondaryAnimation) =>
               ModifyPasswordScreen(),
         );
-      /*case '/search':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            final Map args = settings.arguments! as Map;
-            return SearchScreen(
-              mainList: args['mainList'] as List<User>,
-              suggestionList1Name: args['suggestionList1Name'] as String,
-              suggestionList2Name: args['suggestionList2Name'] as String?,
-              userSuggestionList1: args['userSuggestionList1'] as List<User>,
-              userSuggestionList2: args['userSuggestionList2'] as List<User>?,
-              type: args['type'] as SearchScreenType,
-            );
-          },
-          transitionsBuilder: slideLeftTransition(),
-        );
-*/
       case '/dashboard':
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
@@ -190,30 +199,3 @@ mixin RouterNav {
     }
   }
 }
-
-      /*
-      ! Not for minimal version
-      case '/profile/my_lists':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              MyListsScreen(
-            listOfGuestList: kCurrentUser.listOfGuestList,
-            listOfProductList: kCurrentUser.listOfProductList,
-          ),
-        );
-
-      case '/profile/my_lists/product_list':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              ProductListScreen(
-            productList: settings.arguments! as ProductList,
-          ),
-        );
-
-      case '/profile/my_lists/guest_list':
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              ProductListScreen(
-            productList: settings.arguments! as ProductList,
-          ),
-        );*/
