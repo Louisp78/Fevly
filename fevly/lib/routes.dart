@@ -9,6 +9,7 @@ import 'package:fevly/screens/auth/sign_in_screen.dart';
 import 'package:fevly/screens/auth/verify_email_screen.dart';
 import 'package:fevly/screens/auth/view_models/auth_view_model.dart';
 import 'package:fevly/screens/condition_of_use/condition_of_use_screen.dart';
+import 'package:fevly/screens/create_party/create_party_screen.dart';
 import 'package:fevly/screens/dashboard/dashboard_screen.dart';
 import 'package:fevly/screens/loading/loading_screen.dart';
 import 'package:fevly/screens/modify_password/modify_password_screen.dart';
@@ -177,6 +178,13 @@ mixin RouterNav {
           pageBuilder: (context, animation, secondaryAnimation) => PartyScreen(
             party: settings.arguments! as Party,
           ),
+        );
+      case '/create_party':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              CreatePartyScreen(),
+          transitionDuration: const Duration(milliseconds: 500),
+          transitionsBuilder: slideLeftTransition(),
         );
       case '/notifications':
         return PageRouteBuilder(

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fevly/DTOS/dto_user.dart';
 import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/firebase_options.dart';
 import 'package:fevly/model/user_infos.dart';
@@ -47,7 +49,7 @@ class ApplicationState extends ChangeNotifier {
   User? userLastInstance;
 
   /// Last instance from the pseudo listener
-  UserInfos? userInfos;
+  CurrentUserInfos? userInfos;
 
   late AuthProvider _authProvider;
 
@@ -119,26 +121,13 @@ class ApplicationState extends ChangeNotifier {
     docRef.snapshots().listen(
       (res) async {
         try {
-          userInfos = UserInfos(
+          userInfos = CurrentUserInfos(
             pseudo: await res.get('pseudo') as String,
             user: user,
           );
         } on StateError catch (e) {
-          if (user.displayName != null) {
-            // If pseudo is not inside the db use displayName in snake case instead
-            final rc = ReCase(user.displayName!);
-            await addUserToFS(userId: user.uid, pseudo: rc.snakeCase);
-            userInfos = UserInfos(
-              pseudo: rc.snakeCase,
-              user: user,
-            );
-          } else {
-            // If displayName is null, set pseudo to 'Anonyme'
-            userInfos = UserInfos(
-              pseudo: 'Anonyme',
-              user: user,
-            );
-          }
+          print('StateError should not happen : $e');
+          rethrow;
         }
         notifyListeners();
       },
@@ -374,6 +363,29 @@ class ApplicationState extends ChangeNotifier {
           .then((value) {
         _loginState = ApplicationLoginState.loggedIn;
         _authProvider = AuthProvider.google;
+        return value;
+      }).then((credential) {
+        // check if user is in cloud firestore
+        // else create it with pseudo equals to displayName in snake case
+        final db = FirebaseFirestore.instance;
+        db
+            .collection('users')
+            .doc(credential.user!.uid)
+            .get()
+            .then((docSnapshot) async {
+          if (!docSnapshot.exists) {
+            final dtoUser = DTOUser(
+              userId: credential.user!.uid,
+              friendCounter: 0,
+              partyCounter: 0,
+              pseudo: ReCase(credential.user!.displayName!).snakeCase,
+              email: credential.user!.email!,
+              displayName: credential.user!.displayName!,
+              photoURL: credential.user!.photoURL!,
+            );
+            await addUserToFS(user: dtoUser);
+          }
+        });
       }).then((_) => onSuccess());
     } on FirebaseException catch (e) {
       // TODO : handle error here with an unexpected PlatformException ?
@@ -430,9 +442,16 @@ class ApplicationState extends ChangeNotifier {
       /// Update display name
       await userCredential.user!.updateDisplayName(name);
 
-      /// Update pseudo
-      await addUserToFS(userId: userCredential.user!.uid, pseudo: pseudo)
-          .then((_) => onSuccess());
+      /// Write newly registered user in Cloud Firestore
+      final dtoUser = DTOUser(
+        displayName: userCredential.user!.displayName!,
+        email: userCredential.user!.email!,
+        friendCounter: 0,
+        partyCounter: 0,
+        photoURL: userCredential.user!.photoURL!,
+        pseudo: pseudo,
+      );
+      await addUserToFS(user: dtoUser).then((_) => onSuccess());
     } on FirebaseException catch (e) {
       if (e.code == 'network-request-failed') {
         onNetworkRequestFailed();
@@ -599,8 +618,8 @@ class ApplicationState extends ChangeNotifier {
     required void Function() onSuccess,
   }) async {
     try {
-      return await addUserToFS(userId: userId, pseudo: newPseudo)
-          .then((value) => onSuccess());
+      updateUserPseudoFS(pseudo: newPseudo, userId: userId)
+          .then((_) => onSuccess());
     } on FirebaseException catch (e) {
       if (e.code == 'network-request-failed') {
         onNetworkRequestFailed();
@@ -617,6 +636,7 @@ class ApplicationState extends ChangeNotifier {
 
   /// Delete current logged user
   /// This method will trigger the user listener in [_init] method
+  /// Here we also delete all related data of this user in Cloud Firestore FIXME (TODO)
   Future<void> deleteUser({
     /// Exceptions
     required void Function() onNetworkRequestFailed,

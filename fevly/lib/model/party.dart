@@ -6,7 +6,7 @@ import 'package:fevly/models/product.dart';
 
 class Party {
   String name;
-  UserInfos organizer;
+  CurrentUserInfos organizer;
   DateTime startDate;
   DateTime endDate;
   Location location;

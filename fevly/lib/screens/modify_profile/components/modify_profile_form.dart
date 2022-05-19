@@ -33,7 +33,7 @@ class ModifyProfileForm extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final ModifyProfileViewModel modifyVM =
         Provider.of<ModifyProfileViewModel>(context);
-    final UserInfos? userInfos = appState.userInfos;
+    final CurrentUserInfos? userInfos = appState.userInfos;
     final textTheme =
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final ColorScheme themeColor = Theme.of(context).colorScheme;

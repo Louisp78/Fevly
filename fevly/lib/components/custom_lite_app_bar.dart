@@ -10,10 +10,14 @@ class CustomLiteAppBar extends StatelessWidget {
     Key? key,
     required this.title,
     required this.leading,
+    this.height,
+    this.backgroundColor,
   }) : super(key: key);
 
   final String title;
   final Widget leading;
+  final double? height;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +27,9 @@ class CustomLiteAppBar extends StatelessWidget {
         GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme);
     final Size size = MediaQuery.of(context).size;
     final ApplicationState appState = Provider.of<ApplicationState>(context);
-    return SizedBox(
-      height: size.height * 0.17,
+    return Container(
+      height: height ?? size.height * 0.17,
+      color: backgroundColor ?? Colors.transparent,
       child: Stack(
         alignment: Alignment.centerLeft,
         clipBehavior: Clip.none,

@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 enum GuestStatus { present, absent, unknow }
 
-class Guest extends UserInfos {
-  final UserInfos userInfos;
+class Guest extends CurrentUserInfos {
+  final CurrentUserInfos userInfos;
   final List<Like> _likes = List.empty();
   GuestStatus status;
 

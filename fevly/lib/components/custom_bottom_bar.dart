@@ -50,7 +50,7 @@ class CustomBottomBar extends StatelessWidget {
                   }),
               icon: Icon(Icons.search_rounded, color: themeColor.onBackground)),
           CustomIconButton(
-            press: () {},
+            press: () => Navigator.pushNamed(context, '/create_party'),
             icon: Icons.add_rounded,
             circle: false,
             iconColor: themeColor.background,

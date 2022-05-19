@@ -8,8 +8,8 @@ void main() {
   group("Party Basics", () {
     var party = Party(
         name: "Party 1",
-        organizer:
-            UserInfos(pseudo: "login", name: "name", password: "password"),
+        organizer: CurrentUserInfos(
+            pseudo: "login", name: "name", password: "password"),
         startDate: DateTime.now(),
         endDate: DateTime.now(),
         location: Location(
