@@ -3,7 +3,7 @@ import 'package:fevly/model/user_infos.dart';
 enum QuantityUnit { none, L, cL, m, cm, pack, paquet, part }
 
 class Product {
-  final UserInfos fromUser;
+  final CurrentUserInfos fromUser;
   final String name;
   QuantityUnit unit;
   int quantity;

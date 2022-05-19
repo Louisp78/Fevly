@@ -2,7 +2,7 @@ import 'package:fevly/model/user_infos.dart';
 
 class Media {
   final Object video;
-  final UserInfos fromUser;
+  final CurrentUserInfos fromUser;
   final DateTime addedAt = DateTime.now();
 
   Media({
