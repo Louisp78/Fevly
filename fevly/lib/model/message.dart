@@ -1,7 +1,7 @@
 import 'package:fevly/model/user_infos.dart';
 
 class Message {
-  final UserInfos user;
+  final CurrentUserInfos user;
   String content;
   DateTime atDate = DateTime.now();
 
