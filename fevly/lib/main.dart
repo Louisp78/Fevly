@@ -1,5 +1,4 @@
 import 'package:fevly/routes.dart';
-import 'package:fevly/screens/create_party/create_party_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/theme.dart';
 import 'package:flutter/material.dart';

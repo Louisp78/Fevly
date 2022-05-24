@@ -45,6 +45,7 @@ class _SignInForm extends State<SignInForm> {
     return SizedBox(
       width: size.width * 0.8,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             widget.title,
@@ -62,92 +63,91 @@ class _SignInForm extends State<SignInForm> {
           ),
           Form(
             key: _formKey,
-            child: Expanded(
-              child: Column(
-                children: [
-                  CustomTextField(
-                      error_msg: passwordErrorMsg,
-                      controller: _passwordController,
-                      label_text: 'Mot de passe',
-                      hintText: 'Entrer un mot de passe',
-                      textInputType: TextInputType.text,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return Kpassword_empty_error_msg;
-                        }
-                        return null;
-                      },
-                      obscureText: true),
-                  SizedBox(height: kBasicVerticalPadding(size: size)),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Consumer<CustomTimer>(
-                        builder: (context, customTimer, _) {
-                      return CustomSmallButton(
-                        buttonSize: CustomSmallButtonSize.small,
-                        borderColor:
-                            customTimer.timerState == TimerState.running
-                                ? themeColor.onSurface
-                                : kTextColor,
-                        borderWidth: 2,
-                        press: () async {
-                          if (customTimer.timerState == TimerState.stopped) {
-                            customTimer.startTimer();
-                            await appState.sendPasswordReset(
-                              onNetworkRequestFailed: () =>
-                                  handleNetworkError(context),
-                              onOperationNotAllowed: () =>
-                                  handleOperationNotAllowed(context),
-                              onTooManyRequests: () =>
-                                  handleTooManyRequests(context),
-                              email: widget.email,
-                            );
-                          }
-                        },
-                        text: customTimer.timerState == TimerState.running
-                            ? "Email envoyé : ${customTimer.counter.inSeconds}s"
-                            : 'Mot de passe oublié ?',
-                      );
-                    }),
-                  ),
-                  const Spacer(),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: CustomLoadingButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          authVM.isLoading = true;
-                          await appState
-                              .signInWithEmailAndPassword(
-                                emailAddress: widget.email,
-                                password: _passwordController.text,
-                                onNetworkRequestFailed: () {
-                                  handleNetworkError(context);
-                                  setState(() => passwordErrorMsg = '');
-                                },
-                                onTooManyRequests: () => setState(() =>
-                                    passwordErrorMsg =
-                                        Ktoo_many_requests_error_msg),
-                                onOperationNotAllowed: () => setState(() =>
-                                    passwordErrorMsg = Koperation_not_allowed),
-                                onWrongPassword: () => setState(() =>
-                                    passwordErrorMsg =
-                                        Kwrong_password_error_msg),
-                              )
-                              .then((value) => authVM.isLoading = false)
-                              .then((value) => buildRoute(
-                                  context: context,
-                                  loginState: appState.loginState));
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomTextField(
+                    error_msg: passwordErrorMsg,
+                    controller: _passwordController,
+                    label_text: 'Mot de passe',
+                    hintText: 'Entrer un mot de passe',
+                    textInputType: TextInputType.text,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return Kpassword_empty_error_msg;
+                      }
+                      return null;
+                    },
+                    obscureText: true),
+                SizedBox(height: kBasicVerticalPadding(size: size)),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child:
+                      Consumer<CustomTimer>(builder: (context, customTimer, _) {
+                    return CustomSmallButton(
+                      buttonSize: CustomSmallButtonSize.small,
+                      borderColor: customTimer.timerState == TimerState.running
+                          ? themeColor.onSurface
+                          : kTextColor,
+                      borderWidth: 2,
+                      press: () async {
+                        if (customTimer.timerState == TimerState.stopped) {
+                          customTimer.startTimer();
+                          await appState.sendPasswordReset(
+                            onNetworkRequestFailed: () =>
+                                handleNetworkError(context),
+                            onOperationNotAllowed: () =>
+                                handleOperationNotAllowed(context),
+                            onTooManyRequests: () =>
+                                handleTooManyRequests(context),
+                            email: widget.email,
+                          );
                         }
                       },
-                      text_not_loading: 'Suivant',
-                      text_color_is_loading: themeColor.onBackground,
-                      background_color_is_loading: themeColor.onSurface,
-                      is_loading: authVM.isLoading,
-                    ),
+                      text: customTimer.timerState == TimerState.running
+                          ? "Email envoyé : ${customTimer.counter.inSeconds}s"
+                          : 'Mot de passe oublié ?',
+                    );
+                  }),
+                ),
+                SizedBox(
+                  height: size.height * 0.4,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomLoadingButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        authVM.isLoading = true;
+                        await appState
+                            .signInWithEmailAndPassword(
+                              emailAddress: widget.email,
+                              password: _passwordController.text,
+                              onNetworkRequestFailed: () {
+                                handleNetworkError(context);
+                                setState(() => passwordErrorMsg = '');
+                              },
+                              onTooManyRequests: () => setState(() =>
+                                  passwordErrorMsg =
+                                      Ktoo_many_requests_error_msg),
+                              onOperationNotAllowed: () => setState(() =>
+                                  passwordErrorMsg = Koperation_not_allowed),
+                              onWrongPassword: () => setState(() =>
+                                  passwordErrorMsg = Kwrong_password_error_msg),
+                            )
+                            .then((value) => authVM.isLoading = false)
+                            .then((value) => buildRoute(
+                                context: context,
+                                loginState: appState.loginState));
+                      }
+                    },
+                    text_not_loading: 'Suivant',
+                    text_color_is_loading: themeColor.onBackground,
+                    background_color_is_loading: themeColor.onSurface,
+                    is_loading: authVM.isLoading,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

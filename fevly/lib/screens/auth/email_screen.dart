@@ -22,8 +22,10 @@ class EmailScreen extends StatelessWidget {
         });
         return false;
       },
-      child: const Scaffold(
-        body: Body(formContent: EmailForm()),
+      child: SafeArea(
+        child: const Scaffold(
+          body: Body(formContent: EmailForm()),
+        ),
       ),
     );
   }

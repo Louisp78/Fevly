@@ -10,9 +10,11 @@ class LoggedOutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Body(
-      formContent: PickConnexionMethod(),
-    ));
+    return const SafeArea(
+      child: Scaffold(
+          body: Body(
+        formContent: PickConnexionMethod(),
+      )),
+    );
   }
 }

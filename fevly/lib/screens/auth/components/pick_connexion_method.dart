@@ -26,6 +26,7 @@ class PickConnexionMethod extends StatelessWidget {
     return SizedBox(
       width: size.width * 0.8,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: kBasicVerticalPadding(size: size)),
           AutoSizeText.rich(
@@ -43,7 +44,8 @@ class PickConnexionMethod extends StatelessWidget {
             style: textTheme.headline1!
                 .copyWith(color: themeColor.primary, fontSize: 85),
           ),
-          const Spacer(),
+          //const Spacer(),
+          SizedBox(height: size.height * 0.42),
           CustomTextButton(
             press: () {
               if (authVM.isLoading) return; // avoid multiple clicks

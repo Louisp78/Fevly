@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fevly/DTOS/dto_user.dart';
+import 'package:fevly/DTOS/dto_user_simple.dart';
 import 'package:fevly/components/snackbar/basic_snackbar.dart';
 import 'package:fevly/firebase_options.dart';
+import 'package:fevly/functions/generate_random_pseudo.dart';
 import 'package:fevly/model/user_infos.dart';
 import 'package:fevly/service/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,8 +51,7 @@ class ApplicationState extends ChangeNotifier {
   User? userLastInstance;
 
   /// Last instance from the pseudo listener
-  CurrentUserInfos? userInfos;
-
+  DTOUser? currentUser;
   late AuthProvider _authProvider;
 
   /// Current auth provider
@@ -102,7 +103,7 @@ class ApplicationState extends ChangeNotifier {
       } else {
         // User is disconnected
         _loginState = ApplicationLoginState.loggedOut;
-        userInfos = null;
+        currentUser = null;
       }
       notifyListeners();
     });
@@ -114,21 +115,15 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Listener of pseudo changes in Cloud Firestore
+  /// Listener of current user datas change in FS db
   Future<void> pseudoListener({required User user}) async {
-    final docRef = await db.collection("users").doc(user.uid);
+    final docRef = db.collection("users").doc(user.uid).withConverter(
+        fromFirestore: DTOUser.fromFirestore,
+        toFirestore: (DTOUser user, _) => user.toFirebase());
 
     docRef.snapshots().listen(
       (res) async {
-        try {
-          userInfos = CurrentUserInfos(
-            pseudo: await res.get('pseudo') as String,
-            user: user,
-          );
-        } on StateError catch (e) {
-          print('StateError should not happen : $e');
-          rethrow;
-        }
+        currentUser = res.data();
         notifyListeners();
       },
       onError: (e) => print("Error completing: $e"), // FIXME : Handle error
@@ -374,7 +369,8 @@ class ApplicationState extends ChangeNotifier {
             .get()
             .then((docSnapshot) async {
           if (!docSnapshot.exists) {
-            final dtoUser = DTOUser(
+            // correspond to a register with google
+            DTOUser dtoUser = DTOUser(
               userId: credential.user!.uid,
               friendCounter: 0,
               partyCounter: 0,
@@ -383,7 +379,23 @@ class ApplicationState extends ChangeNotifier {
               displayName: credential.user!.displayName!,
               photoURL: credential.user!.photoURL!,
             );
-            await addUserToFS(user: dtoUser);
+            try {
+              await addUserToFS(user: dtoUser);
+            } on FirebaseException catch (e) {
+              if (e.code == 'pseudo_already_exist') {
+                // pseudo already exist
+                // we need to generate a new pseudo base on displayName
+                print('pseudo already exist : Generate a new pseudo');
+                final newPseudo =
+                    await findValidPseudo(prefix: dtoUser.pseudo!);
+                dtoUser = await dtoUser.withPseudo(newPseudo);
+                print(dtoUser.pseudo!);
+                await addUserToFS(user: dtoUser);
+              } else {
+                print('Not handle exception $e');
+                rethrow;
+              }
+            }
           }
         });
       }).then((_) => onSuccess());
@@ -426,31 +438,30 @@ class ApplicationState extends ChangeNotifier {
     required void Function() onTooManyRequests,
     required void Function() onNetworkRequestFailed,
     required void Function() onWeakPassword,
+    required void Function() onPseudoAlreadyExists,
     required void Function() onSuccess,
   }) async {
     try {
       /// Register new user
-      final userCredential = await FirebaseAuth.instance
+      final dtoUser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailAddress, password: password)
           .then((userCred) async {
         await userCred.user!.sendEmailVerification();
         _authProvider = AuthProvider.emailPassword;
-        return userCred;
+        return userCred.user!.updateDisplayName(name).then((value) => DTOUser(
+              displayName: name,
+              userId: userCred.user!.uid,
+              email: userCred.user!.email!,
+              friendCounter: 0,
+              partyCounter: 0,
+              photoURL: userCred.user!.photoURL,
+              pseudo: pseudo,
+            ));
       });
 
-      /// Update display name
-      await userCredential.user!.updateDisplayName(name);
-
       /// Write newly registered user in Cloud Firestore
-      final dtoUser = DTOUser(
-        displayName: userCredential.user!.displayName!,
-        email: userCredential.user!.email!,
-        friendCounter: 0,
-        partyCounter: 0,
-        photoURL: userCredential.user!.photoURL!,
-        pseudo: pseudo,
-      );
+
       await addUserToFS(user: dtoUser).then((_) => onSuccess());
     } on FirebaseException catch (e) {
       if (e.code == 'network-request-failed') {
@@ -459,6 +470,8 @@ class ApplicationState extends ChangeNotifier {
         onOperationNotAllowed();
       } else if (e.code == 'weak-password') {
         onWeakPassword();
+      } else if (e.code == 'pseudo_already_exists') {
+        onPseudoAlreadyExists();
       } else if (e.code == 'too-many-requests') {
         onTooManyRequests();
       } else {
@@ -516,7 +529,9 @@ class ApplicationState extends ChangeNotifier {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        return await user.updateDisplayName(newName).then((value) {
+        return await user.updateDisplayName(newName).then((value) async {
+          await updateCurrentUserFS(user: DTOUser(displayName: newName));
+        }).then((value) {
           onSuccess();
           return true;
         });
@@ -584,7 +599,15 @@ class ApplicationState extends ChangeNotifier {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        return await user.updateEmail(newEmailAddress).then((value) {
+        return await user
+            .updateEmail(newEmailAddress)
+            .then(
+              (value) => updateCurrentUserFS(
+                  user: DTOUser(
+                email: newEmailAddress,
+              )),
+            )
+            .then((value) {
           onSuccess();
         });
       }
@@ -608,7 +631,6 @@ class ApplicationState extends ChangeNotifier {
 
   /// Update pseudo from Cloud Firestore
   Future<void> updatePseudo({
-    required String userId,
     required String newPseudo,
 
     /// Exceptions
@@ -618,8 +640,12 @@ class ApplicationState extends ChangeNotifier {
     required void Function() onSuccess,
   }) async {
     try {
-      updateUserPseudoFS(pseudo: newPseudo, userId: userId)
-          .then((_) => onSuccess());
+      final user = DTOUser(
+        pseudo: newPseudo,
+        userId: FirebaseAuth.instance.currentUser!.uid,
+      );
+
+      updateCurrentUserFS(user: user).then((_) => onSuccess());
     } on FirebaseException catch (e) {
       if (e.code == 'network-request-failed') {
         onNetworkRequestFailed();
@@ -648,7 +674,10 @@ class ApplicationState extends ChangeNotifier {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        return await user.delete().then((value) => onSucess?.call());
+        return await user
+            .delete()
+            .then((value) => deleteUserFromFS(userId: user.uid))
+            .then((value) => onSucess?.call());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {

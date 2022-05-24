@@ -28,7 +28,7 @@ class CustomLiteAppBar extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final ApplicationState appState = Provider.of<ApplicationState>(context);
     return Container(
-      height: height ?? size.height * 0.17,
+      height: height ?? size.height * 0.1,
       color: backgroundColor ?? Colors.transparent,
       child: Stack(
         alignment: Alignment.centerLeft,
