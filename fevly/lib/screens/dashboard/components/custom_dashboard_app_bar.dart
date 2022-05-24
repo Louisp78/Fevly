@@ -56,7 +56,7 @@ class CustomDashboardAppBar extends StatelessWidget {
               children: [
                 Flexible(
                   child: AutoSizeText(
-                    '@${appState.userInfos?.pseudo}',
+                    '@${appState.currentUser?.pseudo}',
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

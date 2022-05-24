@@ -5,9 +5,9 @@ import 'package:fevly/DTOS/dto_guest.dart';
 class DTOUserSimple {
   /// This id corresponds to the auto-generated id of the party in the cloud firestore
   final String? userId;
-  final String pseudo;
-  final String displayName;
-  final String photoURL;
+  final String? pseudo;
+  final String? displayName;
+  final String? photoURL;
 
   DTOUserSimple({
     required this.pseudo,
@@ -32,8 +32,17 @@ class DTOUserSimple {
   Map<String, dynamic> toFirestore() {
     return {
       'pseudo': pseudo,
-      'display_name': displayName,
       'photo_url': photoURL,
+    };
+  }
+
+  /// from [DTOUserSimple] to Firestore data without null values
+  /// this method should be used only for update data
+  Map<String, dynamic> toFirestoreWithoutNull() {
+    return {
+      'pseudo': pseudo,
+      if (displayName != null) 'display_name': displayName,
+      if (photoURL != null) 'photo_url': photoURL,
     };
   }
 

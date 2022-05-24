@@ -20,11 +20,13 @@ class RegisterScreen extends StatelessWidget {
         }
         return false;
       },
-      child: Scaffold(
-        body: Body(
-            formContent: RegisterForm(
-          email: appState.emailAddress!,
-        )),
+      child: SafeArea(
+        child: Scaffold(
+          body: Body(
+              formContent: RegisterForm(
+            email: appState.emailAddress!,
+          )),
+        ),
       ),
     );
   }

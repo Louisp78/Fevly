@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fevly/DTOS/dto_guest.dart';
 import 'package:fevly/DTOS/dto_party.dart';
+import 'package:fevly/DTOS/dto_user.dart';
 import 'package:fevly/components/card_user_simple.dart';
 import 'package:fevly/components/custom_icon_button.dart';
 import 'package:fevly/components/custom_lite_app_bar.dart';
@@ -34,14 +35,9 @@ class CreatePartyScreen extends StatelessWidget {
 
     final kHeightForSection = size.height * 0.25;
     final ApplicationState appState = Provider.of<ApplicationState>(context);
-    final CurrentUserInfos userInfos = appState.userInfos!;
+    final DTOUser currentUser = appState.currentUser!;
     final List<DTOGuest> guests = [
-      DTOGuest(
-          userId: FirebaseAuth.instance.currentUser!.uid,
-          pseudo: userInfos.pseudo,
-          displayName: userInfos.user.displayName!,
-          photoURL: userInfos.user.photoURL!,
-          isOrganizer: true)
+      currentUser.toDTOGuest(isOrganizer: true),
     ];
     return SafeArea(
       child: Scaffold(
@@ -152,7 +148,7 @@ class CreatePartyScreen extends StatelessWidget {
                             organizersCount: 1,
                           );
 
-                          addParty(party: party, guests: guests);
+                          addPartyFS(party: party, guests: guests);
                         }
                       }),
                   SizedBox(
