@@ -24,6 +24,7 @@ class CustomTextField extends StatefulWidget {
   final String? label_text;
   final TextInputType? textInputType;
   final Widget? prefix;
+  final Widget? suffix;
 
   const CustomTextField({
     this.obscureText = false,
@@ -44,6 +45,7 @@ class CustomTextField extends StatefulWidget {
     this.textInputType,
     this.label_text,
     this.prefix,
+    this.suffix,
   });
 
   @override
@@ -120,6 +122,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           labelText: widget.label_text,
           labelStyle: textTheme.headline3!.copyWith(color: kTextColor),
           prefix: widget.prefix,
+          suffix: widget.suffix,
           errorMaxLines: 2,
         ).applyDefaults(themeInput);
     }

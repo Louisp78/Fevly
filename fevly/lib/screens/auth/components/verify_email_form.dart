@@ -41,6 +41,7 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
     return SizedBox(
       width: size.width * 0.7,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           AutoSizeText('Verifier votre email',
               style: textTheme.headline1!, maxLines: 1),
@@ -51,7 +52,9 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
             '${FirebaseAuth.instance.currentUser?.email}',
             style: textTheme.displayMedium!.apply(color: themeColor.primary),
           ),
-          const Spacer(),
+          SizedBox(
+            height: size.height * 0.5,
+          ),
           CustomLoadingButton(
             onPressed: () async {
               authVM.isLoading = true;

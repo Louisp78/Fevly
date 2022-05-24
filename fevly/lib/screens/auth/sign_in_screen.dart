@@ -24,14 +24,16 @@ class SignInScreen extends StatelessWidget {
         }
         return false;
       },
-      child: Scaffold(
-        body: Body(
-          formContent: ChangeNotifierProvider<CustomTimer>(
-            create: (context) => CustomTimer(number_of_seconds: 30),
-            child: SignInForm(
-              email: appState.emailAddress!,
-              title: 'Connexion à',
-              subtitle: appState.emailAddress!,
+      child: SafeArea(
+        child: Scaffold(
+          body: Body(
+            formContent: ChangeNotifierProvider<CustomTimer>(
+              create: (context) => CustomTimer(number_of_seconds: 30),
+              child: SignInForm(
+                email: appState.emailAddress!,
+                title: 'Connexion à',
+                subtitle: appState.emailAddress!,
+              ),
             ),
           ),
         ),

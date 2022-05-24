@@ -18,12 +18,14 @@ class VerifyEmailScreen extends StatelessWidget {
         buildDisconnectDialog(context: context);
         return Future.value(false);
       },
-      child: Scaffold(
-        body: Body(
-          formContent: ChangeNotifierProvider<CustomTimer>(
-            create: (context) =>
-                CustomTimer(number_of_seconds: 60, reload_user: true),
-            child: const VerifyEmailForm(),
+      child: SafeArea(
+        child: Scaffold(
+          body: Body(
+            formContent: ChangeNotifierProvider<CustomTimer>(
+              create: (context) =>
+                  CustomTimer(number_of_seconds: 60, reload_user: true),
+              child: const VerifyEmailForm(),
+            ),
           ),
         ),
       ),

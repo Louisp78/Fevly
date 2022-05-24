@@ -4,9 +4,9 @@ import 'package:fevly/DTOS/dto_user_simple.dart';
 /// DTO class for 'parties/{partiesUid}/guests' collection
 class DTOGuest {
   final String? userId;
-  final String pseudo;
-  final String displayName;
-  final String photoURL;
+  final String? pseudo;
+  final String? displayName;
+  final String? photoURL;
   final bool isOrganizer;
 
   DTOGuest({
@@ -37,6 +37,17 @@ class DTOGuest {
       'is_organizer': isOrganizer,
       'display_name': displayName,
       'photo_url': photoURL,
+    };
+  }
+
+  /// from [DTOGuest] to Firestore data without null values
+  /// this method should be used only for update data
+  Map<String, dynamic> toFirestoreWithoutNull() {
+    return {
+      if (pseudo != null) 'pseudo': pseudo,
+      'is_organizer': isOrganizer,
+      if (displayName != null) 'display_name': displayName,
+      if (photoURL != null) 'photo_url': photoURL,
     };
   }
 

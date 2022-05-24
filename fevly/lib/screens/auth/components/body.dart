@@ -23,57 +23,70 @@ class Body extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final ColorScheme themeColor = Theme.of(context).colorScheme;
 
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: Consumer<AuthViewModel>(builder: (context, authVM, _) {
-          return Stack(
-            alignment: Alignment.center,
-            children: [
-              AnimatedContainer(
-                height: authVM.height,
-                width: authVM.width,
-                duration: const Duration(milliseconds: 700),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: authVM.backgroundColor,
-                ),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+                minWidth: size.width,
               ),
-              Column(
-                children: [
-                  CustomLiteAppBar(
-                    title: "Fevly",
-                    leading: CustomIconButton(
-                      size: const CustomIconButtonSize.small(),
-                      press: () {
-                        // Exit animations
-                        authVM.setwidthAndHeightAndColor(
-                            0, 0, Colors.transparent);
-                        // Let the animation finish before popping
-                        MartiniAnim.changeShowStatus();
-                        Future.delayed(const Duration(seconds: 1), () {
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                        });
-                      },
-                      outline: true,
-                      circle: false,
-                      icon: Icons.arrow_back_ios_rounded,
-                      iconColor: themeColor.onBackground,
-                      backgroundColor: themeColor.background,
-                      borderColor: themeColor.onBackground,
+              child: Consumer<AuthViewModel>(builder: (context, authVM, _) {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    AnimatedContainer(
+                      height: authVM.height,
+                      width: authVM.width,
+                      duration: const Duration(milliseconds: 700),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: authVM.backgroundColor,
+                      ),
                     ),
-                  ),
-                  Expanded(child: formContent),
-                  SizedBox(
-                    height: kBasicVerticalPadding(size: size),
-                  ),
-                ],
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: size.height * 0.15),
+                        formContent,
+                        SizedBox(
+                          height: kBasicVerticalPadding(size: size),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ),
+          Consumer<AuthViewModel>(builder: (context, authVM, _) {
+            return CustomLiteAppBar(
+              title: "Fevly",
+              backgroundColor: themeColor.background,
+              leading: CustomIconButton(
+                size: const CustomIconButtonSize.small(),
+                press: () {
+                  // Exit animations
+                  authVM.setwidthAndHeightAndColor(0, 0, Colors.transparent);
+                  // Let the animation finish before popping
+                  MartiniAnim.changeShowStatus();
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  });
+                },
+                outline: true,
+                circle: false,
+                icon: Icons.arrow_back_ios_rounded,
+                iconColor: themeColor.onBackground,
+                backgroundColor: themeColor.background,
+                borderColor: themeColor.onBackground,
               ),
-            ],
-          );
-        }),
-      ),
-    );
+            );
+          }),
+        ],
+      );
+    });
   }
 }

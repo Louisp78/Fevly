@@ -2,30 +2,78 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fevly/DTOS/dto_guest.dart';
 import 'package:fevly/DTOS/dto_user.dart';
 import 'package:fevly/DTOS/dto_party.dart';
+import 'package:fevly/functions/generate_random_pseudo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final db = FirebaseFirestore.instance;
 
+Future<bool> isUserPseudoExist(String pseudo) async {
+  final QuerySnapshot querySnapshot =
+      await db.collection('users').where('pseudo', isEqualTo: pseudo).get();
+  return querySnapshot.docs.isNotEmpty;
+}
+
 Future<void> addUserToFS({required DTOUser user}) async {
   try {
+    /// Check if user.pseudo already exist in DB
+    await isUserPseudoExist(user.pseudo!).then((isExist) {
+      if (isExist) {
+        throw FirebaseException(
+            plugin: 'isUserPseudoExist',
+            message: 'Pseudo already exist',
+            code: 'pseudo_already_exist');
+      }
+    });
+
     await db.collection('users').doc(user.userId!).set(user.toFirebase());
-  } on FirebaseException catch (e) {
+  } on Exception catch (e) {
+    print('Not handled exception: $e ' + ' with pseudo' + user.pseudo!);
+    rethrow;
+  }
+}
+
+Future<void> deleteUserFromFS({required String userId}) async {
+  try {
+    await db.collection('users').doc(userId).delete();
+  } on Exception catch (e) {
     print('Not handled exception: $e');
     rethrow;
   }
 }
 
-Future<String> getUserPseudoFromFS({required String userId}) async {
-  final docRef = db.collection("users").doc(userId);
+Future<String> findValidPseudo({required String prefix}) async {
+  int len = 10;
+  String genPseudo = generateRandomPseudo(prefix: prefix, length: len ~/ 10);
+  while (await isUserPseudoExist(genPseudo)) {
+    len++;
+    if (len >= 100) {
+      throw FirebaseException(
+          plugin: 'UnableToGeneratePseudo',
+          code: 'unable_to_generate_pseudo',
+          message: 'Unable to generate pseudo');
+    }
+    genPseudo = generateRandomPseudo(prefix: prefix, length: len ~/ 10);
+  }
+  return genPseudo;
+}
+
+/// Retrive a [DTOUser] dto object from users collection of the current user
+Future<DTOUser?> getCurrentUserFromFS() async {
+  final docRef = db
+      .collection("users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .withConverter(
+        fromFirestore: DTOUser.fromFirestore,
+        toFirestore: (DTOUser user, _) => user.toFirebase(),
+      );
 
   return docRef.get().then(
     (res) async {
       print("Successfully completed");
       try {
-        final result = res.get('pseudo') as String;
-        return result;
+        return res.data();
       } on StateError {
-        print("StateError : pseudo not found in db, should not happen");
+        print("StateError : should not happen");
         rethrow;
       }
     },
@@ -33,11 +81,24 @@ Future<String> getUserPseudoFromFS({required String userId}) async {
   );
 }
 
-Future<void> updateUserPseudoFS(
-    {required String userId, required String pseudo}) async {
-  final docRef = db.collection("users").doc(userId);
+Future<void> updateCurrentUserFS({required DTOUser user}) async {
+  /// Check if user.pseudo already exist in DB
+  if (user.pseudo != null) {
+    /// Check to keep pseudo unique
+    await isUserPseudoExist(user.pseudo!).then((isExist) {
+      if (isExist) {
+        throw FirebaseException(
+            plugin: 'isUserPseudoExist',
+            message: 'Pseudo already exist',
+            code: 'pseudo_already_exist');
+      }
+    });
+  }
 
-  return docRef.update({'pseudo': pseudo}).then(
+  final docRef =
+      db.collection("users").doc(FirebaseAuth.instance.currentUser!.uid);
+
+  return docRef.update(user.toFirebaseWithoutNull()).then(
     (res) async {
       print("Successfully completed");
     },
@@ -46,7 +107,7 @@ Future<void> updateUserPseudoFS(
 }
 
 /// Add a party to the cloud firestore
-Future<void> addParty({
+Future<void> addPartyFS({
   required DTOParty party,
   required List<DTOGuest> guests,
 }) async {
