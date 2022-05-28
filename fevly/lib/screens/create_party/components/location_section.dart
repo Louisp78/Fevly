@@ -1,14 +1,22 @@
+import 'dart:async';
+
 import 'package:fevly/components/custom_text_button.dart';
 import 'package:fevly/constant/constant.dart';
+import 'package:fevly/screens/create_party/view_model/location_section_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class LocationSection extends StatelessWidget {
-  const LocationSection({required this.height});
+  LocationSection({required this.height});
 
+  final Completer<GoogleMapController> _mapController = Completer();
   final double height;
   @override
   Widget build(BuildContext context) {
+    final LocationSectionViewModel modelView =
+        Provider.of<LocationSectionViewModel>(context);
     final ColorScheme themeColor = Theme.of(context).colorScheme;
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme =
@@ -46,11 +54,28 @@ class LocationSection extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-              child: Container(
-            decoration: BoxDecoration(
-                color: Colors.amber, borderRadius: BorderRadius.circular(20)),
-          )),
+          GestureDetector(
+            onTap: () => print('tap on map !'),
+            child: Expanded(
+              child: GoogleMap(
+                zoomControlsEnabled: false,
+                scrollGesturesEnabled: false,
+                mapToolbarEnabled: false,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    modelView.currentLocation!.latitude,
+                    modelView.currentLocation!.longitude,
+                  ),
+                  zoom: 14.0,
+                ),
+                onMapCreated: (GoogleMapController controller) {
+                  _mapController.complete(controller);
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
