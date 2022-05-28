@@ -12,6 +12,9 @@ import 'package:fevly/model/user_infos.dart';
 import 'package:fevly/screens/create_party/components/date_section.dart';
 import 'package:fevly/screens/create_party/components/location_section.dart';
 import 'package:fevly/screens/create_party/components/organizer_section.dart';
+import 'package:fevly/screens/create_party/view_model/location_section_view_model.dart';
+import 'package:fevly/screens/party/party_products/custom_bottom_sheet_add_product.dart';
+import 'package:fevly/screens/product_list/components/custom_bottom_sheet.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/service/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,8 +86,11 @@ class CreatePartyScreen extends StatelessWidget {
                         SizedBox(
                           height: kBasicHorizontalPadding(size: size) * 2,
                         ),
-                        LocationSection(
-                          height: kHeightForSection,
+                        ChangeNotifierProvider<LocationSectionViewModel>(
+                          create: (_) => LocationSectionViewModel(),
+                          child: LocationSection(
+                            height: kHeightForSection,
+                          ),
                         ),
                         SizedBox(
                           height: kBasicHorizontalPadding(size: size) * 2,
@@ -182,7 +188,16 @@ class HeaderGuestList extends StatelessWidget {
           CustomTextButton(
             text: 'Ajouter un invité',
             textColor: themeColor.onBackground,
-            press: () {},
+            press: () => showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return Container(
+                    height: size.height * 0.1,
+                    width: size.width,
+                    color: Colors.amber,
+                  );
+                }),
             buttonSize: CustomTextButtonSize.small(),
             suffixIcon: Icon(
               Icons.group_add_rounded,

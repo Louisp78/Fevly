@@ -1,7 +1,6 @@
 import 'package:fevly/components/dialog/disconnect.dart';
 import 'package:fevly/components/dialog/leave.dart';
 import 'package:fevly/models/user.dart';
-import 'package:fevly/screens/auth/anim/martini_anim.dart';
 import 'package:fevly/screens/auth/email_screen.dart';
 import 'package:fevly/screens/auth/logged_out_screen.dart';
 import 'package:fevly/screens/auth/register_screen.dart';
@@ -20,6 +19,7 @@ import 'package:fevly/screens/party/party_screen.dart';
 import 'package:fevly/screens/party_info/party_info_screen.dart';
 import 'package:fevly/screens/profile/profile_screen.dart';
 import 'package:fevly/screens/reauthenticate/reauthenticate_screen.dart';
+import 'package:fevly/screens/search_address/search_address_screen.dart';
 import 'package:fevly/screens/settings/settings_screen.dart';
 import 'package:fevly/service/application_state.dart';
 import 'package:fevly/styles/transition.dart';
@@ -183,6 +183,13 @@ mixin RouterNav {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               CreatePartyScreen(),
+          transitionDuration: const Duration(milliseconds: 500),
+          transitionsBuilder: slideLeftTransition(),
+        );
+      case '/create_party/select_location':
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              SearchAddressScreen(),
           transitionDuration: const Duration(milliseconds: 500),
           transitionsBuilder: slideLeftTransition(),
         );

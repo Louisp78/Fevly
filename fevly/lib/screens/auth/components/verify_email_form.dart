@@ -25,7 +25,7 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
     super.initState();
 
     // Start timer after build is completed
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CustomTimer>(context, listen: false).startTimer();
     });
   }

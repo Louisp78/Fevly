@@ -77,7 +77,9 @@ class ApplicationState extends ChangeNotifier {
   /// - Setting the [_authProvider] member if logged in
   Future<void> _init() async {
     // Init
+    print(Firebase.apps);
     await Firebase.initializeApp(
+      name: 'fevly',
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
