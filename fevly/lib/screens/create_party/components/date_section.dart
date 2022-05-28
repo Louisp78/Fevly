@@ -1,10 +1,19 @@
 import 'package:fevly/constant/constant.dart';
-import 'package:fevly/screens/create_party/components/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fevly/screens/create_party/components/date_button.dart';
 
-class DateSection extends StatelessWidget {
+class DateSection extends StatefulWidget {
   const DateSection();
+
+  @override
+  State<DateSection> createState() => _DateSectionState();
+}
+
+class _DateSectionState extends State<DateSection> {
+  DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +44,27 @@ class DateSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              DatePicker(title: 'Debut', initialDate: DateTime.now()),
-              DatePicker(title: 'Fin', initialDate: DateTime.now()),
+              DateButton(
+                title: 'Debut',
+                initialDate: _startDate,
+                onTap: () => DatePicker.showDateTimePicker(
+                  context,
+                  currentTime: _startDate,
+                  onConfirm: (time) => setState(
+                    () => _startDate = time,
+                  ),
+                ),
+              ),
+              DateButton(
+                title: 'Fin',
+                initialDate: _endDate,
+                onTap: () => DatePicker.showDateTimePicker(
+                  context,
+                  currentTime: _endDate,
+                  onConfirm: (time) => setState(() => _endDate = time),
+                ),
+              ),
+              //DatePicker(title: 'Fin', initialDate: DateTime.now()),
             ],
           ),
         ],

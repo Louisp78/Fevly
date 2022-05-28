@@ -22,7 +22,7 @@ class CustomDashboardAppBar extends StatelessWidget {
 
     /// user is not null
     final appState = Provider.of<ApplicationState>(context);
-    final user = appState.userLastInstance;
+    final user = FirebaseAuth.instance.currentUser;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kBasicHorizontalPadding(size: size), vertical: 10),

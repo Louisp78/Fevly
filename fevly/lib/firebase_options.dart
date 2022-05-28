@@ -37,8 +37,8 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyABL0AeQiyrDSdvezapIC7lTD35a8yVbik',
-    appId: '1:86192589121:web:c8b8766ec8813acf7539c0',
+    apiKey: 'AIzaSyDshqljbFmgCcBx6PMnnj8vbAkHTM_SDao',
+    appId: '1:86192589121:web:ef6748b1c33331767539c0',
     messagingSenderId: '86192589121',
     projectId: 'fevly-5adae',
     authDomain: 'fevly-5adae.firebaseapp.com',
@@ -46,20 +46,20 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCYtmTf8_jScCrocpjNUjjh368_MniVMoM',
-    appId: '1:86192589121:android:780fcdb5e7333d797539c0',
+    apiKey: 'AIzaSyCNCsFtBFTdX76nOVg8nGczEAZIFkij5Kc',
+    appId: '1:86192589121:android:dfe2cd58b9dba90d7539c0',
     messagingSenderId: '86192589121',
     projectId: 'fevly-5adae',
     storageBucket: 'fevly-5adae.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAX-0owhWsNorIorQzP8GkR85qrMxiP598',
-    appId: '1:86192589121:ios:1085b594bad234257539c0',
+    apiKey: 'AIzaSyDlE2nDhXPXvdA7MZxoIm7geCrINPGJztU',
+    appId: '1:86192589121:ios:bae7141b85ee02b17539c0',
     messagingSenderId: '86192589121',
     projectId: 'fevly-5adae',
     storageBucket: 'fevly-5adae.appspot.com',
-    iosClientId: '86192589121-4o84tg1c8itktn5slt5fmnuaj6sh68l2.apps.googleusercontent.com',
-    iosBundleId: 'com.fevly.fevly',
+    iosClientId: '86192589121-n24ddatlpscbgqi19shnh3giift49lu0.apps.googleusercontent.com',
+    iosBundleId: 'fevly',
   );
 }
